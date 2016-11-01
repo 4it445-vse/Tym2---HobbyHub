@@ -48,7 +48,7 @@ export class CreateActivityPage extends Component {
        <div className="cols-sm-10">
         <div className="input-group">
          <span className="input-group-addon"><i className="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-         <input type="password" className="form-control" name="password" id="password"  placeholder="Enter your Password"/>
+         <input type="password" className="form-control" name="password" id="password"  placeholder="Enterr your Password"/>
         </div>
        </div>
       </div>
