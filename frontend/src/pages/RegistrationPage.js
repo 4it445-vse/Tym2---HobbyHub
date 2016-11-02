@@ -3,17 +3,17 @@ import { Link } from 'react-router';
 import $ from 'jquery';
 
 import './RegistrationPage.css';
+import { connect } from 'react-redux';
+import { userLogged } from '../actions'
 
-const IMAGE_1 = 'http://www.pixelstalk.net/wp-content/uploads/2016/09/Rock-Climbing-Adventure-Wallpaper.jpg'
-const IMAGE_2 = 'http://www.pixelstalk.net/wp-content/uploads/2016/09/Hiking-dventure-Wallpaper.jpg'
-const IMAGE_3 = 'http://www.pixelstalk.net/wp-content/uploads/2016/09/Adventure-HD-Wallpaper.jpg'
-const IMAGE_4 = 'http://cdn.wallpapersafari.com/68/5/K92vDz.jpg'
+const bgImage = require('../img/Rock-climbing-Wallpaper.jpg')
 
-export class RegistrationPage extends Component {
+class RegistrationPageRaw extends Component {
 
   constructor(props) {
     super(props);
     this.onSubmit = this.onSubmit.bind(this);
+    this.props.userLogged(false)
   }
 
   onSubmit(event) {
@@ -26,8 +26,15 @@ export class RegistrationPage extends Component {
     if(windowHeight > 690) {
       windowHeight = 690
     }
+
+    var imgStyle = {
+        backgroundImage: 'url(' + bgImage + ')',
+        backgroundSize: 'cover',
+        height: windowHeight,
+    }
+
     return (
-      <div className="container-fluid" style={{backgroundImage: `url(${IMAGE_1})`, backgroundSize: `cover`, height: {windowHeight}}}>
+      <div className="container-fluid" style={imgStyle}>
       <div className="row main">
 
 				<div className="main-login main-center">
@@ -98,3 +105,11 @@ export class RegistrationPage extends Component {
     );
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.userReducer
+  }
+}
+
+export default connect(mapStateToProps, { userLogged })(RegistrationPageRaw)

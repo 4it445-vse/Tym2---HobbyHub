@@ -4,15 +4,17 @@ import $ from 'jquery';
 
 import './RegistrationPage.css';
 
-const IMAGE_1 = 'http://www.webgranth.com/wp-content/uploads/2014/07/Rock-climbing-Wallpaper.jpg'
-const IMAGE_2 = 'http://www.pixelstalk.net/wp-content/uploads/2016/09/Hiking-dventure-Wallpaper.jpg'
-const IMAGE_3 = 'http://www.pixelstalk.net/wp-content/uploads/2016/09/Adventure-HD-Wallpaper.jpg'
+import { connect } from 'react-redux';
+import { userLogged } from '../actions'
 
-export class LoginPage extends Component {
+const bgImage = require('../img/Rock-climbing-Wallpaper.jpg')
+
+class LoginPageRaw extends Component {
 
   constructor(props) {
     super(props);
     this.onSubmit = this.onSubmit.bind(this);
+    this.props.userLogged(false)
   }
 
   onSubmit(event) {
@@ -22,13 +24,18 @@ export class LoginPage extends Component {
 
   render() {
     var windowHeight = $(window).height();
-    if(windowHeight > 690) {
-      windowHeight = 690
-    }
-    return (
-      <div className="container-fluid" style={{backgroundImage: `url(${IMAGE_3})`, backgroundSize: `cover`, height: {windowHeight}}}>
-      <div className="row main">
+    if (windowHeight > 690) { windowHeight = 690 }
 
+    var imgStyle = {
+        backgroundImage: 'url(' + bgImage + ')',
+        backgroundSize: 'cover',
+        height: windowHeight,
+    }
+
+    return (
+      <div className="container-fluid" style={imgStyle}>
+
+      <div className="row main">
       <div className="main-login main-center">
       <h2 className="title">Login</h2>
      <form className="form-horizontal" method="post" action="#">
@@ -63,8 +70,15 @@ export class LoginPage extends Component {
     </div>
 
       </div>
-
       </div>
     );
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.userReducer
+  }
+}
+
+export default connect(mapStateToProps, { userLogged })(LoginPageRaw)
