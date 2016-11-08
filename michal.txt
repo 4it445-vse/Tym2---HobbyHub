@@ -1,1 +1,4 @@
-test gitu
+test git
+jeste neco
+nevim co
+ale tak to otestujem
