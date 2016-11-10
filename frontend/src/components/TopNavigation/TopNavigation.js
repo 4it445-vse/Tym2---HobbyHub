@@ -5,12 +5,14 @@ import { isUserLogged, userLogged } from '../../actions'
 import { LoggedUserNavigation } from './LoggedUserNavigation'
 import { DefaultNavigation } from './DefaultNavigation'
 
+import './TopNavigation.css';
+
 export class TopNavigationRaw extends Component {
   render() {
     const isUserLogged = this.props.user.isUserLogged
 
     return (
-      <nav className="navbar navbar-default" role="navigation">
+      <nav className="navbar navbar-default navbar-static-top" role="navigation">
         {
           (isUserLogged ? <LoggedUserNavigation/> : <DefaultNavigation/>)
         }
