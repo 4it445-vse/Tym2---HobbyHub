@@ -3,10 +3,14 @@ import { Link } from 'react-router';
 import { Nav, DropdownButton, MenuItem } from 'react-bootstrap'
 import _ from 'lodash'
 
+const logo = require('../../img/paper-plane.png')
+
 export const DefaultNavigation = () => (
   <div className="container-fluid" id="navfluid">
   <div className="navbar-header">
-    <Link to="/"><a className="navbar-brand" href="#">HobbyHub</a></Link>
+    <Link to="/">
+      <a className="navbar-brand vcenter changeFont" href="#"><span><img className="img-responsive2 vcenter" src={logo}/></span> HobbyHub</a>
+    </Link>
     <Nav pullRight>
       <DropdownButton noCaret pullRight
           title={ _.times( 3, (i) => <span key={i} className="icon-bar"></span> )}

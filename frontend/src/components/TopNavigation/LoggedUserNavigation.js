@@ -9,7 +9,7 @@ export const LoggedUserNavigation = () => (
   <div className="container-fluid" id="navfluid">
   <div className="navbar-header">
     <Link to="/">
-      <a className="navbar-brand vcenter" href="#"><span><img className="img-responsive2 vcenter" src={logo}/></span> HobbyHub</a>
+      <a className="navbar-brand vcenter changeFont" href="#"><span><img className="img-responsive2 vcenter" src={logo}/></span> HobbyHub</a>
     </Link>
     <Nav pullRight>
       <DropdownButton noCaret pullRight

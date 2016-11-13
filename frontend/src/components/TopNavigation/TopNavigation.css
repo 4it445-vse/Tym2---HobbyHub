@@ -4,6 +4,10 @@
     float: none;
 }
 
+.navbar-fixed-top {
+    position: static !important;
+}
+
 .navbar-nav li a {
  line-height: 32px;
 }
@@ -26,4 +30,9 @@
 .navbar-default {
     background-color: #F8F8F8;
     border-color: #E7E7E7;
+}
+
+.changeFont {
+    font-family: 'Comic Sans MS' !important;
+    font-style: bold;
 }
