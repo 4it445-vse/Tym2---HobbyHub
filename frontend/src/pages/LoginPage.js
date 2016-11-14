@@ -7,7 +7,7 @@ import './RegistrationPage.css';
 import { connect } from 'react-redux';
 import { userLogged } from '../actions'
 
-const bgImage = require('../img/Rock-climbing-Wallpaper.jpg')
+//const bgImage = require('../img/Rock-climbing-Wallpaper.jpg')
 
 class LoginPageRaw extends Component {
 
@@ -27,7 +27,7 @@ class LoginPageRaw extends Component {
     if (windowHeight > 690) { windowHeight = 690 }
 
     var imgStyle = {
-        backgroundImage: 'url(' + bgImage + ')',
+        backgroundImage: 'url('  + 'https://weknowyourdreams.com/image.php?pic=/images/rock/rock-03.jpg' + ')',
         backgroundSize: 'cover',
         height: windowHeight,
     }
