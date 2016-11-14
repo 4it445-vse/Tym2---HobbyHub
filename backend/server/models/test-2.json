@@ -1,13 +1,12 @@
 {
-  "name": "ProductCategory",
-  "plural": "category",
+  "name": "test2",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {
     "validateUpsert": true
   },
   "properties": {
-    "name": {
+    "testfield": {
       "type": "string"
     }
   },
