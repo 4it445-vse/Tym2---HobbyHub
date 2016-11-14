@@ -35,15 +35,15 @@ class LoginPageRaw extends Component {
     return (
       <div className="container-fluid" style={imgStyle}>
 
-      <div className="row main">
-      <div className="main-login main-center">
-      <h2 className="title">Login</h2>
-     <form className="form-horizontal" method="post" action="#">
+        <div className="row main">
+          <div className="main-login main-center">
+            <h2 className="title">Logisn</h2>
+            <form className="form-horizontal" method="post" action="#">
 
-      <div className="form-group">
-       <label htmlFor="email" className="cols-sm-2 control-label">Email</label>
-       <div className="cols-sm-10">
-        <div className="input-group">
+              <div className="form-group">
+                <label htmlFor="email" className="cols-sm-2 control-label">Email</label>
+                <div className="cols-sm-10">
+                  <div className="input-group">
          <span className="input-group-addon"><i className="fa fa-envelope fa" aria-hidden="true"></i></span>
          <input type="text" className="form-control" name="email" id="email"  placeholder="Enter your Email"/>
         </div>
