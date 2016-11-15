@@ -14,10 +14,6 @@ const Icon = (props) => (
   </li>
 )
 
-const spanIcon = (props) => (
-  <span><img className="img-responsive2 vcenter" src={props.src}/></span>
-)
-
 export const PageFooter = () => (
       <div className="navbar navbar-default navbar-fixed-bottom footer">
         <div className="container-fluid cut-width">
