@@ -15,6 +15,9 @@ export const DefaultNavigation = () => (
       <DropdownButton noCaret pullRight
           title={ _.times( 3, (i) => <span key={i} className="icon-bar"></span> )}
           className="navbar-toggle navbar-right" id="bg-nested-dropdown">
+          <MenuItem><Link to="/createActivity"><text className="text-success">
+            <span className="glyphicon glyphicon-flag"></span> Create Activity</text></Link></MenuItem>
+          <MenuItem divider />
         <MenuItem><Link to="/login"><text className="text-muted">
           <span className="glyphicon glyphicon-user"></span> Login</text></Link></MenuItem>
         <MenuItem><Link to="/register"><text className="text-muted">
@@ -24,6 +27,7 @@ export const DefaultNavigation = () => (
   </div>
   <div className="collapse navbar-collapse" id="navigationbar">
     <ul className="nav navbar-nav navbar-right">
+    <li><Link to="/createActivity"><span className="glyphicon glyphicon-flag"></span> Create Activity</Link></li>
       <li><Link to="/login"><span className="glyphicon glyphicon-user"></span> Login</Link></li>
       <li><Link to="/register"><span className="glyphicon glyphicon-plus"></span> Register</Link></li>
     </ul>

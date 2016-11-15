@@ -11,6 +11,7 @@ import  RegistrationPage  from './pages/RegistrationPage'
 import  LoginPage  from './pages/LoginPage'
 import  CreateActivityPage  from './pages/CreateActivityPage'
 import  LandingPage  from './pages/LandingPage.js';
+import  ActivityDetailPage from './pages/ActivityDetailPage.js';
 
 export function createRoutes() {
   return (
@@ -23,6 +24,7 @@ export function createRoutes() {
       <Route path="/login" component={LoginPage}/>
       <Route path="/land" component={LandingPage}/>
       <Route path="/register" component={RegistrationPage}/>
+      <Route path="/activityDetail" component={ActivityDetailPage}/>
       <Route path="*" component={NoMatchPage}/>
     </Route>
   );

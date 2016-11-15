@@ -2,26 +2,25 @@ import React, { Component } from 'react';
 import { Link } from 'react-router';
 import { Thumbnail } from 'react-bootstrap';
 
-import 'bootstrap/dist/css/bootstrap.css';
-
 import { AttendActivityButtonContainer } from '../ActivityGrid/AttendActivityButton.js';
 import { ViewActivityButtonContainer } from '../ActivityGrid/ViewActivityButton.js';
 
 export class ActivityItem extends Component {
   render() {
     const { activity } = this.props;
-    const { id, name, about } = activity;
+    const { id, name, about, city } = activity;
     return (
-
-      <Thumbnail src="http://www.shop-samolepky.cz/out/pictures/1/tenis6(1).png" alt="242x200">
-
-        <h3>{ name }</h3>
-        <p>{ about }</p>
-        <p>
-          <AttendActivityButtonContainer activity={activity} />&nbsp;
+      <div className="product">
+        <div className="pull-right">
+          <AttendActivityButtonContainer activity={activity} />
           <ViewActivityButtonContainer activity={activity} />
-        </p>
-      </Thumbnail>
+        </div>
+        <h2>
+          <Link to={`/Activities/${id}`}>{name}</Link>
+        </h2>
+        <p>city: <span className="city">{city}</span></p>
+        <p>{about}</p>
+      </div>
     );
   }
 }

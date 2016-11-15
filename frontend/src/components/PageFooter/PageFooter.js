@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
 
-import FontAwesome from 'react-fontawesome'
-
 import './PageFooter.css';
 
 const fb_icon = require('../../img/facebook_icon.png')
@@ -16,25 +14,19 @@ const Icon = (props) => (
   </li>
 )
 
-export class PageFooter extends Component {
-  render() {
-    return (
+export const PageFooter = () => (
       <div className="navbar navbar-default navbar-fixed-bottom footer">
         <div className="container-fluid cut-width">
-
           <ul className="nav navbar-nav navbar-left">
             <li>
               <p> © HobbyHub {new Date().getFullYear()}, made with love by Team 2</p>
             </li>
           </ul>
-
-          <ul className="social-icon animate pull-right">
+          <ul className="nav navbar-nav navbar-right hidden-xs">
             <Icon src={fb_icon} />
             <Icon src={yt_icon} />
             <Icon src={ig_icon} />
           </ul>
         </div>
       </div>
-    );
-  }
-}
+);
