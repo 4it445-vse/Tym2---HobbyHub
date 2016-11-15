@@ -37,11 +37,11 @@ class RegistrationPageRaw extends Component {
       <div className="container-fluid" style={imgStyle}>
       <div className="row main">
 
-				<div className="main-login main-center form-group">
+				<div className="main-login main-center">
         <h2 className="title">Registration</h2>
 					<form className="form-horizontal" method="post" action="#">
 
-						<div className="form-group required">
+						<div className="form-group ">
 							<label htmlFor="name" className="cols-sm-2 control-label">Name</label>
 							<div className="cols-sm-10">
 								<div className="input-group">
@@ -51,7 +51,7 @@ class RegistrationPageRaw extends Component {
 							</div>
 						</div>
 
-						<div className="form-group required">
+						<div className="form-group ">
 							<label htmlFor="email" className="cols-sm-2 control-label">Email</label>
 							<div className="cols-sm-10">
 								<div className="input-group">
@@ -61,7 +61,7 @@ class RegistrationPageRaw extends Component {
 							</div>
 						</div>
 
-						<div className="form-group required">
+						<div className="form-group ">
 							<label htmlFor="username" className="cols-sm-2 control-label">Username</label>
 							<div className="cols-sm-10">
 								<div className="input-group">
@@ -71,7 +71,7 @@ class RegistrationPageRaw extends Component {
 							</div>
 						</div>
 
-						<div className="form-group required">
+						<div className="form-group ">
 							<label htmlFor="password" className="cols-sm-2 control-label">Password</label>
 							<div className="cols-sm-10">
 								<div className="input-group">
@@ -81,7 +81,7 @@ class RegistrationPageRaw extends Component {
 							</div>
 						</div>
 
-						<div className="form-group required">
+						<div className="form-group ">
 							<label htmlFor="confirm" className="cols-sm-2 control-label">Confirm Password</label>
 							<div className="cols-sm-10">
 								<div className="input-group">

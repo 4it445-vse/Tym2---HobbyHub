@@ -8,6 +8,8 @@ import { userLogged } from '../actions'
 
 const bgImage = require('../img/Rock-climbing-Wallpaper.jpg')
 
+var DatePicker = require("react-bootstrap-date-picker");
+
 class CreateActivityPageRaw extends Component {
 
   constructor(props) {
@@ -19,12 +21,12 @@ class CreateActivityPageRaw extends Component {
   onSubmit(event) {
     event.preventDefault();
     console.log('submitted')
-  }
+  };
 
   render() {
     var windowHeight = $(window).height();
     if(windowHeight > 690) {
-      windowHeight = 690
+      windowHeight = 900
     }
 
     var imgStyle = {
@@ -33,86 +35,80 @@ class CreateActivityPageRaw extends Component {
         height: windowHeight,
     }
 
+
+
     return (
       <div className="container-fluid" style={imgStyle}>
       <div className="row main">
 
 				<div className="main-login main-center">
-        <h2 className="title">Create activity</h2>
+        <h2 className="title">Vytvořit aktivitu</h2>
 					<form className="form-horizontal" method="post" action="#">
 
-          <div className="form-group required">
-            <label htmlFor="category" className="cols-sm-2 control-label">Category</label>
+          <div className="form-group ">
+            <label htmlFor="activity" className="cols-sm-2 control-label">Název aktivity</label>
             <div className="cols-sm-10">
               <div className="input-group">
                 <span className="input-group-addon"><i className="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-                <input type="text" className="form-control" name="category" id="category"  placeholder="Select Category"/>
+                <input type="text" className="form-control" name="activity" id="activity"  placeholder="Vložte název aktivity"/>
               </div>
             </div>
           </div>
 
           <div className="form-group">
-            <label htmlFor="activity" className="cols-sm-2 control-label">Activity name</label>
+            <label htmlFor="city" className="cols-sm-2 control-label">Město</label>
             <div className="cols-sm-10">
               <div className="input-group">
-                <span className="input-group-addon"><i className="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-                <input type="text" className="form-control" name="activity" id="activity"  placeholder="Enter Activity name"/>
+                <span className="input-group-addon"><i className="fa fa-envelope fa" aria-hidden="true"></i></span>
+                <input type="text" className="form-control" name="city" id="city"  placeholder="Zadejte město"/>
               </div>
             </div>
           </div>
 
-						<div className="form-group">
-							<label htmlFor="From" className="cols-sm-2 control-label">From</label>
-							<div className="cols-sm-10">
-								<div className="input-group">
-									<span className="input-group-addon"><i className="fa fa-user fa" aria-hidden="true"></i></span>
-									<input type="text" className="form-control" name="from" id="from"  placeholder="From"/>
-								</div>
-							</div>
-						</div>
-
-            <div className="form-group">
-              <label htmlFor="To" className="cols-sm-2 control-label">To</label>
-              <div className="cols-sm-10">
-                <div className="input-group">
-                  <span className="input-group-addon"><i className="fa fa-user fa" aria-hidden="true"></i></span>
-                  <input type="text" className="form-control" name="to" id="to"  placeholder="To"/>
-                </div>
+          <div className="form-group">
+            <label htmlFor="address" className="cols-sm-2 control-label">Adresa</label>
+            <div className="cols-sm-10">
+              <div className="input-group">
+                <span className="input-group-addon"><i className="fa fa-users fa" aria-hidden="true"></i></span>
+                <input type="text" className="form-control" name="address" id="address"  placeholder="Vložte adresu"/>
               </div>
             </div>
+          </div>
 
-						<div className="form-group">
-							<label htmlFor="city" className="cols-sm-2 control-label">City</label>
-							<div className="cols-sm-10">
-								<div className="input-group">
-									<span className="input-group-addon"><i className="fa fa-envelope fa" aria-hidden="true"></i></span>
-									<input type="text" className="form-control" name="city" id="city"  placeholder="City"/>
-								</div>
-							</div>
-						</div>
 
-						<div className="form-group">
-							<label htmlFor="street" className="cols-sm-2 control-label">Street</label>
-							<div className="cols-sm-10">
-								<div className="input-group">
-									<span className="input-group-addon"><i className="fa fa-users fa" aria-hidden="true"></i></span>
-									<input type="text" className="form-control" name="street" id="street"  placeholder="Enter Street"/>
-								</div>
-							</div>
-						</div>
+          <div className="form-group">
+            <label htmlFor="user_count" className="cols-sm-2 control-label">Počet účastníků</label>
+            <div className="cols-sm-10">
+              <div className="input-group">
+                <span className="input-group-addon"><i className="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+                <input type="text" className="form-control" name="user_count" id="user_count"  placeholder="Vložte počet účastníků"/>
+              </div>
+            </div>
+          </div>
 
-						<div className="form-group">
-							<label htmlFor="number-of-people" className="cols-sm-2 control-label">Number of people</label>
-							<div className="cols-sm-10">
-								<div className="input-group">
-									<span className="input-group-addon"><i className="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-									<input type="text" className="form-control" name="number-of-people" id="number-of-people"  placeholder="Enter number of People"/>
-								</div>
-							</div>
-						</div>
+          <div className="form-group">
+            <label htmlFor="date_and_time" className="cols-sm-2 control-label">Datum</label>
+            <div className="cols-sm-10">
+              <div className="input-group">
+                <span className="input-group-addon"><i className="fa fa-users fa" aria-hidden="true"></i></span>
+                <input type="text" className="form-control" name="date" id="date"  placeholder="Datum"/>
+              </div>
+            </div>
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="about" className="cols-sm-2 control-label">Popis</label>
+            <div className="cols-sm-10">
+              <div className="input-group">
+                <span className="input-group-addon"><i className="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+                <textarea class="form-control" className="form-control" rows="5" name="comment" id="comment" placeholder="Krátký popis"></textarea>
+              </div>
+            </div>
+          </div>
+
 
 						<div className="form-group ">
-							<button type="button" className="btn btn-primary btn-lg btn-block login-button">Create</button>
+							<button type="submit" className="btn btn-primary btn-lg btn-block">Vytvořit</button>
 						</div>
 
 					</form>

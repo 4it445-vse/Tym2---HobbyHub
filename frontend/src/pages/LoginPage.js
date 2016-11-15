@@ -5,9 +5,11 @@ import $ from 'jquery';
 import './RegistrationPage.css';
 
 import { connect } from 'react-redux';
-import { userLogged } from '../actions'
+import { userLogged, isUserLogged } from '../actions'
 
 const bgImage = require('../img/Rock-climbing-Wallpaper.jpg')
+
+import api from '../api.js';
 
 class LoginPageRaw extends Component {
 
@@ -20,6 +22,32 @@ class LoginPageRaw extends Component {
   onSubmit(event) {
     event.preventDefault();
     console.log('submitted')
+    const { items } =  this.props;
+    const formItems = items.map(({ email, password }) => ({
+      email: email,
+      password: password,
+    }))
+
+    const formData = new FormData(event.target);
+    formData.append(
+      'items',
+      JSON.stringify(formItems)
+    );
+
+    api.post('Customers/login', formData)
+      .then(({ data }) => {
+        console.log('data', data);
+
+        // isUserLogged = data
+
+        this.setState({ errors: {} });
+      })
+      .catch(error => {
+        const { response } = error;
+        const { errors } = response.data.error.details;
+
+        this.setState({ errors });
+      });
   }
 
   render() {
@@ -61,7 +89,7 @@ class LoginPageRaw extends Component {
       </div>
 
       <div className="form-group ">
-       <button type="button" className="btn btn-primary btn-lg btn-block login-button">Login</button>
+       <button type="submit" className="btn btn-primary btn-lg btn-block login-button">Login</button>
       </div>
       <div className="login-register">
                 Not registered yet?  <Link to="/register">Register</Link>

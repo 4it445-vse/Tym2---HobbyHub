@@ -23,14 +23,6 @@ html, body {
   padding-right: 0px;
 }
 
-.form-group.required .control-label:after {
-    color: #d00;
-    content: "*";
-    position: absolute;
-    margin-left: 8px;
-    top:7px;
-}
-
 /* Custom page header */
 .header {
   border-bottom: 1px solid #e5e5e5;
