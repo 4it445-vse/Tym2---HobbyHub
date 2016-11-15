@@ -41,7 +41,7 @@ class RegistrationPageRaw extends Component {
         <h2 className="title">Registration</h2>
 					<form className="form-horizontal" method="post" action="#">
 
-						<div className="form-group ">
+						<div className="form-group">
 							<label htmlFor="name" className="cols-sm-2 control-label">Name</label>
 							<div className="cols-sm-10">
 								<div className="input-group">
@@ -51,7 +51,7 @@ class RegistrationPageRaw extends Component {
 							</div>
 						</div>
 
-						<div className="form-group ">
+						<div className="form-group">
 							<label htmlFor="email" className="cols-sm-2 control-label">Email</label>
 							<div className="cols-sm-10">
 								<div className="input-group">
@@ -61,7 +61,7 @@ class RegistrationPageRaw extends Component {
 							</div>
 						</div>
 
-						<div className="form-group ">
+						<div className="form-group">
 							<label htmlFor="username" className="cols-sm-2 control-label">Username</label>
 							<div className="cols-sm-10">
 								<div className="input-group">
@@ -71,7 +71,7 @@ class RegistrationPageRaw extends Component {
 							</div>
 						</div>
 
-						<div className="form-group ">
+						<div className="form-group">
 							<label htmlFor="password" className="cols-sm-2 control-label">Password</label>
 							<div className="cols-sm-10">
 								<div className="input-group">
@@ -81,7 +81,7 @@ class RegistrationPageRaw extends Component {
 							</div>
 						</div>
 
-						<div className="form-group ">
+						<div className="form-group">
 							<label htmlFor="confirm" className="cols-sm-2 control-label">Confirm Password</label>
 							<div className="cols-sm-10">
 								<div className="input-group">
@@ -91,7 +91,7 @@ class RegistrationPageRaw extends Component {
 							</div>
 						</div>
 
-						<div className="form-group">
+						<div className="form-group ">
 							<button type="button" className="btn btn-primary btn-lg btn-block login-button">Register</button>
 						</div>
 						<div className="login-register">

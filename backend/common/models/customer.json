@@ -11,7 +11,7 @@
     "activities": {
       "type": "hasMany",
       "model": "Activity",
-      "foreignKey": "ActivityId"
+      "foreignKey": "customerId"
     }
   },
   "acls": [

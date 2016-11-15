@@ -20,6 +20,7 @@ class LoginPageRaw extends Component {
   }
 
   onSubmit(event) {
+    console.log('submitted')
     event.preventDefault();
     console.log('submitted')
     const { items } =  this.props;
@@ -34,7 +35,7 @@ class LoginPageRaw extends Component {
       JSON.stringify(formItems)
     );
 
-    api.post('Customers/login', formData)
+    api.post('customers/login', formData)
       .then(({ data }) => {
         console.log('data', data);
 
@@ -89,7 +90,7 @@ class LoginPageRaw extends Component {
       </div>
 
       <div className="form-group ">
-       <button type="submit" className="btn btn-primary btn-lg btn-block login-button">Login</button>
+       <button type="submit" className="btn btn-primary btn-lg btn-block login-button" >Login</button>
       </div>
       <div className="login-register">
                 Not registered yet?  <Link to="/register">Register</Link>
