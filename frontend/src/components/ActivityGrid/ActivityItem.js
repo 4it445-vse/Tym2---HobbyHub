@@ -10,17 +10,17 @@ import { ViewActivityButtonContainer } from '../ActivityGrid/ViewActivityButton.
 export class ActivityItem extends Component {
   render() {
     const { activity } = this.props;
-    const { id, title, shortInfo } = activity;
+    const { id, name, about } = activity;
     return (
 
       <Thumbnail src="http://www.shop-samolepky.cz/out/pictures/1/tenis6(1).png" alt="242x200">
 
-          <h3>{ title }</h3>
-          <p>{ shortInfo }</p>
-          <p>
-              <AttendActivityButtonContainer activity={activity} />&nbsp;
-              <ViewActivityButtonContainer activity={activity} />
-          </p>
+        <h3>{ name }</h3>
+        <p>{ about }</p>
+        <p>
+          <AttendActivityButtonContainer activity={activity} />&nbsp;
+          <ViewActivityButtonContainer activity={activity} />
+        </p>
       </Thumbnail>
     );
   }
