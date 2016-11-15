@@ -4,9 +4,11 @@ import $ from 'jquery';
 import api from '../api.js';
 // import { ActivityGrid } from '../components/ActivityGrid/ActivityGrid.js';
 import { Carousel, Thumbnail, Grid, Button, Col, Row } from 'react-bootstrap';
+import { Link } from 'react-router';
 
 import { connect } from 'react-redux';
-import { userLogged } from '../actions'
+import { userLogged } from '../actions';
+import { isUserLogged } from '../actions'
 
 const IMAGE_3 = 'http://www.pixelstalk.net/wp-content/uploads/2016/09/Adventure-HD-Wallpaper.jpg'
 
@@ -15,11 +17,10 @@ class LandingPageRaw extends Component {
         super(props);
         this.state = {
         };
-        this.props.userLogged(true)
+        this.props.userLogged(false)
     }
 
     render() {
-
         return (
             <Grid>
                 <Carousel>
@@ -55,7 +56,8 @@ class LandingPageRaw extends Component {
                        <p>Description</p>
                        <p>
                          <Button bsStyle="primary">Attend</Button>&nbsp;
-                         <Button bsStyle="default">View</Button>
+                         {/* <Button bsStyle="default">View</Button> */}
+                         <Link className="btn btn-default" to="/activityDetail" role="button">View</Link>
                        </p>
                      </Thumbnail>
                    </Col>
@@ -114,7 +116,7 @@ class LandingPageRaw extends Component {
                    </Row>
                  </Grid>
         );
-    }
+  }
 }
 
 const mapStateToProps = (state) => {
