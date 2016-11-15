@@ -5,37 +5,44 @@ import $ from 'jquery';
 import './RegistrationPage.css';
 
 import { connect } from 'react-redux';
-import { userLogged, isUserLogged } from '../actions'
+import { userLogged } from '../actions'
+import { api } from '../api.js';
+import { FormGroup, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
 
 const bgImage = require('../img/Rock-climbing-Wallpaper.jpg')
-
-import api from '../api.js';
 
 class LoginPageRaw extends Component {
 
   constructor(props) {
     super(props);
-    this.onSubmit = this.onSubmit.bind(this);
     this.props.userLogged(false)
+    console.log('starting')
+    this.onSubmit = this.onSubmit.bind(this);
   }
 
   onSubmit(event) {
-    console.log('submitted')
     event.preventDefault();
     console.log('submitted')
-    const { items } =  this.props;
-    const formItems = items.map(({ email, password }) => ({
-      email: email,
-      password: password,
-    }))
 
-    const formData = new FormData(event.target);
-    formData.append(
-      'items',
-      JSON.stringify(formItems)
-    );
+    // const { items } =  this.props;
+    // 	const formItems = items.map(({ email, password }) => ({
+    //     email: email,
+    //     password: password,
+    //   }))
 
-    api.post('customers/login', formData)
+      const formData = new FormData(event.target);
+      // formData.append(
+      //   'items',
+      //   JSON.stringify(formItems)
+      // );
+
+
+      console.log(event)
+      console.log(event.target)
+      console.log(new FormData(event.target))
+      console.log(this.props)
+      console.log(formData)
+      api.post('Customers/login', formData)
       .then(({ data }) => {
         console.log('data', data);
 
@@ -49,7 +56,8 @@ class LoginPageRaw extends Component {
 
         this.setState({ errors });
       });
-  }
+
+    }
 
   render() {
     var windowHeight = $(window).height();
@@ -62,13 +70,13 @@ class LoginPageRaw extends Component {
     }
 
     return (
-      <div className="container-fluid" style={imgStyle}>
 
+      <div className="container-fluid" style={imgStyle}>
       <div className="row main">
       <div className="main-login main-center">
       <h2 className="title">Login</h2>
-     <form className="form-horizontal" method="post" action="#">
 
+     <form className="form-horizontal" method="post" onSubmit={this.onSubmit}>
       <div className="form-group">
        <label htmlFor="email" className="cols-sm-2 control-label">Email</label>
        <div className="cols-sm-10">
@@ -90,7 +98,7 @@ class LoginPageRaw extends Component {
       </div>
 
       <div className="form-group ">
-       <button type="submit" className="btn btn-primary btn-lg btn-block login-button" >Login</button>
+       <button type="submit" className="btn btn-primary btn-lg btn-block">Login</button>
       </div>
       <div className="login-register">
                 Not registered yet?  <Link to="/register">Register</Link>

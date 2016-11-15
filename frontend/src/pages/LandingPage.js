@@ -4,7 +4,8 @@ import { Jumbotron, Thumbnail, Grid, Button, Col, Row } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { userLogged } from '../actions'
 import api from '../api.js';
-import SearchMenu from '../components/ActivityGrid/SearchBar'
+import SearchMenu from '../components/ActivityGrid/SearchBar';
+import { Link } from 'react-router'
 
 import './LandingPage.css'
 
@@ -62,7 +63,7 @@ export class LandingPageRaw extends Component {
                   <p>Description</p>
                   <p>
                     <Button bsStyle="primary">Attend</Button>&nbsp;
-                    <Button bsStyle="default">View</Button>
+                    <Link className="btn btn-default" to="/activityDetail" role="button">View</Link>
                   </p>
                 </Thumbnail>
               </Grid>

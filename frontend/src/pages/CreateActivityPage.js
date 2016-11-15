@@ -24,13 +24,12 @@ class CreateActivityPageRaw extends Component {
   };
 
   render() {
-<<<<<<< HEAD
+
     var windowHeight = $(window).height();
     if(windowHeight > 690) {
       windowHeight = 900
     }
-=======
->>>>>>> origin/master
+
 
     var imgStyle = {
         backgroundImage: 'url(' + bgImage + ')',
@@ -41,7 +40,6 @@ class CreateActivityPageRaw extends Component {
 
     return (
       <div className="container-fluid" style={imgStyle}>
-<<<<<<< HEAD
       <div className="row main">
 
 				<div className="main-login main-center">
