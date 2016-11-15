@@ -24,21 +24,24 @@ class CreateActivityPageRaw extends Component {
   };
 
   render() {
+<<<<<<< HEAD
     var windowHeight = $(window).height();
     if(windowHeight > 690) {
       windowHeight = 900
     }
+=======
+>>>>>>> origin/master
 
     var imgStyle = {
         backgroundImage: 'url(' + bgImage + ')',
-        backgroundSize: 'cover',
-        height: windowHeight,
+        backgroundSize: 'cover'
     }
 
 
 
     return (
       <div className="container-fluid" style={imgStyle}>
+<<<<<<< HEAD
       <div className="row main">
 
 				<div className="main-login main-center">
@@ -72,8 +75,8 @@ class CreateActivityPageRaw extends Component {
                 <span className="input-group-addon"><i className="fa fa-users fa" aria-hidden="true"></i></span>
                 <input type="text" className="form-control" name="address" id="address"  placeholder="Vložte adresu"/>
               </div>
-            </div>
-          </div>
+              </div>
+              </div>
 
 
           <div className="form-group">

@@ -8,8 +8,8 @@ const logo = require('../../img/paper-plane.png')
 export const DefaultNavigation = () => (
   <div className="container-fluid" id="navfluid">
   <div className="navbar-header">
-    <Link to="/">
-      <a className="navbar-brand vcenter changeFont" href="#"><span><img className="img-responsive2 vcenter" src={logo}/></span> HobbyHub</a>
+    <Link to="/"
+      className="navbar-brand vcenter changeFont" href="#"><span><img className="img-responsive2 vcenter" src={logo}/></span> HobbyHub
     </Link>
     <Nav pullRight>
       <DropdownButton noCaret pullRight

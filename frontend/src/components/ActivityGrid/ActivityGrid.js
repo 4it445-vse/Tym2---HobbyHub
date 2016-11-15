@@ -2,15 +2,15 @@ import React, { Component } from 'react';
 
 import { ActivityItem } from './ActivityItem.js';
 
-export class ProductList extends Component {
+export class ActivityGrid extends Component {
   render() {
-    const { ActivityItems } = this.props;
+    const { Activities } = this.props;
 
     return (
-      <div className="products">
-        {ActivityItems.map(ActivityItem =>
-          <ActivityItem ActivityItem={ActivityItem} key={ActivityItem.id}/>
-        )}
+      <div>
+        { Activities.map(activity =>
+          <ActivityItem activity={ activity } key={ activity.id }/>
+        ) }
       </div>
     );
   }
