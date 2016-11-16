@@ -102,6 +102,7 @@ class RegistrationPageRaw extends Component {
           if (data){
 
           this.props.history.push('/login');
+          // TODO tohle je cilove chovani, ale ted to nechceme
           //browserHistory.goBack()
           }
         })
