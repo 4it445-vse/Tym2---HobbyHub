@@ -88,7 +88,7 @@ class RegistrationPageRaw extends Component {
 
 =======*/
     console.log("name",this.state.name,"email",this.state.email)
-    console.log(this.pwdValid);
+    console.log(this.pwdValid && this.emailValid);
     if(this.pwdValid){
       const formData = {
             "username": this.state.name,
