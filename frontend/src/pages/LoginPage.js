@@ -78,43 +78,42 @@ class LoginPageRaw extends Component {
     return (
 
       <div className="container-fluid" style={imgStyle}>
-      <div className="row main">
-      <div className="main-login main-center">
-      <h2 className="title">Login</h2>
+        <div className="row main">
+          <div className="main-login main-center">
+            <h2 className="title">Login</h2>
 
-     <form id="loginForm" className="form-horizontal" method="post" onSubmit={this.onSubmit}>
+            <form id="loginForm" className="form-horizontal" method="post" onSubmit={this.onSubmit}>
 
-      <div className="form-group">
-       <label htmlFor="email" className="cols-sm-2 control-label">Email</label>
-       <div className="cols-sm-10">
-        <div className="input-group">
-         <span className="input-group-addon"><i className="fa fa-envelope fa" aria-hidden="true"></i></span>
-         <input type="text" className="form-control" name="email" id="email"  placeholder="Vložte e-mail" onChange={this.handleEmailChange}/>
-        </div>
-       </div>
-      </div>
+              <div className="form-group">
+                <label htmlFor="email" className="cols-sm-2 control-label">Email</label>
+                <div className="cols-sm-10">
+                  <div className="input-group">
+                    <span className="input-group-addon"><i className="fa fa-envelope fa" aria-hidden="true"></i></span>
+                    <input type="text" className="form-control" name="email" id="email"  placeholder="Vložte e-mail" onChange={this.handleEmailChange}/>
+                  </div>
+                </div>
+              </div>
 
-      <div className="form-group">
-       <label htmlFor="password" className="cols-sm-2 control-label">Password</label>
-       <div className="cols-sm-10">
-        <div className="input-group">
-         <span className="input-group-addon"><i className="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-         <input type="password" className="form-control" name="password" id="password"  placeholder="Vložte heslo" onChange={this.handlePasswordChange}/>
-        </div>
-       </div>
-      </div>
+              <div className="form-group">
+                <label htmlFor="password" className="cols-sm-2 control-label">Password</label>
+                <div className="cols-sm-10">
+                  <div className="input-group">
+                    <span className="input-group-addon"><i className="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+                    <input type="password" className="form-control" name="password" id="password"  placeholder="Vložte heslo" onChange={this.handlePasswordChange}/>
+                  </div>
+                </div>
+              </div>
 
-      <div className="form-group ">
-       <button type="submit" className="btn btn-primary btn-lg btn-block">Login</button>
-      </div>
-      <div className="login-register">
+              <div className="form-group ">
+                <button type="submit" className="btn btn-primary btn-lg btn-block">Login</button>
+              </div>
+              <div className="login-register">
                 Not registered yet?  <Link to="/register">Register</Link>
+              </div>
+
+            </form>
+          </div>
         </div>
-
-     </form>
-    </div>
-
-      </div>
       </div>
     );
   }
