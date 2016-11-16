@@ -6,7 +6,6 @@ import api from '../api.js';
 import './RegistrationPage.css';
 import { connect } from 'react-redux';
 import { userLogged } from '../actions';
-import api from '../api.js';
 
 const bgImage = require('../img/Rock-climbing-Wallpaper.jpg')
 
@@ -103,6 +102,7 @@ class RegistrationPageRaw extends Component {
           if (data){
 
           browserHistory.goBack()
+          }
         })
         .catch(error => {
           console.log(error);
@@ -112,7 +112,6 @@ class RegistrationPageRaw extends Component {
 
           this.setState({ errors });
         });
-        }
     } else {
       console.log(this.pwdValid);
     }

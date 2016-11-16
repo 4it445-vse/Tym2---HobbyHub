@@ -133,66 +133,68 @@ class CreateActivityPageRaw extends Component {
                     <span className="input-group-addon"><i className="fa fa-envelope fa" aria-hidden="true"></i></span>
                     <input type="text" className="form-control" name="city" id="city"  placeholder="Zadejte město" onChange={this.handleCityChange}/>
                   </div>
-
-                  <div className="form-group">
-                    <label htmlFor="address" className="cols-sm-2 control-label">Adresa</label>
-                    <div className="cols-sm-10">
-                      <div className="input-group">
-                        <span className="input-group-addon"><i className="fa fa-users fa" aria-hidden="true"></i></span>
-                        <input type="text" className="form-control" name="address" id="address"  placeholder="Vložte adresu" onChange={this.handleAddressChange}/>
-                      </div>
-                    </div>
-                  </div>
-
-
-                  <div className="form-group">
-                    <label htmlFor="user_count" className="cols-sm-2 control-label">Počet účastníků</label>
-                    <div className="cols-sm-10">
-                      <div className="input-group">
-                        <span className="input-group-addon"><i className="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-                        <input type="text" className="form-control" name="user_count" id="user_count"  placeholder="Vložte počet účastníků" onChange={this.handleUserCountChange}/>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="form-group">
-                    <label htmlFor="date_and_time" className="cols-sm-2 control-label">Datum</label>
-                    <div className="cols-sm-10">
-                      <div className="input-group">
-                        <span className="input-group-addon"><i className="fa fa-users fa" aria-hidden="true"></i></span>
-                        <input type="text" className="form-control" name="date" id="date"  placeholder="Datum" onChange={this.handleDateChange}/>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="form-group">
-                    <label htmlFor="about" className="cols-sm-2 control-label">Popis</label>
-                    <div className="cols-sm-10">
-                      <div className="input-group">
-                        <span className="input-group-addon"><i className="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-                        <textarea class="form-control" className="form-control" rows="5" name="comment" id="comment" placeholder="Krátký popis" onChange={this.handleAboutChange}></textarea>
-                      </div>
-                    </div>
-                  </div>
-
-
-                  <div className="form-group ">
-                    <button type="submit" className="btn btn-primary btn-lg btn-block">Vytvořit</button>
-                  </div>
-
-                </form>
+                </div>
               </div>
-            </div>
 
+              <div className="form-group">
+                <label htmlFor="address" className="cols-sm-2 control-label">Adresa</label>
+                <div className="cols-sm-10">
+                  <div className="input-group">
+                    <span className="input-group-addon"><i className="fa fa-users fa" aria-hidden="true"></i></span>
+                    <input type="text" className="form-control" name="address" id="address"  placeholder="Vložte adresu" onChange={this.handleAddressChange}/>
+                  </div>
+                </div>
+              </div>
+
+
+              <div className="form-group">
+                <label htmlFor="user_count" className="cols-sm-2 control-label">Počet účastníků</label>
+                <div className="cols-sm-10">
+                  <div className="input-group">
+                    <span className="input-group-addon"><i className="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+                    <input type="text" className="form-control" name="user_count" id="user_count"  placeholder="Vložte počet účastníků" onChange={this.handleUserCountChange}/>
+                  </div>
+                </div>
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="date_and_time" className="cols-sm-2 control-label">Datum</label>
+                <div className="cols-sm-10">
+                  <div className="input-group">
+                    <span className="input-group-addon"><i className="fa fa-users fa" aria-hidden="true"></i></span>
+                    <input type="text" className="form-control" name="date" id="date"  placeholder="Datum" onChange={this.handleDateChange}/>
+                  </div>
+                </div>
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="about" className="cols-sm-2 control-label">Popis</label>
+                <div className="cols-sm-10">
+                  <div className="input-group">
+                    <span className="input-group-addon"><i className="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+                    <textarea class="form-control" className="form-control" rows="5" name="comment" id="comment" placeholder="Krátký popis" onChange={this.handleAboutChange}></textarea>
+                  </div>
+                </div>
+              </div>
+
+
+              <div className="form-group ">
+                <button type="submit" className="btn btn-primary btn-lg btn-block">Vytvořit</button>
+              </div>
+
+            </form>
           </div>
-          );
-          }
-          }
+        </div>
 
-          const mapStateToProps = (state) => {
-            return {
-              user: state.userReducer
-            }
-          }
+      </div>
+    );
+  }
+}
 
-          export default connect(mapStateToProps, { userLogged })(CreateActivityPageRaw)
+const mapStateToProps = (state) => {
+  return {
+    user: state.userReducer
+  }
+}
+
+export default connect(mapStateToProps, { userLogged })(CreateActivityPageRaw)
