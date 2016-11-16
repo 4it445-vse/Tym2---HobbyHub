@@ -101,7 +101,8 @@ class RegistrationPageRaw extends Component {
 
           if (data){
 
-          browserHistory.goBack()
+          this.props.history.push('/login');
+          //browserHistory.goBack()
           }
         })
         .catch(error => {
@@ -203,6 +204,16 @@ class RegistrationPageRaw extends Component {
               </div>
 
               <div className="form-group required">
+                <label htmlFor="username" className="cols-sm-2 control-label">Příjmení</label>
+                <div className="cols-sm-10">
+                  <div className="input-group">
+                    <span className="input-group-addon"><i className="fa fa-users fa" aria-hidden="true"></i></span>
+                    <input type="text" onChange={this.onUserInput} className="form-control" name="username" id="username"  placeholder="Enter your Surname"/>
+                  </div>
+                </div>
+              </div>
+
+              <div className="form-group required">
                 <label htmlFor="email" className="cols-sm-2 control-label">Email</label>
                 <div className="cols-sm-10">
                   <div className="input-group">
@@ -212,15 +223,6 @@ class RegistrationPageRaw extends Component {
                 </div>
               </div>
 
-              <div className="form-group required">
-                <label htmlFor="username" className="cols-sm-2 control-label">Příjmení</label>
-                <div className="cols-sm-10">
-                  <div className="input-group">
-                    <span className="input-group-addon"><i className="fa fa-users fa" aria-hidden="true"></i></span>
-                    <input type="text" onChange={this.onUserInput} className="form-control" name="username" id="username"  placeholder="Enter your Surname"/>
-                  </div>
-                </div>
-              </div>
 
               <div className="form-group required">
                 <label htmlFor="password" className="cols-sm-2 control-label">Heslo</label>
