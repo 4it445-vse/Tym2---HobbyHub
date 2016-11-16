@@ -42,7 +42,8 @@ class RegistrationPageRaw extends Component {
       pwdVal: true,
       errors: {}
     };
-    this.pwdValid =true;
+    this.pwdValid   = true;
+    this.emailValid = true;
 //>>>>>>> fc3f317a1f885c1f5413499ccab426a3c3818c3a
   }
 
@@ -127,6 +128,17 @@ class RegistrationPageRaw extends Component {
           this.pwdValid=false
         }
     }
+
+    if(event.target.name === "email"){
+      if (event.target.value.match(/^\w+([^\u0000-\u0080]?[\.!#$%^&*()\-+-]?\w+)*@\w+([\.-]?\w+)*(\.\w{1,3})+$/g)) {
+        console.log("štymuje");
+        this.emailValid = true;
+      } else {
+        console.log("neštymuje");
+        this.emailValid = false;
+      }
+    }
+
     switch (event.target.id) {
       case "name":
         this.setState({
@@ -176,10 +188,17 @@ class RegistrationPageRaw extends Component {
     }
 
     var pwdValid = "";
+    var emailValid = "";
     if(this.pwdValid){
       pwdValid = "";
     } else {
       pwdValid = "has-error";
+    }
+
+    if(this.emailValid){
+      emailValid = "";
+    } else {
+      emailValid = "has-error";
     }
 
 //    console.log("STATE:", this.state);
@@ -205,9 +224,9 @@ class RegistrationPageRaw extends Component {
               <div className="form-group required">
                 <label htmlFor="email" className="cols-sm-2 control-label">Email</label>
                 <div className="cols-sm-10">
-                  <div className="input-group">
+                  <div className={"input-group " + emailValid}>
                     <span className="input-group-addon"><i className="fa fa-envelope fa" aria-hidden="true"></i></span>
-                    <input type="text" onChange={this.onUserInput} className="form-control" name="email" id="email"  placeholder="Enter your Email"/>
+                    <input type="email" onChange={this.onUserInput} className="form-control" name="email" id="email"  placeholder="Enter your Email"/>
                   </div>
                 </div>
               </div>
