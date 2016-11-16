@@ -1,6 +1,8 @@
 'use strict';
 
 module.exports = function(app) {
+debugger;
+
   app.dataSources.mysqlds.autoupdate('testModel', function(err) {
     const { Testmodel } = app.models;
     if (!Testmodel) { return; }
@@ -103,7 +105,7 @@ module.exports = function(app) {
 
 
 app.dataSources.mysqlds.autoupdate('Activity', function(err) {
-
+/*
   const { Activity } = app.models;
   if (!Activity) { return; }
 
@@ -126,7 +128,7 @@ app.dataSources.mysqlds.autoupdate('Activity', function(err) {
       console.log('Models created: \n', categories);
     });
   });
-
+*/
  });
 app.dataSources.mysqlds.autoupdate('Role', function(err) { });
 app.dataSources.mysqlds.autoupdate('ACL', function(err) { });

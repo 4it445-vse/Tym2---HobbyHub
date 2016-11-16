@@ -10,19 +10,51 @@ import { userLogged } from '../actions'
 
 const IMAGE_3 = 'http://www.pixelstalk.net/wp-content/uploads/2016/09/Adventure-HD-Wallpaper.jpg'
 
-class LandingPageRaw extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-        };
-        this.props.userLogged(true)
+import classNames from 'classnames';
+
+export class ActivityDetailPageRaw extends Component {
+  constructor(props) {
+    super(props);
+    console.log('detail started')
+    console.log('params '+this.props.params)
+    this.state = {
+      activity: null,
+    };
+    this.props.userLogged(true)
+  }
+
+  componentDidMount() {
+    const { activityId } = this.props.params;
+
+console.log('id ' + activityId)
+    api(`Activities/${activityId}`
+    ).then((response) => {
+      console.log(response.data)
+      this.setState({ activity: response.data });
+    });
+  }
+
+
+  render() {
+    console.log('state ' + this.state)
+    const { activity } = this.state;
+    if (!activity) {
+      return <div>Loading...</div>;
     }
 
-    render() {
+    const {
+      id,
+      name,
+      about,
+      city,
+      date_and_time,
+      user_count,
+      address,
+    } = activity;
 
         return (
             <Grid>
-                <h1>Hokej</h1>
+                <h1>{name}</h1>
 
                    <Row>
                    <Col xs={6} md={4}>
@@ -31,20 +63,20 @@ class LandingPageRaw extends Component {
                      </Thumbnail>
                    </Col>
                    <Col>
-                    <p>Místo: Praha</p>
-                    <p>Ulice: Testovací</p>
-                    <p>Datum: Pondělí 13.06.2017</p>
-                    <p>Čas:   12:30 - 16:00</p>
+                    <p>Místo: {city}</p>
+                    <p>Ulice: {address}</p>
+                    <p>Datum: {date_and_time}</p>
+                    <p>Čas:   {date_and_time}</p>
                    </Col>
                    </Row>
                    <Row>
                    <Col>
                    <h2>Popis</h2>
-                   <p>Nějaký ten popis, co k tomu tvůrce dal</p>
+                   <p>{about}</p>
                    </Col>
                    </Row>
                    <Row>
-                     <h2>Účastníci</h2>
+                     <h2>Účastníci TODO / {user_count}</h2>
                    </Row>
                    <Row>
                    <Col xs={5} md={3}>
@@ -71,7 +103,7 @@ class LandingPageRaw extends Component {
                    </Thumbnail>
                    </Col>
                    </Row>
-                
+
                  </Grid>
 
         );
@@ -84,4 +116,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, { userLogged })(LandingPageRaw)
+export default connect(mapStateToProps, { userLogged })(ActivityDetailPageRaw)

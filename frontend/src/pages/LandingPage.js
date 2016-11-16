@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { ActivityGrid } from '../components/ActivityGrid/ActivityGrid.js';
 import { Jumbotron, Thumbnail, Grid, Button, Col, Row } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { userLogged } from '../actions'
+import { userLogged, isUserLogged } from '../actions'
 import api from '../api.js';
 import SearchMenu from '../components/ActivityGrid/SearchBar';
 import { Link } from 'react-router'
@@ -14,7 +14,7 @@ export class LandingPageRaw extends Component {
   constructor(props) {
     super(props);
     this.onSubmit = this.onSubmit.bind(this);
-    this.props.userLogged(false);
+    this.props.userLogged(isUserLogged());
     this.state = {
   Activities: null,
 };
@@ -52,12 +52,13 @@ export class LandingPageRaw extends Component {
         <br/>
         <br/>
 
+        <Grid>
+
         {Activities === null ?
           <div>Loading...</div> :
           <ActivityGrid Activities={Activities}/>
         }
 
-        <Grid>
           <Thumbnail src="https://www.ticketstream.cz/tsp/static/czech/cs/partnership/images/16.png" alt="242x200">
             <h3>Hokej</h3>
                   <p>Description</p>

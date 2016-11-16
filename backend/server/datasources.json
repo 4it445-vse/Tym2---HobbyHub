@@ -10,6 +10,7 @@
     "username": "team02",
     "password": "xju4cqnpv6ttx68i",
     "name": "mysqlds",
-    "connector": "mysql"
+    "connector": "mysql",
+    "collation": "utf8_czech_ci"
   }
 }

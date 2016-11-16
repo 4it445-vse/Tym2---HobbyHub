@@ -2,13 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1b0e40e3-1b85-4353-afe4-cabced48066d" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/backend/common/models/customer.json" afterPath="$PROJECT_DIR$/backend/common/models/customer.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/backend/server/server.js" afterPath="$PROJECT_DIR$/backend/server/server.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/frontend/package.json" afterPath="$PROJECT_DIR$/frontend/package.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/frontend/src/components/Forms/DateTimePicker.js" afterPath="$PROJECT_DIR$/frontend/src/components/Forms/DateTimePicker.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/frontend/src/components/ParticipantList/ParticipantListItem.js" afterPath="$PROJECT_DIR$/frontend/src/components/ParticipantList/ParticipantListItem.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/frontend/src/pages/LoginPage.js" afterPath="$PROJECT_DIR$/frontend/src/pages/LoginPage.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/frontend/src/pages/RegistrationPage.js" afterPath="$PROJECT_DIR$/frontend/src/pages/RegistrationPage.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/frontend/src/pages/CreateActivityPage.js" afterPath="$PROJECT_DIR$/frontend/src/pages/CreateActivityPage.js" />
     </list>
     <ignored path="Hobby hub.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -164,6 +158,28 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pages" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Hobby hub" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Hobby hub" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="frontend" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="public" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -208,7 +224,7 @@
   <component name="PropertiesComponent">
     <property name="settings.editor.selected.configurable" value="configurable.group.appearance" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Cvičení/git" />
     <property name="WebServerToolWindowFactoryState" value="false" />
   </component>
   <component name="ShelveChangesManager" show_recycled="false" />
@@ -222,7 +238,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-2" y="-2" width="1938" height="1050" extended-state="1" />
+    <frame x="-2" y="-2" width="1938" height="1050" extended-state="0" />
     <editor active="false" />
     <layout>
       <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25669882" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />

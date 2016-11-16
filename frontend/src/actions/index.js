@@ -1,6 +1,8 @@
 export const DUMMY_ACTION = 'DUMMY_ACTION';
 export const USER_LOGGED = 'USER_LOGGED';
 export const IS_USER_LOGGED = 'IS_USER_LOGGED';
+export const USER_SESSION = 'USER_SESSION';
+export const GET_SESSION = 'GET_SESSION';
 
 export const dummyAction = data => {
   return {
@@ -21,5 +23,18 @@ export const userLogged = boolean => {
   return {
     type: USER_LOGGED,
     payload: boolean,
+  };
+};
+
+export const userSession = (id, customerId) => {
+  return {
+    type: USER_SESSION,
+    payload: {id: id, customerId: customerId}
+  };
+};
+
+export const getSession = () => {
+  return {
+    type: GET_SESSION
   };
 };

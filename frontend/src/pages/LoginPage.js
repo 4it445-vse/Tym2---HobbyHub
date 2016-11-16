@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router';
+import { Link, browserHistory } from 'react-router';
 import $ from 'jquery';
 
 import './RegistrationPage.css';
-
 import { connect } from 'react-redux';
-import { userLogged } from '../actions'
-import { api } from '../api.js';
+import { userLogged, userSession, getSession } from '../actions'
+import api from '../api.js';
+
 import { FormGroup, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
 
 const bgImage = require('../img/Rock-climbing-Wallpaper.jpg')
@@ -18,40 +18,46 @@ class LoginPageRaw extends Component {
     this.props.userLogged(false)
     console.log('starting')
     this.onSubmit = this.onSubmit.bind(this);
+    this.handleEmailChange = this.handleEmailChange.bind(this);
+    this.handlePasswordChange = this.handlePasswordChange.bind(this);
+
+  }
+
+  handleEmailChange(e) {
+   this.setState({email: e.target.value});
+  }
+  handlePasswordChange(e) {
+   this.setState({password: e.target.value});
   }
 
   onSubmit(event) {
     event.preventDefault();
     console.log('submitted')
 
-    // const { items } =  this.props;
-    // 	const formItems = items.map(({ email, password }) => ({
-    //     email: email,
-    //     password: password,
-    //   }))
+// TODO Odebrat
+      console.log('Email: ' + this.state.email)
+      console.log('Password: ' + this.state.password)
 
-      const formData = new FormData(event.target);
-      // formData.append(
-      //   'items',
-      //   JSON.stringify(formItems)
-      // );
+      var formData = {email: this.state.email, password: this.state.password}
 
-
-      console.log(event)
-      console.log(event.target)
-      console.log(new FormData(event.target))
-      console.log(this.props)
-      console.log(formData)
       api.post('Customers/login', formData)
       .then(({ data }) => {
         console.log('data', data);
 
+        if (data){
+        userSession(data)
+        this.props.userLogged(true)
+        browserHistory.goBack()
+        console.log(getSession())
+      }else{
         // isUserLogged = data
 
         this.setState({ errors: {} });
+      };
       })
       .catch(error => {
         const { response } = error;
+        console.log(error)
         const { errors } = response.data.error.details;
 
         this.setState({ errors });
@@ -76,13 +82,14 @@ class LoginPageRaw extends Component {
       <div className="main-login main-center">
       <h2 className="title">Login</h2>
 
-     <form className="form-horizontal" method="post" onSubmit={this.onSubmit}>
+     <form id="loginForm" className="form-horizontal" method="post" onSubmit={this.onSubmit}>
+
       <div className="form-group">
        <label htmlFor="email" className="cols-sm-2 control-label">Email</label>
        <div className="cols-sm-10">
         <div className="input-group">
          <span className="input-group-addon"><i className="fa fa-envelope fa" aria-hidden="true"></i></span>
-         <input type="text" className="form-control" name="email" id="email"  placeholder="Enter your Email"/>
+         <input type="text" className="form-control" name="email" id="email"  placeholder="Vložte e-mail" onChange={this.handleEmailChange}/>
         </div>
        </div>
       </div>
@@ -92,7 +99,7 @@ class LoginPageRaw extends Component {
        <div className="cols-sm-10">
         <div className="input-group">
          <span className="input-group-addon"><i className="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-         <input type="password" className="form-control" name="password" id="password"  placeholder="Enter your Password"/>
+         <input type="password" className="form-control" name="password" id="password"  placeholder="Vložte heslo" onChange={this.handlePasswordChange}/>
         </div>
        </div>
       </div>
@@ -103,6 +110,7 @@ class LoginPageRaw extends Component {
       <div className="login-register">
                 Not registered yet?  <Link to="/register">Register</Link>
         </div>
+
      </form>
     </div>
 

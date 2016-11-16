@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router';
+import { Link, browserHistory } from 'react-router';
 import $ from 'jquery';
 
 import './RegistrationPage.css';
 import { connect } from 'react-redux';
-import { userLogged } from '../actions'
+import { userLogged } from '../actions';
+import api from '../api.js';
 
 const bgImage = require('../img/Rock-climbing-Wallpaper.jpg')
 
@@ -13,12 +14,65 @@ class RegistrationPageRaw extends Component {
   constructor(props) {
     super(props);
     this.onSubmit = this.onSubmit.bind(this);
-    this.props.userLogged(false)
+    this.props.userLogged(false);
+    this.handleNameChange = this.handleNameChange.bind(this);
+    this.handleUsernameChange = this.handleUsernameChange.bind(this);
+    this.handlePasswordChange = this.handlePasswordChange.bind(this);
+    this.handleEmailChange = this.handleEmailChange.bind(this);
+  }
+
+  handleNameChange(e) {
+   this.setState({name: e.target.value});
+  }
+  handleUsernameChange(e) {
+   this.setState({username: e.target.value});
+  }
+  handlePasswordChange(e) {
+   this.setState({password: e.target.value});
+  }
+  handleEmailChange(e) {
+   this.setState({email: e.target.value});
   }
 
   onSubmit(event) {
     event.preventDefault();
     console.log('submitted')
+
+// TODO Odebrat
+      console.log('Email: ' + this.state.email)
+      console.log('Password: ' + this.state.password)
+      console.log('Name: ' + this.state.name)
+      console.log('Username: ' + this.state.username)
+
+
+      var formData = {email: this.state.email,
+                      password: this.state.password,
+                      name: this.state.name,
+                      username: this.state.username}
+
+      api.post('Customers/replaceOrCreate', formData)
+      .then(({ data }) => {
+        console.log('data', data);
+
+        if (data){
+
+        browserHistory.goBack()
+      }else{
+        // isUserLogged = data
+
+        this.setState({ errors: {} });
+      };
+      })
+      .catch(error => {
+        const { response } = error;
+        console.log(error)
+        const { errors } = response.data.error.details;
+
+        this.setState({ errors });
+      });
+
+
+
   }
 
   render() {
@@ -38,15 +92,15 @@ class RegistrationPageRaw extends Component {
       <div className="row main">
 
 				<div className="main-login main-center">
-        <h2 className="title">Registration</h2>
-					<form className="form-horizontal" method="post" action="#">
+        <h2 className="title">Registrace</h2>
+					<form className="form-horizontal" method="post" onSubmit={this.onSubmit}>
 
 						<div className="form-group">
-							<label htmlFor="name" className="cols-sm-2 control-label">Name</label>
+							<label htmlFor="name" className="cols-sm-2 control-label">Jméno</label>
 							<div className="cols-sm-10">
 								<div className="input-group">
 									<span className="input-group-addon"><i className="fa fa-user fa" aria-hidden="true"></i></span>
-									<input type="text" className="form-control" name="name" id="name"  placeholder="Enter your Name"/>
+									<input type="text" className="form-control" name="name" id="name"  placeholder="Vložte své jméno" onChange={this.handleNameChange}/>
 								</div>
 							</div>
 						</div>
@@ -56,43 +110,43 @@ class RegistrationPageRaw extends Component {
 							<div className="cols-sm-10">
 								<div className="input-group">
 									<span className="input-group-addon"><i className="fa fa-envelope fa" aria-hidden="true"></i></span>
-									<input type="text" className="form-control" name="email" id="email"  placeholder="Enter your Email"/>
+									<input type="text" className="form-control" name="email" id="email"  placeholder="Vložte e-mail" onChange={this.handleEmailChange}/>
 								</div>
 							</div>
 						</div>
 
 						<div className="form-group">
-							<label htmlFor="username" className="cols-sm-2 control-label">Username</label>
+							<label htmlFor="username" className="cols-sm-2 control-label">Uživatelské jméno</label>
 							<div className="cols-sm-10">
 								<div className="input-group">
 									<span className="input-group-addon"><i className="fa fa-users fa" aria-hidden="true"></i></span>
-									<input type="text" className="form-control" name="username" id="username"  placeholder="Enter your Username"/>
+									<input type="text" className="form-control" name="username" id="username"  placeholder="Vložte uživatelské jeméno" onChange={this.handleUsernameChange}/>
 								</div>
 							</div>
 						</div>
 
 						<div className="form-group">
-							<label htmlFor="password" className="cols-sm-2 control-label">Password</label>
+							<label htmlFor="password" className="cols-sm-2 control-label">Heslo</label>
 							<div className="cols-sm-10">
 								<div className="input-group">
 									<span className="input-group-addon"><i className="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-									<input type="password" className="form-control" name="password" id="password"  placeholder="Enter your Password"/>
+									<input type="password" className="form-control" name="password" id="password"  placeholder="Vložte heslo" onChange={this.handlePasswordChange}/>
 								</div>
 							</div>
 						</div>
 
 						<div className="form-group">
-							<label htmlFor="confirm" className="cols-sm-2 control-label">Confirm Password</label>
+							<label htmlFor="confirm" className="cols-sm-2 control-label">Heslo znovu</label>
 							<div className="cols-sm-10">
 								<div className="input-group">
 									<span className="input-group-addon"><i className="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-									<input type="password" className="form-control" name="confirm" id="confirm"  placeholder="Confirm your Password"/>
+									<input type="password" className="form-control" name="confirm" id="confirm"  placeholder="Potvrďte heslo"/>
 								</div>
 							</div>
 						</div>
 
 						<div className="form-group ">
-							<button type="button" className="btn btn-primary btn-lg btn-block login-button">Register</button>
+							<button type="submit" className="btn btn-primary btn-lg btn-block login-button">Registrovat</button>
 						</div>
 						<div className="login-register">
               <Link to="/login">Login</Link>
