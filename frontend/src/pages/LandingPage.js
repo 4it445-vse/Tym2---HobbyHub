@@ -14,7 +14,7 @@ export class LandingPageRaw extends Component {
   constructor(props) {
     super(props);
     this.onSubmit = this.onSubmit.bind(this);
-    this.props.userLogged(this.props.isUserLogged);
+    this.props.userLogged(isUserLogged());
     this.state = {
   Activities: null,
 };
