@@ -112,6 +112,10 @@ class RegistrationPageRaw extends Component {
 
           this.setState({ errors });
         });
+        }
+    } else {
+      console.log(this.pwdValid);
+    }
   }
 
   onUserInput(event){
