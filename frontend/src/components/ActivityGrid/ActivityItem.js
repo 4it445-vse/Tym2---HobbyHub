@@ -10,14 +10,14 @@ import { ViewActivityButtonContainer } from '../ActivityGrid/ViewActivityButton.
 export class ActivityItem extends Component {
   render() {
     const { activity } = this.props;
-    const { id, name, about, city } = activity;
+    const { id, name, about, city, date_and_time } = activity;
     return (
       <Thumbnail src="https://www.ticketstream.cz/tsp/static/czech/cs/partnership/images/16.png" alt="242x200">
        <h2>
         <Link to={`/activityDetail/${id}`}>{name}</Link>
       </h2>
       <p>Město: <span className="city">{city}</span></p>
-      <p>{about}</p>
+      <p>Datum: <span className="city">{date_and_time}</span></p>
       <p>
       <Button bsStyle="primary">Attend</Button>&nbsp;
       <Link className="btn btn-default" to={`/activityDetail/${id}`} role="button">View</Link>

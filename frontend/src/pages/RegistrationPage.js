@@ -91,7 +91,7 @@ class RegistrationPageRaw extends Component {
     console.log(this.pwdValid && this.emailValid);
     if(this.pwdValid){
       const formData = {
-            "username": this.state.name,
+            "username": this.state.name + ' ' + this.state.username, //TODO prepsat aby to odpovidalo
             "email": this.state.email,
             "password": this.state.password
           };
@@ -102,7 +102,9 @@ class RegistrationPageRaw extends Component {
 
           if (data){
 
-          browserHistory.goBack()
+          this.props.history.push('/login');
+          // TODO tohle je cilove chovani, ale ted to nechceme
+          //browserHistory.goBack()
           }
         })
         .catch(error => {
@@ -222,7 +224,7 @@ class RegistrationPageRaw extends Component {
               </div>
 
               <div className="form-group required">
-                <label htmlFor="email" className="cols-sm-2 control-label">Email</label>
+                <label htmlFor="username" className="cols-sm-2 control-label">Příjmení</label>
                 <div className="cols-sm-10">
                   <div className={"input-group " + emailValid}>
                     <span className="input-group-addon"><i className="fa fa-envelope fa" aria-hidden="true"></i></span>
@@ -232,14 +234,15 @@ class RegistrationPageRaw extends Component {
               </div>
 
               <div className="form-group required">
-                <label htmlFor="username" className="cols-sm-2 control-label">Uživatelské jméno</label>
+                <label htmlFor="email" className="cols-sm-2 control-label">Email</label>
                 <div className="cols-sm-10">
                   <div className="input-group">
-                    <span className="input-group-addon"><i className="fa fa-users fa" aria-hidden="true"></i></span>
-                    <input type="text" onChange={this.onUserInput} className="form-control" name="username" id="username"  placeholder="Enter your Username"/>
+                    <span className="input-group-addon"><i className="fa fa-envelope fa" aria-hidden="true"></i></span>
+                    <input type="text" onChange={this.onUserInput} className="form-control" name="email" id="email"  placeholder="Enter your Email"/>
                   </div>
                 </div>
               </div>
+
 
               <div className="form-group required">
                 <label htmlFor="password" className="cols-sm-2 control-label">Heslo</label>

@@ -54,7 +54,11 @@ console.log('id ' + activityId)
 
         return (
             <Grid>
+            <Row>
+            <Col>
                 <h1>{name}</h1>
+                </Col>
+                </Row>
 
                    <Row>
                    <Col xs={6} md={4}>

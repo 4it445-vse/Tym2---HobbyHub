@@ -47,7 +47,9 @@ class LoginPageRaw extends Component {
         if (data){
         userSession(data)
         this.props.userLogged(true)
-        browserHistory.goBack()
+        this.props.history.push('/land');
+        //TODO spravne chovani, ale ted to nechceme
+      //  browserHistory.goBack()
         console.log(getSession())
       }else{
         // isUserLogged = data
