@@ -44,59 +44,23 @@ class RegistrationPageRaw extends Component {
     };
     this.pwdValid   = true;
     this.emailValid = true;
-//>>>>>>> fc3f317a1f885c1f5413499ccab426a3c3818c3a
   }
 
   onSubmit(event) {
     event.preventDefault();
-/*<<<<<<< HEAD
-    console.log('submitted')
 
-// TODO Odebrat
-      console.log('Email: ' + this.state.email)
-      console.log('Password: ' + this.state.password)
-      console.log('Name: ' + this.state.name)
-      console.log('Username: ' + this.state.username)
-
-
-      var formData = {email: this.state.email,
-                      password: this.state.password,
-                      name: this.state.name,
-                      username: this.state.username}
-
-      api.post('Customers/replaceOrCreate', formData)
-      .then(({ data }) => {
-        console.log('data', data);
-
-        if (data){
-
-        browserHistory.goBack()
-      }else{
-        // isUserLogged = data
-
-        this.setState({ errors: {} });
-      };
-      })
-      .catch(error => {
-        const { response } = error;
-        console.log(error)
-        const { errors } = response.data.error.details;
-
-        this.setState({ errors });
-      });
-
-
-=======*/
     console.log("name",this.state.name,"email",this.state.email)
     console.log(this.pwdValid && this.emailValid);
     if(this.pwdValid){
-      const formData = {
-            "username": this.state.name + ' ' + this.state.username, //TODO prepsat aby to odpovidalo
-            "email": this.state.email,
-            "password": this.state.password
-          };
 
-      api.post('Customers', formData)
+      const formData = new FormData(event.target);
+      const regData = {
+          username: formData.get('name'), //jak to bdue v tabulce?
+          email : formData.get('email'),
+          password : formData.get('password')
+      };
+
+      api.post('Customers', regData)
         .then(({ data }) => {
           console.log('data', data);
 
@@ -132,7 +96,7 @@ class RegistrationPageRaw extends Component {
     }
 
     if(event.target.name === "email"){
-      if (event.target.value.match(/^\w+([^\u0000-\u0080]?[\.!#$%^&*()\-+-]?\w+)*@\w+([\.-]?\w+)*(\.\w{1,3})+$/g)) {
+      if (event.target.value.match(/^\w+([^\u0000-\u0080]?[\.!#$%^&*()\-+-]?\w+)*@\S+/g)) {
         console.log("štymuje");
         this.emailValid = true;
       } else {
@@ -211,14 +175,14 @@ class RegistrationPageRaw extends Component {
 
           <div className="main-login main-center form-group">
             <h2 className="title">Registrace</h2>
-            <form className="form-horizontal" method="post" action="#">
+            <form className="form-horizontal" onSubmit={this.onSubmit} data-toggle="validator">
 
               <div className="form-group required">
                 <label htmlFor="name" className="cols-sm-2 control-label">Jméno</label>
                 <div className="cols-sm-10">
                   <div className="input-group">
                     <span className="input-group-addon"><i className="fa fa-user fa" aria-hidden="true"></i></span>
-                    <input type="text" onChange={this.onUserInput} className="form-control" name="name" id="name"  placeholder="Enter your Name"/>
+                    <input type="text" onChange={this.onUserInput} className="form-control" name="name" id="name"  placeholder="Zadejte Jméno"/>
                   </div>
                 </div>
               </div>
@@ -226,9 +190,9 @@ class RegistrationPageRaw extends Component {
               <div className="form-group required">
                 <label htmlFor="username" className="cols-sm-2 control-label">Příjmení</label>
                 <div className="cols-sm-10">
-                  <div className={"input-group " + emailValid}>
+                  <div className="input-group">
                     <span className="input-group-addon"><i className="fa fa-envelope fa" aria-hidden="true"></i></span>
-                    <input type="email" onChange={this.onUserInput} className="form-control" name="email" id="email"  placeholder="Enter your Email"/>
+                    <input type="text" onChange={this.onUserInput} className="form-control" name="surname" id="surname"  placeholder="Zadejte Příjmení"/>
                   </div>
                 </div>
               </div>
@@ -236,9 +200,9 @@ class RegistrationPageRaw extends Component {
               <div className="form-group required">
                 <label htmlFor="email" className="cols-sm-2 control-label">Email</label>
                 <div className="cols-sm-10">
-                  <div className="input-group">
+                  <div className={"input-group " + emailValid}>
                     <span className="input-group-addon"><i className="fa fa-envelope fa" aria-hidden="true"></i></span>
-                    <input type="text" onChange={this.onUserInput} className="form-control" name="email" id="email"  placeholder="Enter your Email"/>
+                    <input type="email" onChange={this.onUserInput} className="form-control" name="email" id="email"  placeholder="Zadejte Email"/>
                   </div>
                 </div>
               </div>
@@ -249,7 +213,7 @@ class RegistrationPageRaw extends Component {
                 <div className="cols-sm-10">
                   <div className={"input-group " + pwdValid}>
                     <span className="input-group-addon"><i className="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-                    <input type="password" onChange={this.onUserInput} className="form-control" name="password" id="password"  placeholder="Enter your Password"/>
+                    <input type="password" onChange={this.onUserInput} className="form-control" name="password" id="password"  placeholder="Zadejte Heslo" required/>
                   </div>
                 </div>
               </div>
@@ -257,15 +221,17 @@ class RegistrationPageRaw extends Component {
               <div className="form-group required">
                 <label htmlFor="confirm" className="cols-sm-2 control-label">Heslo znovu</label>
                 <div className="cols-sm-10">
-                  <div className={"input-group " + pwdValid}>
+                  <div className="input-group">
                     <span className="input-group-addon"><i className="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-                    <input type="password" onChange={this.onUserInput} className="form-control" name="confirm" id="confirm"  placeholder="Confirm your Password"/>
+                    <input type="password" onChange={this.onUserInput} className="form-control" data-match="#password" name="confirm" id="confirm"
+                      data-match-error="Whoops, these don't match" placeholder="Potvrďte Heslo" required/>
+                    <div class="help-block with-errors"></div>
                   </div>
                 </div>
               </div>
 
               <div className="form-group">
-                <button type="button" onClick={this.onSubmit} className="btn btn-primary btn-lg btn-block login-button">Register</button>
+                <button type="submit" className="btn btn-primary btn-lg btn-block login-button">Register</button>
               </div>
               <div className="login-register">
                 <Link to="/login">Login</Link>
