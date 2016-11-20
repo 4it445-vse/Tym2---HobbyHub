@@ -31,8 +31,33 @@ app.get('/hello', function (req, res) {
   res.send(JSON.stringify(data));
 });
 
-var currentUser = require('loopback-current-user');
-console.log(currentUser.get());
+
+var LoopBackContext = require('loopback-context');
+
+app.use(LoopBackContext.perRequest());
+app.use(loopback.token());
+app.use(function setCurrentUser(req, res, next) {
+  if (!req.accessToken) {
+    return next();
+  }
+  console.log('app.models.customers.findById: ', req.accessToken.userId );
+    var loopbackContext = LoopBackContext.getCurrentContext();
+	loopbackContext.set('currentUserId', req.accessToken.userId);
+	  next();
+  /*app.models.customers.findById(req.accessToken.userId, function(err, user) {
+    if (err) {
+      return next(err);
+    }
+    if (!user) {
+      return next(new Error('No user with this access token was found.'));
+    }
+    var loopbackContext = LoopBackContext.getCurrentContext();
+    if (loopbackContext) {
+      loopbackContext.set('currentUser', user);
+    }
+    next();
+  });*/
+});
 
 
 app.start = function() {

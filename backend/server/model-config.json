@@ -47,5 +47,13 @@
   "EshopOrderItem": {
     "dataSource": "mysqlds",
     "public": false
+  },
+  "Customer": {
+    "dataSource": "mysqlds",
+    "public": true
+  },
+  "Activity": {
+    "dataSource": "mysqlds",
+    "public": true
   }
 }

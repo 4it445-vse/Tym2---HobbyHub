@@ -69,6 +69,7 @@ debugger;
 
       Customer.create([
         {
+		  username: 'testuser',
           email: 'test@mail.com',
           password: 'testtest'
         }
