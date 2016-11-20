@@ -14,23 +14,22 @@
     ]
   },
   "User": {
-    "dataSource": "mysqlds",
-    "public": false
+    "dataSource": "db"
   },
   "AccessToken": {
-    "dataSource": "mysqlds",
+    "dataSource": "db",
     "public": false
   },
   "ACL": {
-    "dataSource": "mysqlds",
+    "dataSource": "db",
     "public": false
   },
   "RoleMapping": {
-    "dataSource": "mysqlds",
+    "dataSource": "db",
     "public": false
   },
   "Role": {
-    "dataSource": "mysqlds",
+    "dataSource": "db",
     "public": false
   },
   "EshopProduct": {
@@ -48,21 +47,5 @@
   "EshopOrderItem": {
     "dataSource": "mysqlds",
     "public": false
-  },
-  "testModel": {
-    "dataSource": "mysqlds",
-    "public": true
-  },
-  "test2": {
-    "dataSource": "mysqlds",
-    "public": true
-  },
-  "Customer": {
-    "dataSource": "mysqlds",
-    "public": true
-  },
-  "Activity": {
-    "dataSource": "mysqlds",
-    "public": true
   }
 }
