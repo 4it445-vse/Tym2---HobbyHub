@@ -31,6 +31,8 @@ app.get('/hello', function (req, res) {
   res.send(JSON.stringify(data));
 });
 
+var currentUser = require('loopback-current-user');
+console.log(currentUser.get());
 
 
 app.start = function() {

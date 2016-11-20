@@ -5,7 +5,7 @@
   },
   "mysqlds": {
     "name": "mysqlds",
-    "connector": "memory",
-    "note": "This is overwritten in ./datasources.local.js"
+    "connector": "mysql",
+    "collation": "utf8_czech_ci"
   }
 }

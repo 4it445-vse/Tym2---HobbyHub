@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 
-import { IS_USER_LOGGED, USER_LOGGED } from '../actions'
+import { IS_USER_LOGGED, USER_LOGGED, USER_SESSION, GET_SESSION } from '../actions'
 
 const dummy = (state=0, action) => {
   //console.log('---- action:', action, 'state:', state);
@@ -27,6 +27,13 @@ const userReducer = (state = initialUserState, action) => {
         ...state,
         isUserLogged: action.payload
       };
+    case USER_SESSION:
+      return {
+        ...state,
+        getSession: action.payload
+      };
+      case GET_SESSION:
+        return state;
 
     default:
       return state;

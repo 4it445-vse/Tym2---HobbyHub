@@ -1,17 +1,20 @@
 import React, { Component } from 'react';
 
 import { ActivityItem } from './ActivityItem.js';
+import { Jumbotron, Thumbnail, Grid, Button, Col, Row } from 'react-bootstrap';
 
-export class ProductList extends Component {
+export class ActivityGrid extends Component {
   render() {
-    const { ActivityItems } = this.props;
+    const { Activities } = this.props;
 
     return (
-      <div className="products">
-        {ActivityItems.map(ActivityItem =>
-          <ActivityItem ActivityItem={ActivityItem} key={ActivityItem.id}/>
-        )}
-      </div>
+      <Row>
+        { Activities.map(activity =>
+            <Col xs={6} md={3}>
+          <ActivityItem activity={ activity } key={ activity.id }/>
+          </Col>
+        ) }
+      </Row>
     );
   }
 }

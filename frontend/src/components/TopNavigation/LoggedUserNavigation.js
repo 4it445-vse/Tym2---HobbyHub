@@ -8,9 +8,7 @@ const logo = require('../../img/paper-plane.png')
 export const LoggedUserNavigation = () => (
   <div className="container-fluid" id="navfluid">
   <div className="navbar-header">
-    <Link to="/">
-      <a className="navbar-brand vcenter changeFont" href="#"><span><img className="img-responsive2 vcenter" src={logo}/></span> HobbyHub</a>
-    </Link>
+    <Link to="/" className="navbar-brand vcenter changeFont" href="#"><span><img className="img-responsive2 vcenter" src={logo}/></span> HobbyHub</Link>
     <Nav pullRight>
       <DropdownButton noCaret pullRight
           title={ _.times( 3, (i) => <span key={i} className="icon-bar"></span> )}

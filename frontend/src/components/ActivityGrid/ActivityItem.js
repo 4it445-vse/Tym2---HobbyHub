@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 import { Thumbnail } from 'react-bootstrap';
+import { Jumbotron,  Grid, Button, Col, Row } from 'react-bootstrap';
 
-import 'bootstrap/dist/css/bootstrap.css';
 
 import { AttendActivityButtonContainer } from '../ActivityGrid/AttendActivityButton.js';
 import { ViewActivityButtonContainer } from '../ActivityGrid/ViewActivityButton.js';
@@ -10,18 +10,21 @@ import { ViewActivityButtonContainer } from '../ActivityGrid/ViewActivityButton.
 export class ActivityItem extends Component {
   render() {
     const { activity } = this.props;
-    const { id, title, shortInfo } = activity;
+    const { id, name, about, city, date_and_time } = activity;
     return (
-
-      <Thumbnail src="http://www.shop-samolepky.cz/out/pictures/1/tenis6(1).png" alt="242x200">
-
-          <h3>{ title }</h3>
-          <p>{ shortInfo }</p>
-          <p>
-              <AttendActivityButtonContainer activity={activity} />&nbsp;
-              <ViewActivityButtonContainer activity={activity} />
-          </p>
-      </Thumbnail>
+      <Thumbnail src="https://www.ticketstream.cz/tsp/static/czech/cs/partnership/images/16.png" alt="242x200">
+       <h2>
+        <Link to={`/activityDetail/${id}`}>{name}</Link>
+      </h2>
+      <p>Město: <span className="city">{city}</span></p>
+      <p>Datum: <span className="city">{date_and_time}</span></p>
+      <p>
+      <Button bsStyle="primary">Attend</Button>&nbsp;
+      <Link className="btn btn-default" to={`/activityDetail/${id}`} role="button">View</Link>
+          {/* <AttendActivityButtonContainer activity={activity} />
+          <ViewActivityButtonContainer activity={activity} /> */}
+        </p>
+        </Thumbnail>
     );
   }
 }
