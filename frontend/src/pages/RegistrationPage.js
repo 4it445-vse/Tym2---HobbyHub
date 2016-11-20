@@ -10,40 +10,24 @@ import { userLogged } from '../actions';
 const bgImage = require('../img/Rock-climbing-Wallpaper.jpg')
 
 class RegistrationPageRaw extends Component {
-
   constructor(props) {
     super(props);
     this.onSubmit = this.onSubmit.bind(this);
-/*<<<<<<< HEAD
-    this.props.userLogged(false);
-    this.handleNameChange = this.handleNameChange.bind(this);
-    this.handleUsernameChange = this.handleUsernameChange.bind(this);
-    this.handlePasswordChange = this.handlePasswordChange.bind(this);
-    this.handleEmailChange = this.handleEmailChange.bind(this);
-  }
 
-  handleNameChange(e) {
-   this.setState({name: e.target.value});
-  }
-  handleUsernameChange(e) {
-   this.setState({username: e.target.value});
-  }
-  handlePasswordChange(e) {
-   this.setState({password: e.target.value});
-  }
-  handleEmailChange(e) {
-   this.setState({email: e.target.value});
-=======*/
     this.onUserInput = this.onUserInput.bind(this);
+    this.handleUserBlur = this.handleUserBlur.bind(this);
     this.props.userLogged(false);
     this.state = {
       password:"",
       confirm:"",
+      username:"",
       pwdVal: true,
-      errors: {}
+      errors: {},
+      userValid: true
     };
     this.pwdValid   = true;
     this.emailValid = true;
+    this.pwdComplex = true;
   }
 
   onSubmit(event) {
@@ -55,7 +39,7 @@ class RegistrationPageRaw extends Component {
 
       const formData = new FormData(event.target);
       const regData = {
-          username: formData.get('name'), //jak to bdue v tabulce?
+          username: formData.get('username'),
           email : formData.get('email'),
           password : formData.get('password')
       };
@@ -97,20 +81,21 @@ class RegistrationPageRaw extends Component {
 
     if(event.target.name === "email"){
       if (event.target.value.match(/^\w+([^\u0000-\u0080]?[\.!#$%^&*()\-+-]?\w+)*@\S+/g)) {
-        console.log("štymuje");
         this.emailValid = true;
       } else {
-        console.log("neštymuje");
         this.emailValid = false;
       }
     }
 
+    if(event.target.name === "password"){
+      if (event.target.value.match(/^((?=\S*?[A-Z])(?=\S*?[a-z])(?=\S*?[0-9])(?=\S*?[!"$%^&*_]).{8,12})$/g)) {
+        this.pwdComplex = true;
+      } else {
+        this.pwdComplex = false;
+      }
+    }
+
     switch (event.target.id) {
-      case "name":
-        this.setState({
-          name:event.target.value
-        });
-        break;
       case "email":
         this.setState({
           email:event.target.value
@@ -133,8 +118,31 @@ class RegistrationPageRaw extends Component {
         break;
       default:
     }
-//>>>>>>> fc3f317a1f885c1f5413499ccab426a3c3818c3a
+  }
 
+  handleUserBlur(){
+    const regData = {
+        username: this.state.username
+      };
+
+      //pro vyzkoušení
+      if(this.state.username === "martin"){
+        this.setState({userValid:false});
+      } else {
+        this.setState({userValid: true});
+      }
+
+    //TODO: Dodělat až bude odpovídající služba
+    /*api.post('Customers/username', custData)
+      .then(({ data }) => {
+        console.log('data', data);
+
+        }
+      })
+      .catch(error => {
+        console.log(error);
+
+      });*/
   }
 
   render() {
@@ -155,10 +163,19 @@ class RegistrationPageRaw extends Component {
 
     var pwdValid = "";
     var emailValid = "";
+    var userValid = "";
+    var pwdComplex = "";
+
     if(this.pwdValid){
       pwdValid = "";
     } else {
       pwdValid = "has-error";
+    }
+
+    if(this.pwdComplex){
+      pwdComplex = "";
+    } else {
+      pwdComplex = "has-error";
     }
 
     if(this.emailValid){
@@ -167,7 +184,11 @@ class RegistrationPageRaw extends Component {
       emailValid = "has-error";
     }
 
-//    console.log("STATE:", this.state);
+    if(this.state.userValid){
+      userValid = "";
+    } else {
+      userValid = "has-error";
+    }
 
     return (
       <div className="container-fluid" style={imgStyle}>
@@ -175,25 +196,27 @@ class RegistrationPageRaw extends Component {
 
           <div className="main-login main-center form-group">
             <h2 className="title">Registrace</h2>
-            <form className="form-horizontal" onSubmit={this.onSubmit} data-toggle="validator">
+            <form className="form-horizontal" onSubmit={this.onSubmit}>
 
-              <div className="form-group required">
+              {/*<div className="form-group required">
                 <label htmlFor="name" className="cols-sm-2 control-label">Jméno</label>
                 <div className="cols-sm-10">
-                  <div className="input-group">
-                    <span className="input-group-addon"><i className="fa fa-user fa" aria-hidden="true"></i></span>
-                    <input type="text" onChange={this.onUserInput} className="form-control" name="name" id="name"  placeholder="Zadejte Jméno"/>
-                  </div>
+                <div className="input-group">
+                <span className="input-group-addon"><i className="fa fa-user fa" aria-hidden="true"></i></span>
+                <input type="text" onChange={this.onUserInput} className="form-control" name="name" id="name"  placeholder="Zadejte Jméno"/>
                 </div>
-              </div>
+                </div>
+              </div>*/}
 
               <div className="form-group required">
-                <label htmlFor="username" className="cols-sm-2 control-label">Příjmení</label>
+                <label htmlFor="username" className="cols-sm-2 control-label">Uživatelské jméno</label>
                 <div className="cols-sm-10">
-                  <div className="input-group">
+                  <div className={"input-group " + userValid}>
                     <span className="input-group-addon"><i className="fa fa-envelope fa" aria-hidden="true"></i></span>
-                    <input type="text" onChange={this.onUserInput} className="form-control" name="surname" id="surname"  placeholder="Zadejte Příjmení"/>
+                    <input type="text" maxLength="20" onChange={this.onUserInput} onBlur={this.handleUserBlur} className="form-control" name="username" id="username"  placeholder="Zadejte Uživatelské jméno"
+                      required/>
                   </div>
+                  {this.userCheckText()}
                 </div>
               </div>
 
@@ -202,31 +225,33 @@ class RegistrationPageRaw extends Component {
                 <div className="cols-sm-10">
                   <div className={"input-group " + emailValid}>
                     <span className="input-group-addon"><i className="fa fa-envelope fa" aria-hidden="true"></i></span>
-                    <input type="email" onChange={this.onUserInput} className="form-control" name="email" id="email"  placeholder="Zadejte Email"/>
+                    <input type="email" onChange={this.onUserInput} className="form-control"
+                      name="email" id="email"  placeholder="Zadejte Email" required/>
                   </div>
+                  {this.emailCheckText()}
                 </div>
               </div>
-
 
               <div className="form-group required">
                 <label htmlFor="password" className="cols-sm-2 control-label">Heslo</label>
                 <div className="cols-sm-10">
-                  <div className={"input-group " + pwdValid}>
+                  <div className={"input-group " + pwdComplex}>
                     <span className="input-group-addon"><i className="fa fa-lock fa-lg" aria-hidden="true"></i></span>
                     <input type="password" onChange={this.onUserInput} className="form-control" name="password" id="password"  placeholder="Zadejte Heslo" required/>
                   </div>
+                  {this.pwdCheckText('pwd')}
                 </div>
               </div>
 
               <div className="form-group required">
                 <label htmlFor="confirm" className="cols-sm-2 control-label">Heslo znovu</label>
                 <div className="cols-sm-10">
-                  <div className="input-group">
+                  <div className={"input-group " + pwdValid}>
                     <span className="input-group-addon"><i className="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-                    <input type="password" onChange={this.onUserInput} className="form-control" data-match="#password" name="confirm" id="confirm"
-                      data-match-error="Whoops, these don't match" placeholder="Potvrďte Heslo" required/>
-                    <div class="help-block with-errors"></div>
+                    <input type="password" onChange={this.onUserInput} className="form-control" name="confirm" id="confirm"
+                      placeholder="Potvrďte Heslo" required/>
                   </div>
+                  {this.pwdCheckText('con')}
                 </div>
               </div>
 
@@ -241,6 +266,23 @@ class RegistrationPageRaw extends Component {
         </div>
       </div>
     );
+  }
+
+  pwdCheckText(type){
+    if(type === 'pwd' && !this.pwdComplex)    {
+      return (<div>Heslo musí obsahovat: a-z, A-Z, 0-9 a alespoň jeden znak z !"$%^&*_</div>)
+    }
+    if(type === 'con' && !this.pwdValid){
+      return (<div>Hesla se neshodují</div>)
+    }
+  }
+
+  emailCheckText(){
+    if(!this.emailValid) return (<div>Zadaný email není validní</div>)
+  }
+
+  userCheckText(){
+    if(!this.state.userValid) return (<div>Zadaný username již existuje</div>)
   }
 }
 
