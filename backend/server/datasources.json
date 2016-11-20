@@ -6,9 +6,9 @@
   "mysqlds": {
     "host": "localhost",
     "port": 3306,
-    "database": "user_team02",
-    "username": "team02",
-    "password": "xju4cqnpv6ttx68i",
+    "database": "hobbyhub",
+    "username": "root",
+    "password": "4sVA4A5OCCwU",
     "name": "mysqlds",
     "connector": "mysql"
   }

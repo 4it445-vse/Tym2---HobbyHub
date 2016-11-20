@@ -32,6 +32,33 @@ app.get('/hello', function (req, res) {
 });
 
 
+var LoopBackContext = require('loopback-context');
+
+app.use(LoopBackContext.perRequest());
+app.use(loopback.token());
+app.use(function setCurrentUser(req, res, next) {
+  if (!req.accessToken) {
+    return next();
+  }
+  console.log('app.models.customers.findById: ', req.accessToken.userId );
+    var loopbackContext = LoopBackContext.getCurrentContext();
+	loopbackContext.set('currentUserId', req.accessToken.userId);
+	  next();
+  /*app.models.customers.findById(req.accessToken.userId, function(err, user) {
+    if (err) {
+      return next(err);
+    }
+    if (!user) {
+      return next(new Error('No user with this access token was found.'));
+    }
+    var loopbackContext = LoopBackContext.getCurrentContext();
+    if (loopbackContext) {
+      loopbackContext.set('currentUser', user);
+    }
+    next();
+  });*/
+});
+
 
 app.start = function() {
   // start the web server
@@ -44,7 +71,10 @@ app.start = function() {
       console.log('Browse your REST API at %s%s', baseUrl, explorerPath);
     }
   });
+  
 };
+
+
 
 
 
@@ -52,8 +82,10 @@ app.start = function() {
 // Sub-apps like REST API are mounted via boot scripts.
 boot(app, __dirname, function(err) {
   if (err) throw err;
-
+  
   // start the server if `$ node server.js`
   if (require.main === module || GLOBAL.PhusionPassenger)
     app.start();
+	
+	
 });

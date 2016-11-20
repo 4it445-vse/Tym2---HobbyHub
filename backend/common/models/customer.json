@@ -11,7 +11,7 @@
     "activities": {
       "type": "hasMany",
       "model": "Activity",
-      "foreignKey": "ActivityId"
+      "foreignKey": "customer_id"
     }
   },
   "acls": [
@@ -22,10 +22,11 @@
       "permission": "DENY"
     },
     {
-      "accessType": "*",
+      "accessType": "EXECUTE",
       "principalType": "ROLE",
       "principalId": "$everyone",
-      "permission": "DENY"
+      "permission": "ALLOW",
+      "property": "findByUsername"
     }
   ],
   "methods": {}

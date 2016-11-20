@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = function(app) {
-  app.dataSources.mysqlds.autoupdate('testModel', function(err) {
+ /* app.dataSources.mysqlds.autoupdate('testModel', function(err) {
     const { Testmodel } = app.models;
     if (!Testmodel) { return; }
 
@@ -89,6 +89,7 @@ module.exports = function(app) {
 
       Customer.create([
         {
+		  username: 'testusername',
           email: 'test@mail.com',
           password: 'testtest'
         }
@@ -99,7 +100,7 @@ module.exports = function(app) {
       });
     });
   });
-
+*/
 
 
 app.dataSources.mysqlds.autoupdate('Activity', function(err) {
@@ -133,7 +134,7 @@ app.dataSources.mysqlds.autoupdate('ACL', function(err) { });
 app.dataSources.mysqlds.autoupdate('RoleMapping', function(err) { });
 app.dataSources.mysqlds.autoupdate('AccessToken', function(err) { });
 
-app.dataSources.mysqlds.autoupdate('User', function(err) {
+/*app.dataSources.mysqlds.autoupdate('User', function(err) {
   const { User } = app.models;
   if (!User) { return; }
 
@@ -151,10 +152,10 @@ app.dataSources.mysqlds.autoupdate('User', function(err) {
       console.log('Models created: \n', categories);
     });
   });
-});
+});*/
 
 
-
+/*
   app.dataSources.mysqlds.autoupdate('EshopOrder', function(err) { });
-  app.dataSources.mysqlds.autoupdate('EshopOrderItem', function(err) { });
+  app.dataSources.mysqlds.autoupdate('EshopOrderItem', function(err) { });*/
 };
