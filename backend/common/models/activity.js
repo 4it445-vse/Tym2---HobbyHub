@@ -10,7 +10,7 @@ module.exports = function(Activity) {
 
 
 
- Activity.createActivity = function(category_id, name, city, address, date_and_time, user_count, about, cb) {
+ Activity.createActivity = function(subcategory_id, name, city, address, date_and_time, user_count, about, cb) {
  	const app = require('../../server/server.js');
 	const { ActivitySubcategory } = app.models;
 	
@@ -20,17 +20,17 @@ module.exports = function(Activity) {
 	console.log("second STEEEEPPP: ", typeof currentUser);
     console.log('currentUser.username: ', currentUser); // voila!
  
-	ActivitySubcategory.findById(category_id, function(err, act) {
+	ActivitySubcategory.findById(subcategory_id, function(err, act) {
 	if (err) {
 		return cb(err);
 	}
 	if(!act){
-		return cb({message:'Category_id not found', status:404});
+		return cb({message:'subcategory_id not found', status:404});
 	}
 
 	console.log("cbbb: ", typeof cb);
 	Activity.create({
-		"category_id": category_id,
+		"subcategory_id": subcategory_id,
 		"name": name,
 		"city": city,
 		"address": address,
@@ -79,7 +79,7 @@ module.exports = function(Activity) {
     {
       description : 'Create new Activity MY',
 	  accepts: [
-	    {arg: 'category_id', type: 'number', required: true},
+	    {arg: 'subcategory_id', type: 'number', required: true},
 		{arg: 'name', type: 'string', required: true},
 		{arg: 'city', type: 'string', required: true},
 		{arg: 'address', type: 'string', required: true},
