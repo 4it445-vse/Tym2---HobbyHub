@@ -38,6 +38,12 @@
       "type": "belongsTo",
       "model": "Customer",
       "foreignKey": "customer_id"
+    },
+    "ActivityCustomers": {
+      "type": "hasMany",
+      "model": "Customer",
+      "foreignKey": "activity_id",
+      "through": "hasActivity"
     }
   },
   "acls": [

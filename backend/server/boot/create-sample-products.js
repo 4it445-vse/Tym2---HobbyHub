@@ -80,6 +80,28 @@ debugger;
       });
     });
   });
+  
+  
+  app.dataSources.mysqlds.autoupdate('hasActivity', function(err) {
+    const { hasActivity } = app.models;
+    if (!hasActivity) { return; }
+
+    hasActivity.count({}, function(err, count) {
+      if (count !== 0) { return };
+
+      hasActivity.create([
+        {
+		"customer_id": 1,
+		"activity_id": 2
+		}
+      ], function(err, hasActivity) {
+        if (err) throw err;
+
+        console.log('Models created: \n', hasActivity);
+      });
+    });
+  });
+
 
 
 

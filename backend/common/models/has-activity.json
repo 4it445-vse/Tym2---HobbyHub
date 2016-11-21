@@ -1,6 +1,7 @@
 {
-  "name": "Customer",
-  "base": "User",
+  "name": "hasActivity",
+  "plural": "hasActivities",
+  "base": "PersistedModel",
   "idInjection": true,
   "options": {
     "validateUpsert": true
@@ -8,20 +9,19 @@
   "properties": {},
   "validations": [],
   "relations": {
-    "activities": {
-      "type": "hasMany",
+    "activity": {
+      "type": "belongsTo",
       "model": "Activity",
-      "foreignKey": "customer_id"
+      "foreignKey": "activity_id"
     },
-    "CustomerActivities": {
-      "type": "hasMany",
-      "model": "Activity",
-      "foreignKey": "customer_id",
-      "through": "hasActivity"
+    "customer": {
+      "type": "belongsTo",
+      "model": "Customer",
+      "foreignKey": "customer_id"
     }
   },
   "acls": [
-    {
+	{
       "accessType": "*",
       "principalType": "ROLE",
       "principalId": "$everyone",
@@ -32,7 +32,13 @@
       "principalType": "ROLE",
       "principalId": "$everyone",
       "permission": "ALLOW",
-      "property": "findByUsername"
+      "property": "getSubscribeCustomer"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$authenticated",
+      "permission": "ALLOW"
     }
   ],
   "methods": {}

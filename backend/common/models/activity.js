@@ -107,6 +107,61 @@ module.exports = function(Activity) {
     }
 	
 	);
+	
+	
+	
+
+	Activity.subscribeToActivity = function(id, cb) {
+	var ctx = LoopBackContext.getCurrentContext();
+    var currentUser = ctx && ctx.get('currentUserId');
+    console.log('currentUser.username: ', currentUser); // voila!
+  
+    Activity.findById(id, function(err, act) {
+      if (err) {
+        return cb(err);
+      }
+      if(!act){
+        return cb({message:'Not found', status:404});
+      }
+	});
+	
+	Customer.Activity.create({
+		"customer_id": currentUser,
+		"activity_id": id
+		}, function(err, sub) {
+		if (err)
+		  return cb(err);
+		
+		console.log('New subscribeToActivity has been created:', sub);
+
+		cb(null, sub);
+		}
+  );
+  
+  };
+
+	
+	Activity.remoteMethod(
+	 'subscribeToActivity',
+    {
+      description : 'Subscribe to Activity',
+      accepts: {
+        arg: 'id',
+        type: 'number',
+        description: 'Activity id',
+        required: true,
+        http: { source: 'path' }
+      },
+      accessType: 'READ',
+      returns: { arg: 'statusIS', type: 'boolean' },
+      // alternately, to return the boolean "unwrapped":
+      // returns: { root: true, type: 'boolean' },
+      http: [
+        { verb: 'get', path: '/:id/subscribeToActivity' }
+      ]
+    }
+	
+	);
 
 
 };

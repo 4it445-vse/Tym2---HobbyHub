@@ -55,5 +55,9 @@
   "Activity": {
     "dataSource": "mysqlds",
     "public": true
+  },
+  "hasActivity": {
+    "dataSource": "mysqlds",
+    "public": true
   }
 }
