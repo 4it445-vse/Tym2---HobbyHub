@@ -59,5 +59,13 @@
   "hasActivity": {
     "dataSource": "mysqlds",
     "public": true
+  },
+  "ActivityCategory": {
+    "dataSource": "mysqlds",
+    "public": true
+  },
+  "ActivitySubcategory": {
+    "dataSource": "mysqlds",
+    "public": true
   }
 }

@@ -1,0 +1,25 @@
+{
+  "name": "ActivityCategory",
+  "plural": "ActivityCategories",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "name": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {    
+	"activitySubcategory": {
+      "type": "hasMany",
+      "model": "ActivitySubcategory",
+      "foreignKey": "category_id"
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

@@ -10,33 +10,43 @@ module.exports = function(Activity) {
 
 
 
- Activity.createActivity = function(name, city, address, date_and_time, user_count, about, cb) {
- 
+ Activity.createActivity = function(category_id, name, city, address, date_and_time, user_count, about, cb) {
+ 	const app = require('../../server/server.js');
+	const { ActivitySubcategory } = app.models;
+	
 	var ctx = LoopBackContext.getCurrentContext();
 	console.log("first STEEEEPPP: ", typeof ctx);
     var currentUser = ctx && ctx.get('currentUserId');
-	 console.log("second STEEEEPPP: ", typeof currentUser);
+	console.log("second STEEEEPPP: ", typeof currentUser);
     console.log('currentUser.username: ', currentUser); // voila!
  
- console.log("cbbb: ", typeof cb);
-  Activity.create({
-	  "name": name,
-	  "city": city,
-	  "address": address,
-	  "date_and_time": date_and_time,
-	  "user_count": user_count,
-	  "about": about,
-	  "customer_id": currentUser
-		}, function(err, act) {
-		if (err)
-		  return cb(err);
-		
-		console.log('A `Activity` instance has been created from a boot script:', act);
+	ActivitySubcategory.findById(category_id, function(err, act) {
+	if (err) {
+		return cb(err);
+	}
+	if(!act){
+		return cb({message:'Category_id not found', status:404});
+	}
 
-		cb(null, act);
-		}
-  );
-  };
+	console.log("cbbb: ", typeof cb);
+	Activity.create({
+		"category_id": category_id,
+		"name": name,
+		"city": city,
+		"address": address,
+		"date_and_time": date_and_time,
+		"user_count": user_count,
+		"about": about,
+		"customer_id": currentUser
+		}, function(err, act) {
+			if (err)
+				return cb(err);
+			console.log('A `Activity` instance has been created from a boot script:', act);
+			cb(null, act);
+			}
+	  );
+	});
+};
 
 	
 	
@@ -69,6 +79,7 @@ module.exports = function(Activity) {
     {
       description : 'Create new Activity MY',
 	  accepts: [
+	    {arg: 'category_id', type: 'number', required: true},
 		{arg: 'name', type: 'string', required: true},
 		{arg: 'city', type: 'string', required: true},
 		{arg: 'address', type: 'string', required: true},
@@ -110,8 +121,9 @@ module.exports = function(Activity) {
 	
 	
 	
-
+/*
 	Activity.subscribeToActivity = function(id, cb) {
+	
 	var ctx = LoopBackContext.getCurrentContext();
     var currentUser = ctx && ctx.get('currentUserId');
     console.log('currentUser.username: ', currentUser); // voila!
@@ -162,6 +174,6 @@ module.exports = function(Activity) {
     }
 	
 	);
-
+*/
 
 };

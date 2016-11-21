@@ -44,6 +44,11 @@
       "model": "Customer",
       "foreignKey": "activity_id",
       "through": "hasActivity"
+    },
+	"activitySubcategory": {
+      "type": "belongsTo",
+      "model": "ActivitySubcategory",
+      "foreignKey": "subcategory_id"
     }
   },
   "acls": [
