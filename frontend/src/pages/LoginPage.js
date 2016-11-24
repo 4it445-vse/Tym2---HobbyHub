@@ -30,6 +30,7 @@ class LoginPageRaw extends Component {
    this.setState({password: e.target.value});
   }
 
+  // <button className="btn btn-default" onClick={this.testRequest}>Test</button>
   testRequest() {
     api.get('Customers/count')
       .then(({ data }) => {
@@ -81,8 +82,6 @@ class LoginPageRaw extends Component {
         <div className="row main">
           <div className="main-login main-center">
             <h2 className="title">Přihlášení</h2>
-
-            <button className="btn btn-default" onClick={this.testRequest}>Test</button>
 
             <form id="loginForm" className="form-horizontal" method="post" onSubmit={this.onSubmit}>
 
