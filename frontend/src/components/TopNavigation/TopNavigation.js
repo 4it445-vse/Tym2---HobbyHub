@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
 
-import { isUserLogged, userLogged } from '../../actions'
+import { isUserLogged, logoutAction } from '../../actions'
 import { LoggedUserNavigation } from './LoggedUserNavigation'
 import { DefaultNavigation } from './DefaultNavigation'
 
@@ -13,7 +13,10 @@ export class TopNavigationRaw extends Component {
     return (
       <nav className="navbar navbar-default navbar-fixed-top" role="navigation">
         {
-          (isUserLogged ? <LoggedUserNavigation/> : <DefaultNavigation/>)
+          (isUserLogged ?
+            <LoggedUserNavigation logoutAction={logoutAction()} />
+            :
+            <DefaultNavigation/>)
         }
       </nav>
     );
@@ -26,4 +29,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, { isUserLogged, userLogged })(TopNavigationRaw)
+export default connect(mapStateToProps, { isUserLogged })(TopNavigationRaw)

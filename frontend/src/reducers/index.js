@@ -1,8 +1,9 @@
 import { combineReducers } from 'redux';
 
-import { IS_USER_LOGGED, USER_LOGGED, USER_SESSION, GET_SESSION } from '../actions'
+import { IS_USER_LOGGED, USER_LOGGED, USER_SESSION, GET_SESSION, userLogged } from '../actions'
+import { setAuthToken } from '../api'
 
-const dummy = (state=0, action) => {
+const dummy = (state = 0, action) => {
   //console.log('---- action:', action, 'state:', state);
 
   switch (action.type) {
@@ -40,7 +41,37 @@ const userReducer = (state = initialUserState, action) => {
   }
 }
 
+const auth = (state = {}, action) => {
+  switch (action.type) {
+
+    case 'LOGIN':
+      const {
+        authToken,
+        userId
+      } = action;
+      console.log('loginActionParameters', authToken, userId)
+
+      setAuthToken(authToken)
+      userLogged(true)
+
+      return {
+        ...state,
+        authToken,
+        userId
+      };
+
+    case 'LOGOUT':
+      setAuthToken(undefined)
+      userLogged(false)
+      return {}
+
+    default:
+      return state;
+  }
+}
+
 export const rootReducer = combineReducers({
+  auth,
   dummy,
   userReducer,
 });
