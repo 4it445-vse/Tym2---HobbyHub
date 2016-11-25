@@ -126,23 +126,25 @@ class RegistrationPageRaw extends Component {
       };
 
       //pro vyzkoušení
-      if(this.state.username === "martin"){
+      /*if(this.state.username === "martin"){
         this.setState({userValid:false});
       } else {
         this.setState({userValid: true});
-      }
+      }*/
 
     //TODO: Dodělat až bude odpovídající služba
-    /*api.post('Customers/username', custData)
+    api.post('Customer/Customer_findByUsername', regData)
       .then(({ data }) => {
         console.log('data', data);
-
+        if(data.length>0){
+          this.setState({userValid: true});
+        } else {
+          this.setState({userValid:false});
         }
       })
       .catch(error => {
         console.log(error);
-
-      });*/
+      });
   }
 
   render() {
