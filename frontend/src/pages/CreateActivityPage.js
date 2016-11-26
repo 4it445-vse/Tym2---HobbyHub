@@ -7,6 +7,8 @@ import { connect } from 'react-redux';
 import { userLogged, isUserLogged, getSession } from '../actions'
 import api from '../api.js';
 
+var ReactDOM = require('react-dom');
+var NotificationSystem = require('react-notification-system');
 
 const bgImage = require('../img/Rock-climbing-Wallpaper.jpg')
 
@@ -27,6 +29,34 @@ class CreateActivityPageRaw extends Component {
     this.handleDateChange = this.handleDateChange.bind(this);
     this.handleUserCountChange = this.handleUserCountChange.bind(this);
     this.handleAboutChange = this.handleAboutChange.bind(this);
+    this._addNotification = this._addNotification.bind(this);
+  }
+
+  _notificationSystem: null;
+
+  _addNotification(cause, event) {
+    event.preventDefault();
+    switch (cause) {
+      case "success":
+        this._notificationSystem.addNotification({
+          title: 'Success!',
+          message: 'Your activity was successfully created!',
+          level: 'info'
+        });
+        break;
+      case "error":
+        this._notificationSystem.addNotification({
+          title: 'Error!',
+          message: 'There was an error while creating the activity.',
+          level: 'error'
+        });
+        break;
+      default:
+    }
+  }
+
+  componentDidMount() {
+    this._notificationSystem = this.refs.notificationSystem;
   }
 
   handleNameChange(e) {
@@ -53,12 +83,12 @@ class CreateActivityPageRaw extends Component {
     console.log('submitted')
 
 // TODO Odebrat
-      console.log('Name: ' + this.state.name)
+      /*console.log('Name: ' + this.state.name)
       console.log('City: ' + this.state.city)
       console.log('Address: ' + this.state.address)
       console.log('Date: ' + this.state.date_and_time)
       console.log('Users: ' + this.state.user_count)
-      console.log('About: ' + this.state.about)
+      console.log('About: ' + this.state.about)*/
 
 
 
@@ -74,18 +104,22 @@ class CreateActivityPageRaw extends Component {
       .then(({ data }) => {
         console.log('data', data);
 
-        if (data){
+      if (data){
+          this._addNotification("success", event)
+          setTimeout(() => {
+            this.props.history.push(`/activityDetail/${data.id}`)
+          },1500);
 
-        this.props.history.push(`/activityDetail/${data.id}`);
       }else{
         // isUserLogged = data
-
+        this._addNotification("error", event)
         this.setState({ errors: {} });
       };
       })
       .catch(error => {
+        this._addNotification("error", event)
         const { response } = error;
-        console.log(error)
+        console.log("error",error)
         const { errors } = response.data.error.details;
 
         this.setState({ errors });
@@ -183,6 +217,9 @@ class CreateActivityPageRaw extends Component {
               </div>
 
             </form>
+            <div>
+              <NotificationSystem ref="notificationSystem"/>
+            </div>
           </div>
         </div>
 

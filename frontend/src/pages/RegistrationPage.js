@@ -7,7 +7,11 @@ import './RegistrationPage.css';
 import { connect } from 'react-redux';
 import { userLogged } from '../actions';
 
-const bgImage = require('../img/Rock-climbing-Wallpaper.jpg')
+var ReactDOM = require('react-dom');
+var NotificationSystem = require('react-notification-system');
+
+const bgImage = require('../img/Rock-climbing-Wallpaper.jpg');
+
 
 class RegistrationPageRaw extends Component {
   constructor(props) {
@@ -15,13 +19,13 @@ class RegistrationPageRaw extends Component {
     this.onSubmit = this.onSubmit.bind(this);
 
     this.onUserInput = this.onUserInput.bind(this);
+    this._addNotification = this._addNotification.bind(this);
     this.handleUserBlur = this.handleUserBlur.bind(this);
     this.props.userLogged(false);
     this.state = {
       password:"",
       confirm:"",
       username:"",
-      pwdVal: true,
       errors: {},
       userValid: true
     };
@@ -30,12 +34,44 @@ class RegistrationPageRaw extends Component {
     this.pwdComplex = true;
   }
 
+  _notificationSystem: null;
+
+  _addNotification(cause, event) {
+    event.preventDefault();
+    switch (cause) {
+      case "success":
+        this._notificationSystem.addNotification({
+          title: 'Success!',
+          message: 'Vaše registrace byla úspěšně dokončena!',
+          level: 'info'
+        });
+        break;
+      case "error":
+        this._notificationSystem.addNotification({
+          title: 'Error!',
+          message: 'Během registrace došlo k chybě.',
+          level: 'error'
+        });
+        break;
+      default:
+    }
+  }
+
+  componentDidMount() {
+    this._notificationSystem = this.refs.notificationSystem;
+  }
+
   onSubmit(event) {
     event.preventDefault();
 
     console.log("name",this.state.name,"email",this.state.email)
     console.log(this.pwdValid && this.emailValid);
-    if(this.pwdValid){
+    if(
+      this.pwdValid &&
+      this.emailValid &&
+      this.pwdComplex &&
+      this.state.userValid
+    ){
 
       const formData = new FormData(event.target);
       const regData = {
@@ -44,19 +80,34 @@ class RegistrationPageRaw extends Component {
           password : formData.get('password')
       };
 
+      console.log("regData---", regData);
+
       api.post('Customers', regData)
         .then(({ data }) => {
-          console.log('data', data);
 
           if (data){
+            this._addNotification("success", event);
+            setTimeout(() => {
+              this.props.history.push('/login')
+            },1500);
 
-          this.props.history.push('/login');
-          // TODO tohle je cilove chovani, ale ted to nechceme
-          //browserHistory.goBack()
+            // TODO tohle je cilove chovani, ale ted to nechceme
+            //browserHistory.goBack()
           }
         })
         .catch(error => {
+          this._addNotification("error", event);
+
+          //setTimeout(function(){},5000);
+
+
+
           console.log(error);
+          if (error){
+
+            // TODO tohle je cilove chovani, ale ted to nechceme
+            //browserHistory.goBack()
+          }
 
           const { response } = error;
           const { errors } = response.data.error.details;
@@ -69,7 +120,6 @@ class RegistrationPageRaw extends Component {
   }
 
   onUserInput(event){
-
     if(event.target.name === "password" || event.target.name === "confirm"){
         if(event.target.value === this.state.confirm ||
           event.target.value === this.state.password){
@@ -125,21 +175,14 @@ class RegistrationPageRaw extends Component {
         username: this.state.username
       };
 
-      //pro vyzkoušení
-      /*if(this.state.username === "martin"){
-        this.setState({userValid:false});
-      } else {
-        this.setState({userValid: true});
-      }*/
-
     //TODO: Dodělat až bude odpovídající služba
-    api.post('Customer/Customer_findByUsername', regData)
+    api.get('Customers/'+this.state.username+'/findByUsername')
       .then(({ data }) => {
         console.log('data', data);
         if(data.length>0){
-          this.setState({userValid: true});
-        } else {
           this.setState({userValid:false});
+        } else {
+          this.setState({userValid:true});
         }
       })
       .catch(error => {
@@ -260,10 +303,14 @@ class RegistrationPageRaw extends Component {
               <div className="form-group">
                 <button type="submit" className="btn btn-primary btn-lg btn-block login-button">Register</button>
               </div>
+
               <div className="login-register">
                 <Link to="/login">Login</Link>
               </div>
             </form>
+            <div>
+              <NotificationSystem ref="notificationSystem"/>
+            </div>
           </div>
         </div>
       </div>
@@ -284,7 +331,7 @@ class RegistrationPageRaw extends Component {
   }
 
   userCheckText(){
-    if(!this.state.userValid) return (<div>Zadaný username již existuje</div>)
+    if(!this.state.userValid) return (<div>Zadané uživatelské jméno již existuje</div>)
   }
 }
 
