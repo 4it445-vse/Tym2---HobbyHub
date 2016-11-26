@@ -21,13 +21,15 @@ class RegistrationPageRaw extends Component {
     this.onUserInput = this.onUserInput.bind(this);
     this._addNotification = this._addNotification.bind(this);
     this.handleUserBlur = this.handleUserBlur.bind(this);
+    this.handleEmailBlur = this.handleEmailBlur.bind(this);
     this.props.userLogged(false);
     this.state = {
       password:"",
       confirm:"",
       username:"",
       errors: {},
-      userValid: true
+      userValid: true,
+      emailValid: true
     };
     this.pwdValid   = true;
     this.emailValid = true;
@@ -70,7 +72,8 @@ class RegistrationPageRaw extends Component {
       this.pwdValid &&
       this.emailValid &&
       this.pwdComplex &&
-      this.state.userValid
+      this.state.userValid &&
+      this.state.emailValid
     ){
 
       const formData = new FormData(event.target);
@@ -190,6 +193,27 @@ class RegistrationPageRaw extends Component {
       });
   }
 
+  handleEmailBlur(){
+    const regData = {
+        username: this.state.email
+      };
+
+    //TODO: Dodělat až bude odpovídající služba
+    api.get('Customers/'+this.state.email+'/findByEmail')
+      .then(({ data }) => {
+        console.log('data', data);
+        if(data.length>0){
+          this.setState({emailValid:false});
+        } else {
+          this.setState({emailValid:true});
+        }
+      })
+      .catch(error => {
+        console.log(error);
+        this.setState({emailValid:false});
+      });
+  }
+
   render() {
     var windowHeight = $(window).height();
     if(windowHeight > 690) {
@@ -226,6 +250,10 @@ class RegistrationPageRaw extends Component {
     if(this.emailValid){
       emailValid = "";
     } else {
+      emailValid = "has-error";
+    }
+
+    if(!this.state.emailValid){
       emailValid = "has-error";
     }
 
@@ -270,10 +298,11 @@ class RegistrationPageRaw extends Component {
                 <div className="cols-sm-10">
                   <div className={"input-group " + emailValid}>
                     <span className="input-group-addon"><i className="fa fa-envelope fa" aria-hidden="true"></i></span>
-                    <input type="email" onChange={this.onUserInput} className="form-control"
+                    <input type="email" onChange={this.onUserInput} onBlur={this.handleEmailBlur} className="form-control"
                       name="email" id="email"  placeholder="Zadejte Email" required/>
                   </div>
                   {this.emailCheckText()}
+                  {this.emailExistsText()}
                 </div>
               </div>
 
@@ -328,6 +357,10 @@ class RegistrationPageRaw extends Component {
 
   emailCheckText(){
     if(!this.emailValid) return (<div>Zadaný email není validní</div>)
+  }
+
+  emailExistsText(){
+    if(!this.state.emailValid) return (<div>Zadaný email již existuje</div>)
   }
 
   userCheckText(){
