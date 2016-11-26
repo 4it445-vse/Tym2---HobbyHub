@@ -10,6 +10,8 @@ export class LoggedUserNavigation extends Component {
   // this.props.logoutAction
 
   render() {
+    return (
+    <div>
   <div className="container-fluid" id="navfluid">
     <div className="navbar-header">
       <Link to="/" className="navbar-brand vcenter changeFont" href="#"><span><img className="img-responsive2 vcenter" src={logo}/></span> HobbyHub</Link>
@@ -38,5 +40,7 @@ export class LoggedUserNavigation extends Component {
       </ul>
     </div>
   </div>
+  </div>
+  )
   }
 }
