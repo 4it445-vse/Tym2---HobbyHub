@@ -7,15 +7,16 @@ debugger;
     const { Testmodel } = app.models;
     if (!Testmodel) { return; }
 
-    Testmodel.count({}, function(err, count) {
+    EshopCategory.count({}, function(err, count) {
       if (count !== 0) { return };
 
-      Testmodel.create([
+      EshopCategory.create([
         {
-          id: 1,
-          name: 'test',
+          name: 'Car',
         },
-
+        {
+          name: 'Motorbike',
+        }
       ], function(err, categories) {
         if (err) throw err;
 
@@ -23,29 +24,6 @@ debugger;
       });
     });
   });
-
-
-    app.dataSources.mysqlds.autoupdate('EshopCategory', function(err) {
-      const { EshopCategory } = app.models;
-      if (!EshopCategory) { return; }
-
-      EshopCategory.count({}, function(err, count) {
-        if (count !== 0) { return };
-
-        EshopCategory.create([
-          {
-            name: 'Car',
-          },
-          {
-            name: 'Motorbike',
-          }
-        ], function(err, categories) {
-          if (err) throw err;
-
-          console.log('Models created: \n', categories);
-        });
-      });
-    });
 
   app.dataSources.mysqlds.autoupdate('EshopProduct', function(err) {
     const { EshopProduct } = app.models;
@@ -91,6 +69,7 @@ debugger;
 
       Customer.create([
         {
+		  username: 'testuser',
           email: 'test@mail.com',
           password: 'testtest'
         }
@@ -101,7 +80,76 @@ debugger;
       });
     });
   });
+  
+  
+  app.dataSources.mysqlds.autoupdate('hasActivity', function(err) {
+    const { hasActivity } = app.models;
+    if (!hasActivity) { return; }
 
+    hasActivity.count({}, function(err, count) {
+      if (count !== 0) { return };
+
+      hasActivity.create([
+        {
+		"customer_id": 1,
+		"activity_id": 2
+		}
+      ], function(err, hasActivity) {
+        if (err) throw err;
+
+        console.log('Models created: \n', hasActivity);
+      });
+    });
+  });
+
+  
+    app.dataSources.mysqlds.autoupdate('ActivityCategory', function(err) {
+    const { ActivityCategory } = app.models;
+    if (!ActivityCategory) { return; }
+
+    ActivityCategory.count({}, function(err, count) {
+      if (count !== 0) { return };
+
+      ActivityCategory.create([
+        { "name": "sport1" },
+		{ "name": "sport2" },
+		{ "name": "sport3" },
+		{ "name": "sport4" },
+		{ "name": "sport5" },
+		{ "name": "sport6" }
+		
+      ], function(err, ActivityCategory) {
+        if (err) throw err;
+
+        console.log('Models created: \n', ActivityCategory);
+      });
+    });
+  });
+  
+
+      app.dataSources.mysqlds.autoupdate('ActivitySubcategory', function(err) {
+    const { ActivitySubcategory } = app.models;
+    if (!ActivitySubcategory) { return; }
+
+    ActivitySubcategory.count({}, function(err, count) {
+      if (count !== 0) { return };
+
+      ActivitySubcategory.create([
+        { "name": "SUBsport1", category_id: 1 },
+		{ "name": "SUBsport2", category_id: 2 },
+		{ "name": "SUBsport3", category_id: 2 },
+		{ "name": "SUBsport4", category_id: 2 },
+		{ "name": "SUBsport5", category_id: 3 },
+		{ "name": "SUBsport6", category_id: 4 }
+		
+      ], function(err, ActivitySubcategory) {
+        if (err) throw err;
+
+        console.log('Models created: \n', ActivitySubcategory);
+      });
+    });
+  });
+  
 
 
 app.dataSources.mysqlds.autoupdate('Activity', function(err) {

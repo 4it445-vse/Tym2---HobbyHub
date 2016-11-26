@@ -4,8 +4,9 @@ import $ from 'jquery';
 
 import './RegistrationPage.css';
 import { connect } from 'react-redux';
-import { userLogged, userSession, getSession } from '../actions'
+import { userLogged, userSession, getSession, loginAction } from '../actions'
 import api from '../api.js';
+import { setAuthToken } from '../api'
 
 import { FormGroup, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
 
@@ -15,57 +16,56 @@ class LoginPageRaw extends Component {
 
   constructor(props) {
     super(props);
-    this.props.userLogged(false)
-    console.log('starting')
     this.onSubmit = this.onSubmit.bind(this);
     this.handleEmailChange = this.handleEmailChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
-
+    this.testRequest = this.testRequest.bind(this);
   }
 
   handleEmailChange(e) {
    this.setState({email: e.target.value});
   }
+
   handlePasswordChange(e) {
    this.setState({password: e.target.value});
   }
 
+  // <button className="btn btn-default" onClick={this.testRequest}>Test</button>
+  testRequest() {
+    api.get('Customers/count')
+      .then(({ data }) => {
+        console.log('testRequestData', data)
+      })
+      .catch(error => {
+        console.log('testRequestError', error)
+      });
+  }
+
   onSubmit(event) {
     event.preventDefault();
-    console.log('submitted')
+    var formData = {email: this.state.email, password: this.state.password}
 
-// TODO Odebrat
-      console.log('Email: ' + this.state.email)
-      console.log('Password: ' + this.state.password)
-
-      var formData = {email: this.state.email, password: this.state.password}
-
-      api.post('Customers/login', formData)
+    api.post('Customers/login', formData)
       .then(({ data }) => {
-        console.log('data', data);
+        const {
+          id: authToken,
+          userId,
+          id, // id je token
+        } = data;
 
-        if (data){
-        userSession(data)
-        this.props.userLogged(true)
-        this.props.history.push('/land');
-        //TODO spravne chovani, ale ted to nechceme
-      //  browserHistory.goBack()
-        console.log(getSession())
-      }else{
-        // isUserLogged = data
+        setAuthToken(id)
+        loginAction(id, userId)
 
-        this.setState({ errors: {} });
-      };
+        this.setState({ error: null });
+        alert('Success!');
       })
       .catch(error => {
         const { response } = error;
-        console.log(error)
-        const { errors } = response.data.error.details;
+        const { message = "Login failed..." } = response.data.error || {};
 
-        this.setState({ errors });
+        this.setState({ error: message });
       });
-
-    }
+  }
 
   render() {
     var windowHeight = $(window).height();
@@ -78,11 +78,10 @@ class LoginPageRaw extends Component {
     }
 
     return (
-
       <div className="container-fluid" style={imgStyle}>
         <div className="row main">
           <div className="main-login main-center">
-            <h2 className="title">Login</h2>
+            <h2 className="title">Přihlášení</h2>
 
             <form id="loginForm" className="form-horizontal" method="post" onSubmit={this.onSubmit}>
 
@@ -97,7 +96,7 @@ class LoginPageRaw extends Component {
               </div>
 
               <div className="form-group">
-                <label htmlFor="password" className="cols-sm-2 control-label">Password</label>
+                <label htmlFor="password" className="cols-sm-2 control-label">Heslo</label>
                 <div className="cols-sm-10">
                   <div className="input-group">
                     <span className="input-group-addon"><i className="fa fa-lock fa-lg" aria-hidden="true"></i></span>
@@ -107,10 +106,10 @@ class LoginPageRaw extends Component {
               </div>
 
               <div className="form-group ">
-                <button type="submit" className="btn btn-primary btn-lg btn-block">Login</button>
+                <button type="submit" className="btn btn-primary btn-lg btn-block">Přihlásit</button>
               </div>
               <div className="login-register">
-                Not registered yet?  <Link to="/register">Register</Link>
+                Ještě nejste zaregistrovaní?  <Link to="/register">Registrovat</Link>
               </div>
 
             </form>
@@ -127,4 +126,5 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, { userLogged })(LoginPageRaw)
+export default connect(mapStateToProps, { userLogged, loginAction })(LoginPageRaw)
+//export default connect(undefined, { loginAction })(LoginPageRaw)

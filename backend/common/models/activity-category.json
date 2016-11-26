@@ -1,6 +1,6 @@
 {
-  "name": "EshopCategory",
-  "plural": "categories",
+  "name": "ActivityCategory",
+  "plural": "ActivityCategories",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {
@@ -13,11 +13,11 @@
     }
   },
   "validations": [],
-  "relations": {
-    "products": {
+  "relations": {    
+	"activitySubcategory": {
       "type": "hasMany",
-      "model": "EshopProduct",
-      "foreignKey": "categoryId"
+      "model": "ActivitySubcategory",
+      "foreignKey": "category_id"
     }
   },
   "acls": [],
