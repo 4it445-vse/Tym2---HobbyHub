@@ -22,6 +22,7 @@ class RegistrationPageRaw extends Component {
     this._addNotification = this._addNotification.bind(this);
     this.handleUserBlur = this.handleUserBlur.bind(this);
     this.handleEmailBlur = this.handleEmailBlur.bind(this);
+    this.handleEmailFocus = this.handleEmailFocus.bind(this);
     this.props.userLogged(false);
     this.state = {
       password:"",
@@ -52,6 +53,13 @@ class RegistrationPageRaw extends Component {
         this._notificationSystem.addNotification({
           title: 'Error!',
           message: 'Během registrace došlo k chybě.',
+          level: 'error'
+        });
+        break;
+      case "error2":
+        this._notificationSystem.addNotification({
+          title: 'Error!',
+          message: 'Zkontrolujte zda máte správně vyplněna všechna pole.',
           level: 'error'
         });
         break;
@@ -100,25 +108,15 @@ class RegistrationPageRaw extends Component {
         })
         .catch(error => {
           this._addNotification("error", event);
-
-          //setTimeout(function(){},5000);
-
-
-
           console.log(error);
-          if (error){
-
-            // TODO tohle je cilove chovani, ale ted to nechceme
-            //browserHistory.goBack()
-          }
-
           const { response } = error;
           const { errors } = response.data.error.details;
 
           this.setState({ errors });
         });
     } else {
-      console.log(this.pwdValid);
+
+      this._addNotification("error2", event);
     }
   }
 
@@ -174,11 +172,11 @@ class RegistrationPageRaw extends Component {
   }
 
   handleUserBlur(){
+    if(this.state.username){
     const regData = {
         username: this.state.username
       };
 
-    //TODO: Dodělat až bude odpovídající služba
     api.get('Customers/'+this.state.username+'/findByUsername')
       .then(({ data }) => {
         console.log('data', data);
@@ -191,27 +189,39 @@ class RegistrationPageRaw extends Component {
       .catch(error => {
         console.log(error);
       });
+    }
   }
 
   handleEmailBlur(){
-    const regData = {
-        username: this.state.email
-      };
+    console.log(this.state.email);
+    console.log(this.state.emailValid);
+    if(this.state.email &&
+      this.emailValid){
+      const regData = {
+          username: this.state.email
+        };
 
-    //TODO: Dodělat až bude odpovídající služba
-    api.get('Customers/'+this.state.email+'/findByEmail')
-      .then(({ data }) => {
-        console.log('data', data);
-        if(data.length>0){
+      //TODO: Dodělat až bude odpovídající služba
+      api.get('Customers/'+this.state.email+'/findByEmail')
+        .then(({ data }) => {
+          console.log('data', data);
+          if(data.length>0){
+            this.setState({emailValid:false});
+          } else {
+            this.setState({emailValid:true});
+          }
+        })
+        .catch(error => {
+          console.log(error);
           this.setState({emailValid:false});
-        } else {
-          this.setState({emailValid:true});
-        }
-      })
-      .catch(error => {
-        console.log(error);
-        this.setState({emailValid:false});
-      });
+        });
+    } else {
+      this.setState({emailValid:true});
+    }
+  }
+
+  handleEmailFocus(){
+    this.setState({emailValid:true});
   }
 
   render() {
@@ -219,10 +229,6 @@ class RegistrationPageRaw extends Component {
     if(windowHeight > 690) {
       windowHeight = 690
     }
-
-  /*  console.log("pwdState::", this.state.password);
-    console.log("confState::", this.state.confirm);
-    console.log("target::", event.target.value);*/
 
     var imgStyle = {
         backgroundImage: 'url(' + bgImage + ')',
@@ -271,16 +277,6 @@ class RegistrationPageRaw extends Component {
             <h2 className="title">Registrace</h2>
             <form className="form-horizontal" onSubmit={this.onSubmit}>
 
-              {/*<div className="form-group required">
-                <label htmlFor="name" className="cols-sm-2 control-label">Jméno</label>
-                <div className="cols-sm-10">
-                <div className="input-group">
-                <span className="input-group-addon"><i className="fa fa-user fa" aria-hidden="true"></i></span>
-                <input type="text" onChange={this.onUserInput} className="form-control" name="name" id="name"  placeholder="Zadejte Jméno"/>
-                </div>
-                </div>
-              </div>*/}
-
               <div className="form-group required">
                 <label htmlFor="username" className="cols-sm-2 control-label">Uživatelské jméno</label>
                 <div className="cols-sm-10">
@@ -298,7 +294,7 @@ class RegistrationPageRaw extends Component {
                 <div className="cols-sm-10">
                   <div className={"input-group " + emailValid}>
                     <span className="input-group-addon"><i className="fa fa-envelope fa" aria-hidden="true"></i></span>
-                    <input type="email" onChange={this.onUserInput} onBlur={this.handleEmailBlur} className="form-control"
+                    <input type="email" onChange={this.onUserInput} onBlur={this.handleEmailBlur} onFocus={this.handleEmailFocus} className="form-control"
                       name="email" id="email"  placeholder="Zadejte Email" required/>
                   </div>
                   {this.emailCheckText()}
