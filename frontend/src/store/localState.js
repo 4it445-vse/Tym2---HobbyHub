@@ -9,11 +9,12 @@ export function loadState() {
 }
 
 export function saveState(state) {
+  console.log('SAVE STATE DATA',state);
   try {
     const serializedState = JSON.stringify(state);
-    console.log('saveState', serializedState)
+    console.log('saveStateData', serializedState)
     localStorage.setItem('state', serializedState);
   } catch (error) {
-    // ignore errors
+    console.log('saveStateError', error);
   }
 }
