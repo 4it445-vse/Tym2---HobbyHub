@@ -1,14 +1,13 @@
 import React, { Component } from 'react'
-import { Link, browserHistory } from 'react-router';
+import { Link } from 'react-router';
 import $ from 'jquery';
 
 import './RegistrationPage.css';
 import { connect } from 'react-redux';
-import { userLogged, userSession, getSession, loginAction } from '../actions'
+import { userLogged, loginAction } from '../actions'
 import api from '../api.js';
 import { setAuthToken } from '../api'
-
-import { FormGroup, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
+import { loadState, saveState } from  '../store/localState'
 
 const bgImage = require('../img/Rock-climbing-Wallpaper.jpg')
 
@@ -32,6 +31,7 @@ class LoginPageRaw extends Component {
 
   // <button className="btn btn-default" onClick={this.testRequest}>Test</button>
   testRequest() {
+    console.log('loadState output: ',loadState());
     api.get('Customers/count')
       .then(({ data }) => {
         console.log('testRequestData', data)
@@ -53,6 +53,7 @@ class LoginPageRaw extends Component {
           id, // id je token
         } = data;
 
+        saveState({...loadState(), authToken: id, userId: userId})
         setAuthToken(id)
         loginAction(id, userId)
 
@@ -79,6 +80,7 @@ class LoginPageRaw extends Component {
 
     return (
       <div className="container-fluid" style={imgStyle}>
+        <button className="btn btn-default" onClick={this.testRequest}>Test</button>
         <div className="row main">
           <div className="main-login main-center">
             <h2 className="title">Přihlášení</h2>
@@ -127,4 +129,3 @@ const mapStateToProps = (state) => {
 }
 
 export default connect(mapStateToProps, { userLogged, loginAction })(LoginPageRaw)
-//export default connect(undefined, { loginAction })(LoginPageRaw)

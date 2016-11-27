@@ -1,7 +1,7 @@
 import throttle from 'lodash/throttle';
 import { createStore } from 'redux'
 
-import { rootReducer, userReducer } from '../reducers'
+import { rootReducer } from '../reducers'
 
 function stateThatShouldBeSaved(state) {
   const {
@@ -16,16 +16,16 @@ function stateThatShouldBeSaved(state) {
 }
 
 export function configureStore(preloadedState, saveState) {
+  console.log('configureStore saveState', saveState);
   const store = createStore(
     rootReducer,
     preloadedState,
-    userReducer,
   );
 
   if (saveState) {
     store.subscribe(throttle(() => {
       const state = store.getState();
-      console.log('state:', state);
+      console.log('configureStore state:', state);
       const stateToSave = stateThatShouldBeSaved(state);
       saveState(stateToSave);
     }, 1000));

@@ -14,7 +14,7 @@ export class TopNavigationRaw extends Component {
       <nav className="navbar navbar-default navbar-fixed-top" role="navigation">
         {
           (isUserLogged ?
-            <LoggedUserNavigation logoutAction={logoutAction()} />
+            <LoggedUserNavigation logoutAction={logoutAction} />
             :
             <DefaultNavigation/>)
         }
@@ -29,4 +29,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, { isUserLogged })(TopNavigationRaw)
+export default connect(mapStateToProps, { isUserLogged, logoutAction })(TopNavigationRaw)

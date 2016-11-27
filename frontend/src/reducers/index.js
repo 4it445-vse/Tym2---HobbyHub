@@ -42,8 +42,8 @@ const userReducer = (state = initialUserState, action) => {
 }
 
 const auth = (state = {}, action) => {
+  console.log('auth action', action);
   switch (action.type) {
-
     case 'LOGIN':
       const {
         authToken,
