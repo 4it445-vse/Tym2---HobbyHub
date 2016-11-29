@@ -20,8 +20,23 @@ console.log('username: ', username); // voila!
    console.log("cbbb: ", typeof cb);
    Customer.find({where: {username: username}}, function(err, user) {
       if (err) { return cb(err); }
-
-      cb(null, user);
+      if (user.length > 0) cb(null, true);
+      else
+        cb(null, false);
+	      
+	  });
+  };
+  
+  Customer.findByEmail = function(email, cb) {
+ 
+console.log('email: ', email); // voila!
+   console.log("cbbb: ", typeof cb);
+   Customer.find({where: {email: email}}, function(err, user) {
+      if (err) { return cb(err); }
+      if (user.length > 0) cb(null, true);
+      else
+        cb(null, false);
+	      
 	  });
   };
   
@@ -43,6 +58,28 @@ console.log('username: ', username); // voila!
       // returns: { root: true, type: 'boolean' },
       http: [
         { verb: 'get', path: '/:username/findByUsername' }
+      ]
+    }
+	
+	);
+	
+      Customer.remoteMethod(
+	 'findByEmail',
+    {
+      description : 'Get user by email MY',
+      accepts: {
+        arg: 'email',
+        type: 'string',
+        description: 'email',
+        required: true,
+        http: { source: 'path' }
+      },
+      accessType: 'READ',
+      returns: { root: true, type: 'boolean' },
+      // alternately, to return the boolean "unwrapped":
+      // returns: { root: true, type: 'boolean' },
+      http: [
+        { verb: 'get', path: '/:email/findByEmail' }
       ]
     }
 	
