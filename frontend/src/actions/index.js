@@ -13,6 +13,20 @@ export const dummyAction = data => {
   };
 };
 
+export const loginAction = (authToken, userId) => {
+  return {
+    type: 'LOGIN',
+    authToken,
+    userId
+  }
+}
+
+export const logoutAction = () => {
+  return {
+    type: 'LOGOUT',
+  }
+}
+
 export const isUserLogged = () => {
   return {
     type: IS_USER_LOGGED
@@ -26,6 +40,7 @@ export const userLogged = boolean => {
   };
 };
 
+// můžeme smazat?
 export const userSession = (id, customerId) => {
   return {
     type: USER_SESSION,
@@ -33,6 +48,7 @@ export const userSession = (id, customerId) => {
   };
 };
 
+// můžeme smazat?
 export const getSession = () => {
   return {
     type: GET_SESSION
