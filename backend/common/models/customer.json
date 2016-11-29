@@ -33,6 +33,13 @@
       "principalId": "$everyone",
       "permission": "ALLOW",
       "property": "findByUsername"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "findByEmail"
     }
   ],
   "methods": {}
