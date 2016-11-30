@@ -9,6 +9,9 @@ import api from '../api.js';
 import { setAuthToken } from '../api'
 import { loadState, saveState } from  '../store/localState'
 
+var ReactDOM = require('react-dom');
+var NotificationSystem = require('react-notification-system');
+
 const bgImage = require('../img/Rock-climbing-Wallpaper.jpg')
 
 class LoginPageRaw extends Component {
@@ -19,6 +22,33 @@ class LoginPageRaw extends Component {
     this.handleEmailChange = this.handleEmailChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
     this.testRequest = this.testRequest.bind(this);
+    this._addNotification = this._addNotification.bind(this);
+  }
+
+  _notificationSystem: null;
+
+  _addNotification(cause, event) {
+    event.preventDefault();
+    switch (cause) {
+      case "success":
+        this._notificationSystem.addNotification({
+          title: 'Success!',
+          message: 'Přihlášení proběhlo úspěšně',
+          level: 'info'
+        });
+        break;
+      case "error":
+        this._notificationSystem.addNotification({
+          title: 'Error!',
+          message: 'Během přihlášení došlo k chybě.',
+          level: 'error'
+        });
+        break;
+    }
+  }
+
+  componentDidMount() {
+    this._notificationSystem = this.refs.notificationSystem;
   }
 
   handleEmailChange(e) {
@@ -58,13 +88,15 @@ class LoginPageRaw extends Component {
         loginAction(id, userId)
 
         this.setState({ error: null });
-        alert('Success!');
+        this._addNotification("success", event);
+        //alert('Success!');
       })
       .catch(error => {
         const { response } = error;
         const { message = "Login failed..." } = response.data.error || {};
 
         this.setState({ error: message });
+        this._addNotification("error", event);
       });
   }
 
@@ -115,6 +147,9 @@ class LoginPageRaw extends Component {
               </div>
 
             </form>
+            <div>
+              <NotificationSystem ref="notificationSystem"/>
+            </div>
           </div>
         </div>
       </div>
