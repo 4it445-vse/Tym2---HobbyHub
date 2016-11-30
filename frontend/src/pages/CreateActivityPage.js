@@ -7,11 +7,11 @@ import { connect } from 'react-redux';
 import { userLogged, isUserLogged, getSession } from '../actions'
 import api from '../api.js';
 
-// import DateTimePicker from 'react-datetimepicker-bootstrap';
-// import DatePicker from 'react-datepicker';
 import Datetime from 'react-datetime';
 import './DateTimePicker.css';
-
+import Autocomplete from 'react-google-autocomplete';
+import Select from 'react-select';
+import './Select.css';
 const bgImage = require('../img/Rock-climbing-Wallpaper.jpg')
 
 // var DatePicker = require("react-bootstrap-date-picker");
@@ -37,9 +37,9 @@ class CreateActivityPageRaw extends Component {
   handleNameChange(e) {
    this.setState({name: e.target.value});
   }
-  handleKategoryChange(e){
-    console.log(e)
-    this.setState({kategory: e.target.value});
+  handleKategoryChange(val){
+    console.log(val)
+    this.setState({kategory: val});
   }
   handleCityChange(e) {
    this.setState({city: e.target.value});
@@ -117,6 +117,11 @@ class CreateActivityPageRaw extends Component {
         backgroundSize: 'cover'
     }
 
+    var options = [
+        { value: 'one', label: 'One' },
+        { value: 'two', label: 'Two' }
+    ];
+
 
 
     return (
@@ -140,36 +145,42 @@ class CreateActivityPageRaw extends Component {
 
 
 <div className="form-group ">
-  <label htmlFor="activity" className="cols-sm-2 control-label">Select test</label>
+  <label htmlFor="activity" className="cols-sm-2 control-label">Kategorie</label>
   <div className="cols-sm-10">
     <div className="input-group">
       <span className="input-group-addon"><i className="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-      <select type="selectpicker" className="form-control" name="activity" id="activity"  title="Zvolte kategorii" onChange={this.handleKategoryChange}>
-<option id="1">Mustard</option>
-<option id="2">Ketchup</option>
-<option id="3">Relish</option>
-</select>
+
+<Select
+    name="form-field-name"
+    value={this.state ? this.state.kategory : 'one'}
+    options={options}
+    title="Zvolte kategorii"
+    onChange={this.handleKategoryChange}
+    clearable={true}
+    placeholder="Zvolte kategorii"
+/>
+
  </div>
   </div>
 </div>
 
 
               <div className="form-group">
-                <label htmlFor="city" className="cols-sm-2 control-label">Město</label>
-                <div className="cols-sm-10">
-                  <div className="input-group">
-                    <span className="input-group-addon"><i className="fa fa-envelope fa" aria-hidden="true"></i></span>
-                    <input type="text" className="form-control" name="city" id="city"  placeholder="Zadejte město" onChange={this.handleCityChange}/>
-                  </div>
-                </div>
-              </div>
-
-              <div className="form-group">
                 <label htmlFor="address" className="cols-sm-2 control-label">Adresa</label>
                 <div className="cols-sm-10">
                   <div className="input-group">
                     <span className="input-group-addon"><i className="fa fa-users fa" aria-hidden="true"></i></span>
-                    <input type="text" className="form-control" name="address" id="address"  placeholder="Vložte adresu" onChange={this.handleAddressChange}/>
+                    {/* <input type="text" className="form-control" name="address" id="address"  placeholder="Vložte adresu" onChange={this.handleAddressChange}/> */}
+                    <Autocomplete
+                      className="form-control"
+                        onPlaceSelected={(place) => {
+                        console.log(place);
+                        }}
+                        types={['geocode']}
+                        placeholder="Vložte adresu"
+
+                      />
+
                   </div>
                 </div>
               </div>
@@ -215,7 +226,6 @@ class CreateActivityPageRaw extends Component {
             </form>
           </div>
         </div>
-
       </div>
     );
   }
