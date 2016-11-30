@@ -167,14 +167,14 @@ class CreateActivityPageRaw extends Component {
 
 
       var formData = {name: this.state.name,
-                      kategory: this.state.kategory,
-                      subkategory: this.state.subkategory,
+                      category_id: this.state.kategory,
+                      subcategory_id: this.state.subkategory,
                       city: this.state.city,
                       address: this.state.address,
                       date_and_time: this.state.date_and_time,
                       user_count: this.state.user_count,
                       about: this.state.about,
-                      customerId: this.state.customerId}
+                      customer_id: this.state.customerId}
 
       api.post('Activities', formData)
       .then(({ data }) => {
