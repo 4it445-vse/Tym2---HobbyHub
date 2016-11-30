@@ -19,6 +19,8 @@ export class LoggedUserNavigation extends Component {
     saveState({})
     setAuthToken(undefined)
     this.props.logoutAction()
+    this.props.userLogged(false)
+    this.props.history.push('/login')
   }
 
   render() {
@@ -40,6 +42,8 @@ export class LoggedUserNavigation extends Component {
                   <span className="glyphicon glyphicon-heart"></span> Přátelé</text></Link></MenuItem>
                 <MenuItem><Link to="/settings"><text className="text-muted">
                   <span className="glyphicon glyphicon-cog"></span> Nastavení</text></Link></MenuItem>
+                <MenuItem onClick={this.onLogout}><Link to="/login"><text className="text-muted">
+                  <span className="glyphicon glyphicon-log-out"></span> Odhlásit se</text></Link></MenuItem>
               </DropdownButton>
             </Nav>
           </div>
