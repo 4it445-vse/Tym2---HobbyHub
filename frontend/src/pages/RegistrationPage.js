@@ -180,7 +180,7 @@ class RegistrationPageRaw extends Component {
     api.get('Customers/'+this.state.username+'/findByUsername')
       .then(({ data }) => {
         console.log('data', data);
-        if(data.length>0){
+        if(data){
           this.setState({userValid:false});
         } else {
           this.setState({userValid:true});
@@ -205,7 +205,7 @@ class RegistrationPageRaw extends Component {
       api.get('Customers/'+this.state.email+'/findByEmail')
         .then(({ data }) => {
           console.log('data', data);
-          if(data.length>0){
+          if(data){
             this.setState({emailValid:false});
           } else {
             this.setState({emailValid:true});
