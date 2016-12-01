@@ -14,7 +14,7 @@
   },
   "validations": [],
   "relations": {
-     "activitySubcategory": {
+    "activitySubcategory": {
       "type": "belongsTo",
       "model": "ActivitySubcategory",
       "foreignKey": "category_id"

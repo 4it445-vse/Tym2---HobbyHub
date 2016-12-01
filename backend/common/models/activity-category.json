@@ -13,8 +13,8 @@
     }
   },
   "validations": [],
-  "relations": {    
-	"activitySubcategory": {
+  "relations": {
+    "activitySubcategory": {
       "type": "hasMany",
       "model": "ActivitySubcategory",
       "foreignKey": "category_id"
