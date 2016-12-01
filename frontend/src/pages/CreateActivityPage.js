@@ -177,7 +177,7 @@ class CreateActivityPageRaw extends Component {
   handleAddressChange(e) {
     console.log(e)
     this.setState({address: e.formatted_address});
-    this.setState({city: e.url})
+    this.setState({city: e.address_components[2].long_name})
   }
 
   handleDateChange(e) {
@@ -209,14 +209,14 @@ class CreateActivityPageRaw extends Component {
 
 
       var formData = {name: this.state.name,
-                      category_id: this.state.kategory,
-                      subcategory_id: this.state.subkategory,
+                      kategory: this.state.kategory,
+                      subkategory: this.state.subkategory,
                       city: this.state.city,
                       address: this.state.address,
                       date_and_time: this.state.date_and_time,
                       user_count: this.state.user_count,
                       about: this.state.about,
-                      customer_id: this.state.customerId}
+                      customerId: this.state.customerId}
 
       api.post('Activities', formData)
       .then(({ data }) => {
@@ -381,7 +381,6 @@ class CreateActivityPageRaw extends Component {
                   </div>
                 </div>
               </div>
-
 
               <div className="form-group ">
                 <button type="submit" className="btn btn-primary btn-lg btn-block">Vytvořit</button>
