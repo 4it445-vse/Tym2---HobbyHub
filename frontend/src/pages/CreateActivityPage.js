@@ -62,6 +62,18 @@ class CreateActivityPageRaw extends Component {
                   user_count: 2,
                   subDisabled: true});
 
+    this.state = {
+      name: "",
+      category_id: "",
+      subcategory_id: "",
+      city: "",
+      address: "",
+      date_and_time: "",
+      user_count: "",
+      about: "",
+      customer_id: ""
+    };
+
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleKategoryChange = this.handleKategoryChange.bind(this);
     this.handleSubkategoryChange = this.handleSubkategoryChange.bind(this);
@@ -185,14 +197,14 @@ class CreateActivityPageRaw extends Component {
     console.log('submitted')
 
 // TODO Odebrat
-      console.log('Name: ' + this.state.name)
+      /*console.log('Name: ' + this.state.name)
       console.log('Kategory: ' + this.state.kategory)
       console.log('Subkategory: ' + this.state.subkategory)
       console.log('City: ' + this.state.city)
       console.log('Address: ' + this.state.address)
       console.log('Date: ' + this.state.date_and_time)
       console.log('Users: ' + this.state.user_count)
-      console.log('About: ' + this.state.about)
+      console.log('About: ' + this.state.about)*/
 
 
 
