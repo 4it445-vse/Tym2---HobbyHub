@@ -40,6 +40,8 @@ export class ActivityItem extends Component {
     const { id, name, city, date_and_time } = activity;
     const parsedName = this.renderName();
     const generatedLink = this.renderLink(id, parsedName);
+    var date = new Date(date_and_time);
+    var parsedDate = date.getDate() + '.' + (date.getMonth() + 1) + '.' + date.getFullYear();
 
     return (
       <Thumbnail src="https://www.ticketstream.cz/tsp/static/czech/cs/partnership/images/16.png" alt="242x200">
@@ -48,7 +50,7 @@ export class ActivityItem extends Component {
           <ReactTooltip place="top"  type="info" effect="float" />
         </h3>
         <p>Město: <span className="city">{city}</span></p>
-        <p>Datum: <span className="date">{date_and_time}</span></p>
+        <p>Datum: <span className="date">{parsedDate}</span></p>
         <p>
           <Button bsStyle="primary">Attend</Button>&nbsp;
           <Link className="btn btn-default" to={`/activityDetail/${id}`} role="button">View</Link>
