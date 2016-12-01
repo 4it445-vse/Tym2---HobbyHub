@@ -488,7 +488,7 @@ class CreateActivityPageRaw extends Component {
                 <div className="cols-sm-10">
                   <div className="input-group">
                     <span className="input-group-addon"><i className="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-                    <textarea className="form-control" className="form-control" rows="5" name="comment" id="comment" placeholder="Krátký popis" onChange={this.handleAboutChange}></textarea>
+                    <textarea required className="form-control" className="form-control" rows="5" name="comment" id="comment" placeholder="Krátký popis" onChange={this.handleAboutChange}></textarea>
                   </div>
                 </div>
               </div>

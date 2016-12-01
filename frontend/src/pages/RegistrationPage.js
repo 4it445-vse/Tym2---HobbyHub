@@ -225,15 +225,14 @@ class RegistrationPageRaw extends Component {
   }
 
   render() {
-    var windowHeight = $(window).height();
-    if(windowHeight > 690) {
-      windowHeight = 690
-    }
+    // var windowHeight = $(window).height();
+    // if(windowHeight > 690) {
+    //   windowHeight = 690
+    // }
 
     var imgStyle = {
         backgroundImage: 'url(' + bgImage + ')',
         backgroundSize: 'cover',
-        height: windowHeight,
     }
 
     var pwdValid = "";
