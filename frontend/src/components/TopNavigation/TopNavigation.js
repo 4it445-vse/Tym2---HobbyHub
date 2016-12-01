@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
 
-import { isUserLogged, logoutAction } from '../../actions'
+import { isUserLogged, userLogged, logoutAction } from '../../actions'
 import { LoggedUserNavigation } from './LoggedUserNavigation'
 import { DefaultNavigation } from './DefaultNavigation'
 
@@ -14,7 +14,7 @@ export class TopNavigationRaw extends Component {
       <nav className="navbar navbar-default navbar-fixed-top" role="navigation">
         {
           (isUserLogged ?
-            <LoggedUserNavigation logoutAction={logoutAction} />
+            <LoggedUserNavigation logoutAction={logoutAction} userLogged={userLogged}/>
             :
             <DefaultNavigation/>)
         }

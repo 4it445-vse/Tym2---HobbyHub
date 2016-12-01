@@ -24,6 +24,7 @@ const userReducer = (state = initialUserState, action) => {
       return state;
 
     case USER_LOGGED:
+      console.log(`USER_LOGGED action--`, state);
       return {
         ...state,
         isUserLogged: action.payload
