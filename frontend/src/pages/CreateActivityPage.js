@@ -14,6 +14,9 @@ import Select from 'react-select';
 import Number from 'react-numeric-input'
 import './Select.css';
 
+var ReactDOM = require('react-dom');
+var NotificationSystem = require('react-notification-system');
+
 const bgImage = require('../img/Rock-climbing-Wallpaper.jpg')
 
 const sport = [
@@ -67,7 +70,34 @@ class CreateActivityPageRaw extends Component {
     this.handleDateChange = this.handleDateChange.bind(this);
     this.handleUserCountChange = this.handleUserCountChange.bind(this);
     this.handleAboutChange = this.handleAboutChange.bind(this);
+    this._addNotification = this._addNotification.bind(this);
 
+  }
+
+  _notificationSystem: null;
+
+  _addNotification(cause, event) {
+    event.preventDefault();
+    switch (cause) {
+      case "success":
+        this._notificationSystem.addNotification({
+          title: 'Success!',
+          message: 'Vaše aktivita byla úspěšně vytvořena!',
+          level: 'info'
+        });
+        break;
+      case "error":
+        this._notificationSystem.addNotification({
+          title: 'Error!',
+          message: 'Během vytváření aktivity došlo k chybě.',
+          level: 'error'
+        });
+        break;
+    }
+  }
+
+  componentDidMount() {
+    this._notificationSystem = this.refs.notificationSystem;
   }
 
   handleNameChange(e) {
@@ -181,15 +211,18 @@ class CreateActivityPageRaw extends Component {
         console.log('data', data);
 
         if (data){
-
-        this.props.history.push(`/activityDetail/${data.id}`);
+          this._addNotification("success", event);
+          setTimeout(() => {
+            this.props.history.push(`/activityDetail/${data.id}`)
+          },1500);
       }else{
         // isUserLogged = data
-
+        this._addNotification("error", event);
         this.setState({ errors: {} });
       };
       })
       .catch(error => {
+          this._addNotification("error", event);
         const { response } = error;
         console.log(error)
         const { errors } = response.data.error.details;
@@ -240,47 +273,47 @@ class CreateActivityPageRaw extends Component {
 
 
 
-<div className="form-group ">
-  <label htmlFor="activity" className="cols-sm-2 control-label">Kategorie</label>
-  <div className="cols-sm-10">
-    <div className="input-group">
-      <span className="input-group-addon"><i className="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+              <div className="form-group ">
+                <label htmlFor="activity" className="cols-sm-2 control-label">Kategorie</label>
+                <div className="cols-sm-10">
+                  <div className="input-group">
+                    <span className="input-group-addon"><i className="fa fa-lock fa-lg" aria-hidden="true"></i></span>
 
-<Select
-    name="form-field-name"
-    value={this.state ? this.state.kategory : ''}
-    options={kategoryOptions}
-    title="Zvolte kategorii"
-    onChange={this.handleKategoryChange}
-    clearable={true}
-    placeholder="Zvolte kategorii"
-/>
+                    <Select
+                      name="form-field-name"
+                      value={this.state ? this.state.kategory : ''}
+                      options={kategoryOptions}
+                      title="Zvolte kategorii"
+                      onChange={this.handleKategoryChange}
+                      clearable={true}
+                      placeholder="Zvolte kategorii"
+                    />
 
- </div>
-  </div>
-</div>
+                  </div>
+                </div>
+              </div>
 
-<div className="form-group ">
-  <label htmlFor="activity" className="cols-sm-2 control-label">Podkategorie</label>
-  <div className="cols-sm-10">
-    <div className="input-group">
-      <span className="input-group-addon"><i className="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+              <div className="form-group ">
+                <label htmlFor="activity" className="cols-sm-2 control-label">Podkategorie</label>
+                <div className="cols-sm-10">
+                  <div className="input-group">
+                    <span className="input-group-addon"><i className="fa fa-lock fa-lg" aria-hidden="true"></i></span>
 
-<Select
-    name="form-field-name"
-    value={this.state ? this.state.subkategory : ''}
-    options={this.state ? this.state.subkategoryOptions : []}
-    title="Zvolte kategorii"
-    onChange={this.handleSubkategoryChange}
-    clearable={true}
-    placeholder="Zvolte podkategorii"
-    disabled={this.state ? (this.state.subDisabled == null ? true : this.state.subDisabled) : true}
-    autocomplete={true}
-/>
+                    <Select
+                      name="form-field-name"
+                      value={this.state ? this.state.subkategory : ''}
+                      options={this.state ? this.state.subkategoryOptions : []}
+                      title="Zvolte kategorii"
+                      onChange={this.handleSubkategoryChange}
+                      clearable={true}
+                      placeholder="Zvolte podkategorii"
+                      disabled={this.state ? (this.state.subDisabled == null ? true : this.state.subDisabled) : true}
+                      autocomplete={true}
+                    />
 
- </div>
-  </div>
-</div>
+                  </div>
+                </div>
+              </div>
 
 
               <div className="form-group">
@@ -290,14 +323,14 @@ class CreateActivityPageRaw extends Component {
                     <span className="input-group-addon"><i className="fa fa-users fa" aria-hidden="true"></i></span>
                     <Autocomplete
                       className="form-control"
-                        onPlaceSelected={(place) => {
+                      onPlaceSelected={(place) => {
                         console.log(place);
                         this.handleAddressChange(place);
-                        }}
-                        types={['geocode']}
-                        placeholder="Vložte adresu"
+                      }}
+                      types={['geocode']}
+                      placeholder="Vložte adresu"
 
-                      />
+                    />
 
                   </div>
                 </div>
@@ -343,6 +376,9 @@ class CreateActivityPageRaw extends Component {
               </div>
 
             </form>
+            <div>
+              <NotificationSystem ref="notificationSystem"/>
+            </div>
           </div>
         </div>
       </div>
