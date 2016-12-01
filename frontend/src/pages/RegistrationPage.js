@@ -7,120 +7,120 @@ import './RegistrationPage.css';
 import { connect } from 'react-redux';
 import { userLogged } from '../actions';
 
-const bgImage = require('../img/Rock-climbing-Wallpaper.jpg')
+var ReactDOM = require('react-dom');
+var NotificationSystem = require('react-notification-system');
+
+const bgImage = require('../img/Rock-climbing-Wallpaper.jpg');
+
 
 class RegistrationPageRaw extends Component {
-
   constructor(props) {
     super(props);
     this.onSubmit = this.onSubmit.bind(this);
-/*<<<<<<< HEAD
-    this.props.userLogged(false);
-    this.handleNameChange = this.handleNameChange.bind(this);
-    this.handleUsernameChange = this.handleUsernameChange.bind(this);
-    this.handlePasswordChange = this.handlePasswordChange.bind(this);
-    this.handleEmailChange = this.handleEmailChange.bind(this);
-  }
 
-  handleNameChange(e) {
-   this.setState({name: e.target.value});
-  }
-  handleUsernameChange(e) {
-   this.setState({username: e.target.value});
-  }
-  handlePasswordChange(e) {
-   this.setState({password: e.target.value});
-  }
-  handleEmailChange(e) {
-   this.setState({email: e.target.value});
-=======*/
     this.onUserInput = this.onUserInput.bind(this);
+    this._addNotification = this._addNotification.bind(this);
+    this.handleUserBlur = this.handleUserBlur.bind(this);
+    this.handleEmailBlur = this.handleEmailBlur.bind(this);
+    this.handleEmailFocus = this.handleEmailFocus.bind(this);
     this.props.userLogged(false);
     this.state = {
       password:"",
       confirm:"",
-      pwdVal: true,
-      errors: {}
+      username:"",
+      errors: {},
+      userValid: true,
+      emailValid: true
     };
-    this.pwdValid =true;
-//>>>>>>> fc3f317a1f885c1f5413499ccab426a3c3818c3a
+    this.pwdValid   = true;
+    this.emailValid = true;
+    this.pwdComplex = true;
+  }
+
+  _notificationSystem: null;
+
+  _addNotification(cause, event) {
+    event.preventDefault();
+    switch (cause) {
+      case "success":
+        this._notificationSystem.addNotification({
+          title: 'Success!',
+          message: 'Vaše registrace byla úspěšně dokončena!',
+          level: 'info'
+        });
+        break;
+      case "error":
+        this._notificationSystem.addNotification({
+          title: 'Error!',
+          message: 'Během registrace došlo k chybě.',
+          level: 'error'
+        });
+        break;
+      case "error2":
+        this._notificationSystem.addNotification({
+          title: 'Error!',
+          message: 'Zkontrolujte zda máte správně vyplněna všechna pole.',
+          level: 'error'
+        });
+        break;
+      default:
+    }
+  }
+
+  componentDidMount() {
+    this._notificationSystem = this.refs.notificationSystem;
   }
 
   onSubmit(event) {
     event.preventDefault();
-/*<<<<<<< HEAD
-    console.log('submitted')
 
-// TODO Odebrat
-      console.log('Email: ' + this.state.email)
-      console.log('Password: ' + this.state.password)
-      console.log('Name: ' + this.state.name)
-      console.log('Username: ' + this.state.username)
-
-
-      var formData = {email: this.state.email,
-                      password: this.state.password,
-                      name: this.state.name,
-                      username: this.state.username}
-
-      api.post('Customers/replaceOrCreate', formData)
-      .then(({ data }) => {
-        console.log('data', data);
-
-        if (data){
-
-        browserHistory.goBack()
-      }else{
-        // isUserLogged = data
-
-        this.setState({ errors: {} });
-      };
-      })
-      .catch(error => {
-        const { response } = error;
-        console.log(error)
-        const { errors } = response.data.error.details;
-
-        this.setState({ errors });
-      });
-
-
-=======*/
     console.log("name",this.state.name,"email",this.state.email)
-    console.log(this.pwdValid);
-    if(this.pwdValid){
-      const formData = {
-            "username": this.state.name + ' ' + this.state.username, //TODO prepsat aby to odpovidalo
-            "email": this.state.email,
-            "password": this.state.password
-          };
+    console.log(this.pwdValid && this.emailValid);
+    if(
+      this.pwdValid &&
+      this.emailValid &&
+      this.pwdComplex &&
+      this.state.userValid &&
+      this.state.emailValid
+    ){
 
-      api.post('Customers', formData)
+      const formData = new FormData(event.target);
+      const regData = {
+          username: formData.get('username'),
+          email : formData.get('email'),
+          password : formData.get('password')
+      };
+
+      console.log("regData---", regData);
+
+      api.post('Customers', regData)
         .then(({ data }) => {
-          console.log('data', data);
 
           if (data){
+            this._addNotification("success", event);
+            setTimeout(() => {
+              this.props.history.push('/login')
+            },1500);
 
-          this.props.history.push('/login');
-          // TODO tohle je cilove chovani, ale ted to nechceme
-          //browserHistory.goBack()
+            // TODO tohle je cilove chovani, ale ted to nechceme
+            //browserHistory.goBack()
           }
         })
         .catch(error => {
+          this._addNotification("error", event);
           console.log(error);
-
           const { response } = error;
           const { errors } = response.data.error.details;
 
           this.setState({ errors });
         });
     } else {
-      console.log(this.pwdValid);
+
+      this._addNotification("error2", event);
     }
   }
 
   onUserInput(event){
-
     if(event.target.name === "password" || event.target.name === "confirm"){
         if(event.target.value === this.state.confirm ||
           event.target.value === this.state.password){
@@ -129,12 +129,24 @@ class RegistrationPageRaw extends Component {
           this.pwdValid=false
         }
     }
+
+    if(event.target.name === "email"){
+      if (event.target.value.match(/^\w+([^\u0000-\u0080]?[\.!#$%^&*()\-+-]?\w+)*@\S+/g)) {
+        this.emailValid = true;
+      } else {
+        this.emailValid = false;
+      }
+    }
+
+    if(event.target.name === "password"){
+      if (event.target.value.match(/^((?=\S*?[A-Z])(?=\S*?[a-z])(?=\S*?[0-9])(?=\S*?[!"$%^&*_]).{8,12})$/g)) {
+        this.pwdComplex = true;
+      } else {
+        this.pwdComplex = false;
+      }
+    }
+
     switch (event.target.id) {
-      case "name":
-        this.setState({
-          name:event.target.value
-        });
-        break;
       case "email":
         this.setState({
           email:event.target.value
@@ -157,8 +169,59 @@ class RegistrationPageRaw extends Component {
         break;
       default:
     }
-//>>>>>>> fc3f317a1f885c1f5413499ccab426a3c3818c3a
+  }
 
+  handleUserBlur(){
+    if(this.state.username){
+    const regData = {
+        username: this.state.username
+      };
+
+    api.get('Customers/'+this.state.username+'/findByUsername')
+      .then(({ data }) => {
+        console.log('data', data);
+        if(data){
+          this.setState({userValid:false});
+        } else {
+          this.setState({userValid:true});
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
+    }
+  }
+
+  handleEmailBlur(){
+    console.log(this.state.email);
+    console.log(this.state.emailValid);
+    if(this.state.email &&
+      this.emailValid){
+      const regData = {
+          username: this.state.email
+        };
+
+      //TODO: Dodělat až bude odpovídající služba
+      api.get('Customers/'+this.state.email+'/findByEmail')
+        .then(({ data }) => {
+          console.log('data', data);
+          if(data){
+            this.setState({emailValid:false});
+          } else {
+            this.setState({emailValid:true});
+          }
+        })
+        .catch(error => {
+          console.log(error);
+          this.setState({emailValid:false});
+        });
+    } else {
+      this.setState({emailValid:true});
+    }
+  }
+
+  handleEmailFocus(){
+    this.setState({emailValid:true});
   }
 
   render() {
@@ -167,10 +230,6 @@ class RegistrationPageRaw extends Component {
       windowHeight = 690
     }
 
-  /*  console.log("pwdState::", this.state.password);
-    console.log("confState::", this.state.confirm);
-    console.log("target::", event.target.value);*/
-
     var imgStyle = {
         backgroundImage: 'url(' + bgImage + ')',
         backgroundSize: 'cover',
@@ -178,13 +237,37 @@ class RegistrationPageRaw extends Component {
     }
 
     var pwdValid = "";
+    var emailValid = "";
+    var userValid = "";
+    var pwdComplex = "";
+
     if(this.pwdValid){
       pwdValid = "";
     } else {
       pwdValid = "has-error";
     }
 
-//    console.log("STATE:", this.state);
+    if(this.pwdComplex){
+      pwdComplex = "";
+    } else {
+      pwdComplex = "has-error";
+    }
+
+    if(this.emailValid){
+      emailValid = "";
+    } else {
+      emailValid = "has-error";
+    }
+
+    if(!this.state.emailValid){
+      emailValid = "has-error";
+    }
+
+    if(this.state.userValid){
+      userValid = "";
+    } else {
+      userValid = "has-error";
+    }
 
     return (
       <div className="container-fluid" style={imgStyle}>
@@ -192,46 +275,41 @@ class RegistrationPageRaw extends Component {
 
           <div className="main-login main-center form-group">
             <h2 className="title">Registrace</h2>
-            <form className="form-horizontal" method="post" action="#">
+            <form className="form-horizontal" onSubmit={this.onSubmit}>
 
               <div className="form-group required">
-                <label htmlFor="name" className="cols-sm-2 control-label">Jméno</label>
+                <label htmlFor="username" className="cols-sm-2 control-label">Uživatelské jméno</label>
                 <div className="cols-sm-10">
-                  <div className="input-group">
-                    <span className="input-group-addon"><i className="fa fa-user fa" aria-hidden="true"></i></span>
-                    <input type="text" onChange={this.onUserInput} className="form-control" name="name" id="name"  placeholder="Enter your Name"/>
+                  <div className={"input-group " + userValid}>
+                    <span className="input-group-addon"><i className="fa fa-envelope fa" aria-hidden="true"></i></span>
+                    <input type="text" maxLength="20" onChange={this.onUserInput} onBlur={this.handleUserBlur} className="form-control" name="username" id="username"  placeholder="Zadejte Uživatelské jméno"
+                      required/>
                   </div>
-                </div>
-              </div>
-
-              <div className="form-group required">
-                <label htmlFor="username" className="cols-sm-2 control-label">Příjmení</label>
-                <div className="cols-sm-10">
-                  <div className="input-group">
-                    <span className="input-group-addon"><i className="fa fa-users fa" aria-hidden="true"></i></span>
-                    <input type="text" onChange={this.onUserInput} className="form-control" name="username" id="username"  placeholder="Enter your Surname"/>
-                  </div>
+                  {this.userCheckText()}
                 </div>
               </div>
 
               <div className="form-group required">
                 <label htmlFor="email" className="cols-sm-2 control-label">Email</label>
                 <div className="cols-sm-10">
-                  <div className="input-group">
+                  <div className={"input-group " + emailValid}>
                     <span className="input-group-addon"><i className="fa fa-envelope fa" aria-hidden="true"></i></span>
-                    <input type="text" onChange={this.onUserInput} className="form-control" name="email" id="email"  placeholder="Enter your Email"/>
+                    <input type="email" onChange={this.onUserInput} onBlur={this.handleEmailBlur} onFocus={this.handleEmailFocus} className="form-control"
+                      name="email" id="email"  placeholder="Zadejte Email" required/>
                   </div>
+                  {this.emailCheckText()}
+                  {this.emailExistsText()}
                 </div>
               </div>
-
 
               <div className="form-group required">
                 <label htmlFor="password" className="cols-sm-2 control-label">Heslo</label>
                 <div className="cols-sm-10">
-                  <div className={"input-group " + pwdValid}>
+                  <div className={"input-group " + pwdComplex}>
                     <span className="input-group-addon"><i className="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-                    <input type="password" onChange={this.onUserInput} className="form-control" name="password" id="password"  placeholder="Enter your Password"/>
+                    <input type="password" onChange={this.onUserInput} className="form-control" name="password" id="password"  placeholder="Zadejte Heslo" required/>
                   </div>
+                  {this.pwdCheckText('pwd')}
                 </div>
               </div>
 
@@ -240,22 +318,49 @@ class RegistrationPageRaw extends Component {
                 <div className="cols-sm-10">
                   <div className={"input-group " + pwdValid}>
                     <span className="input-group-addon"><i className="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-                    <input type="password" onChange={this.onUserInput} className="form-control" name="confirm" id="confirm"  placeholder="Confirm your Password"/>
+                    <input type="password" onChange={this.onUserInput} className="form-control" name="confirm" id="confirm"
+                      placeholder="Potvrďte Heslo" required/>
                   </div>
+                  {this.pwdCheckText('con')}
                 </div>
               </div>
 
               <div className="form-group">
-                <button type="button" onClick={this.onSubmit} className="btn btn-primary btn-lg btn-block login-button">Register</button>
+                <button type="submit" className="btn btn-primary btn-lg btn-block login-button">Register</button>
               </div>
+
               <div className="login-register">
                 <Link to="/login">Login</Link>
               </div>
             </form>
+            <div>
+              <NotificationSystem ref="notificationSystem"/>
+            </div>
           </div>
         </div>
       </div>
     );
+  }
+
+  pwdCheckText(type){
+    if(type === 'pwd' && !this.pwdComplex)    {
+      return (<div>Heslo musí obsahovat: a-z, A-Z, 0-9 a alespoň jeden znak z !"$%^&*_</div>)
+    }
+    if(type === 'con' && !this.pwdValid){
+      return (<div>Hesla se neshodují</div>)
+    }
+  }
+
+  emailCheckText(){
+    if(!this.emailValid) return (<div>Zadaný email není validní</div>)
+  }
+
+  emailExistsText(){
+    if(!this.state.emailValid) return (<div>Zadaný email již existuje</div>)
+  }
+
+  userCheckText(){
+    if(!this.state.userValid) return (<div>Zadané uživatelské jméno již existuje</div>)
   }
 }
 
