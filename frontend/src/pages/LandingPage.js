@@ -15,7 +15,7 @@ import './Select.css';
 
 import './LandingPage.css'
 
-const KEYS_TO_FILTERS = ['name', 'about', 'city', 'category']
+const KEYS_TO_FILTERS = ['name', 'about', 'city', 'subcategory_id']
 
 const sport = [
   { value: '1', label: 'Fotbal' },
