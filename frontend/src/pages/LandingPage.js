@@ -152,6 +152,12 @@ this.handleSubkategoryChange = this.handleSubkategoryChange.bind(this);
               });
               firstElement = jine[0].value
             break;
+            case null:
+              this.setState({
+                subkategoryOptions: [],
+                searchTerm: 's'
+              });
+            break;
             default:
             this.setState({
               subkategoryOptions: []
@@ -166,8 +172,10 @@ this.handleSubkategoryChange = this.handleSubkategoryChange.bind(this);
       console.log(val)
       if (val == null) {
         this.setState({subkategory: ''});
+
       } else {
-        this.setState({subkategory: val.value});
+        this.setState({subkategory: val.value,
+        searchTerm: val.value});
       }
     }
 
