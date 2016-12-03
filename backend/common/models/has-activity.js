@@ -5,13 +5,15 @@ var LoopBackContext = require('loopback-context');
 var empty = require('is-empty');
 
 module.exports = function(Hasactivity) {
-
-	Hasactivity.subscribeToActivity = function(id, cb) {
 	const app = require('../../server/server.js');
-	const { Activity } = app.models;
 	var ctx = LoopBackContext.getCurrentContext();
     var currentUser = ctx && ctx.get('currentUserId');
     console.log('currentUser.username: ', currentUser); // voila!
+	
+	Hasactivity.subscribeToActivity = function(id, cb) {
+	const { Activity } = app.models;
+	
+	var activity;
   
     Activity.findById(id, function(err, act) {
       if (err) {
@@ -20,34 +22,51 @@ module.exports = function(Hasactivity) {
       if(!act){
         return cb({message:'Activity Not found', status:404});
       }
+	subscribeToActivityWithId(act.user_count, id, cb);
+	  console.log('act.user_count: ', act); // voila!
+	  console.log('act.user_count: ', act.user_count); // voila!
 	});
 	
+	};
+	
+	function subscribeToActivityWithId(user_count, id, cb){
+		console.log('activity user_count: ', user_count); // voila!
 	Hasactivity.find({where: {and: [{customer_id: currentUser}, {activity_id: id}] }}, function(err, sub) {
       if (err) { return cb(err); }
 	  
 	  console.log('sub: ', sub); // voila!
 		if(!empty(sub)){
 		return cb({message:'Subscribe already exist', status:404});}
-		else
-		{
-			Hasactivity.create({
-			"customer_id": currentUser,
-			"activity_id": id
-			}, function(err, sub) {
-			if (err)
-			  return cb(err);
-			
-			console.log('New subscribeToActivity has been created:', sub);
 
-			cb(null, sub);
-			}
-			);
+		  });
+
+
+    /*  if (act.user_count) { return cb(err); }
+	  
+	  console.log('sub: ', sub); // voila!
+		if(!empty(sub)){
+		return cb({message:'Subscribe already exist', status:404});}
+*/
+		  
+		Hasactivity.create({
+		"customer_id": currentUser,
+		"activity_id": id
+		}, function(err, sub) {
+		if (err)
+		  return cb(err);
+		
+		console.log('New subscribeToActivity has been created:', sub);
+
+		cb(null, sub);
 		}
-	  });
+		);
+
+	};
+	
 	
 
   
-  };
+
   
   
   Hasactivity.remoteMethod(

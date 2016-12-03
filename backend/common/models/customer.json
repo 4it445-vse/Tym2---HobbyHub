@@ -13,6 +13,11 @@
       "model": "Activity",
       "foreignKey": "customer_id"
     },
+	"profile": {
+      "type": "hasOne",
+      "model": "Profile",
+      "foreignKey": "customer_id"
+    },
     "CustomerActivities": {
       "type": "hasMany",
       "model": "Activity",
