@@ -204,7 +204,7 @@ app.dataSources.mysqlds.autoupdate('User', function(err) {
 });
 
 
-
+  app.dataSources.mysqlds.autoupdate('Profile', function(err) { });
   app.dataSources.mysqlds.autoupdate('EshopOrder', function(err) { });
   app.dataSources.mysqlds.autoupdate('EshopOrderItem', function(err) { });
 };

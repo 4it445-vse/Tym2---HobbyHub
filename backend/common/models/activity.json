@@ -45,7 +45,7 @@
       "foreignKey": "activity_id",
       "through": "hasActivity"
     },
-	"activitySubcategory": {
+    "activitySubcategory": {
       "type": "belongsTo",
       "model": "ActivitySubcategory",
       "foreignKey": "subcategory_id"
@@ -63,6 +63,13 @@
       "principalType": "ROLE",
       "principalId": "$authenticated",
       "permission": "ALLOW"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "find"
     }
   ],
   "methods": {}

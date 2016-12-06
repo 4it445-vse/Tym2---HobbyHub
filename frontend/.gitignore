@@ -14,7 +14,7 @@ build
 .env
 .idea
 npm-debug.log
-
+datasource.local.js
 # custom
 /tmp/*
 !/tmp/.gitkeep

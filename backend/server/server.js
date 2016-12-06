@@ -60,6 +60,18 @@ app.use(function setCurrentUser(req, res, next) {
 });
 
 
+var express=require('express');
+
+var nodemailer = require("nodemailer");
+
+var smtpTransport = nodemailer.createTransport("SMTP",{
+    service: "Gmail",
+    auth: {
+        user: "team02.hobbyhub@gmail.com",
+        pass: "v0YUkI3MNl"
+    }
+});
+
 app.start = function() {
   // start the web server
   return app.listen(function() {
