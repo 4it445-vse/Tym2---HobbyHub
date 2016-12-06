@@ -101,15 +101,17 @@ class LoginPageRaw extends Component {
 
     api.post('Customers/login', formData)
       .then(({ data }) => {
+        console.log("LOG DATA", data);
+        const { loginAction } = this.props;
         const {
           id: authToken,
           userId,
-          id, // id je token
+          // id, // id je token
         } = data;
 
-        saveState({...loadState(), authToken: id, userId: userId})
-        setAuthToken(id)
-        //loginAction(id, userId)
+        //saveState({...loadState(), authToken: id, userId: userId})
+        //setAuthToken(id)
+        loginAction(authToken, userId)
 
         this.setState({ error: null });
         this._addNotification("success", event);
