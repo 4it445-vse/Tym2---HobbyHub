@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { userLogged } from '../actions'
 
+import { ProfileForm } from '../components/Profile/ProfileForm.js';
+
 class MyProfilePageRaw extends Component {
 
   constructor(props) {
@@ -12,9 +14,7 @@ class MyProfilePageRaw extends Component {
 
   render() {
     return (
-      <div className="container-fluid">
-        <h1>My Profile</h1>
-      </div>
+      <ProfileForm></ProfileForm>
     );
   }
 }

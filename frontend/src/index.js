@@ -12,7 +12,7 @@ if (persistedState && persistedState.auth && persistedState.auth.authToken) {
   const { authToken } = persistedState.auth
   setAuthToken(authToken)
 }
-
+console.log('persistedState', persistedState)
 const store = configureStore(persistedState, saveState);
 
 ReactDOM.render(
