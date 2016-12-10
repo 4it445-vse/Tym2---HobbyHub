@@ -35,8 +35,8 @@ export class UserSearching extends Component {
       <div className="container-fluid">
         {this._header()}
         <Grid>
-          <User name="Ekzim Hnědko"/>
-          <User name="Daniel Šrám"/>
+          <User name="Ekzim Hnědko" id={1} />
+          <User name="Daniel Šrám" id={2} />
         </Grid>
         <br/>
       </div>

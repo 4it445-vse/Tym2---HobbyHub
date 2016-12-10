@@ -6,13 +6,16 @@ export class User extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isInvited: true
+      isInvited: false
     }
     this._onInvite = this._onInvite.bind(this)
   }
 
   _onInvite(e) {
-
+    // TODO
+    this.setState({
+      isInvited: true
+    })
   }
 
   _avatar(){
@@ -38,9 +41,9 @@ export class User extends Component {
     return (
       <Col xs={6} md={8} lg={9}>
         <Button
-          bsStyle="default"
-          disabled={this.state.isInvited ? true : false}
-          onClick={this._onInvite()}
+          bsStyle={this.state.isInvited ? "success" : "default"}
+          disabled={this.state.isInvited}
+          onClick={this._onInvite}
         >
           <span className={this.state.isInvited ? "glyphicon glyphicon-ok" : "glyphicon glyphicon-plus"}>
           </span> {this.state.isInvited ? "Uživatel pozván" : "Pozvat na akci" }
