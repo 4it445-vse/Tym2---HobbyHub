@@ -2,8 +2,10 @@ import React, {Component} from 'react';
 import lodash from 'lodash';
 import $ from 'jquery';
 import api from '../api.js';
-// import { ActivityGrid } from '../components/ActivityGrid/ActivityGrid.js';
+import { ParticipantList } from '../components/ParticipantList/ParticipantList.js';
 import { Thumbnail, Grid, Button, Col, Row } from 'react-bootstrap';
+
+var dateFormat = require('dateformat');
 
 import { connect } from 'react-redux';
 import { userLogged } from '../actions'
@@ -15,29 +17,54 @@ import classNames from 'classnames';
 export class ActivityDetailPageRaw extends Component {
   constructor(props) {
     super(props);
-    console.log('detail started')
-    console.log('params '+this.props.params)
     this.state = {
       activity: null,
+      Participants: [],
+      Subscribers: [],
+      // Customers: [],
     };
     this.props.userLogged(true)
   }
 
-  componentDidMount() {
+  componentWillMount() {
     const { activityId } = this.props.params;
-
-console.log('id ' + activityId)
+    var Owner_id = null
     api(`Activities/${activityId}`
     ).then((response) => {
-      console.log(response.data)
       this.setState({ activity: response.data });
-    });
+    })
+
+    var Subscribers = []
+    var Participants = []
+    api(`hasActivities?filter={"where":{"activity_id":${activityId}}}`
+    ).then((response) => {
+      Subscribers = (response.data)
+      Subscribers.push({activity_id: activityId, customer_id: this.state.activity.customer_id})
+      this.setState({Subscribers: Subscribers})
+    })
+
+
+
+
+    // console.log('subs')
+    // console.log(Subscribers)
+    // Subscribers.forEach((subObj) => {
+    //   api(`Customers/${subObj.customer_id}`
+    //   ).then((customerResponse) => {
+    //     console.log('participant')
+    //     console.log(customerResponse.data)
+    //     Participants.push(customerResponse.data)
+    //   });
+    // });
+    // console.log('participants')
+    // console.log(Participants)
+    // this.setState({Participants: Participants})
+
   }
 
-
   render() {
-    console.log('state ' + this.state)
-    const { activity } = this.state;
+    console.log(this.state)
+    const { activity, Subscribers, Participants } = this.state;
     if (!activity) {
       return <div>Loading...</div>;
     }
@@ -61,51 +88,39 @@ console.log('id ' + activityId)
                 </Row>
 
                    <Row>
-                   <Col xs={6} md={4}>
-                     <Thumbnail src="http://www.canterburyicehockey.com.au/wp-content/themes/canterbury-ice-hockey/library/images/default-post-image.jpg" alt="242x200" border='none'>
+                   <Col xs={4} md={6}>
+
+                   <h2>Popis</h2>
+                   <p>{about}</p>
+
+                  <br/>
+                  <br/>
+                  <h2>Kdy a kde?</h2>
+
+                    <p><h5>Místo:</h5> {city}</p>
+                    <p><h5>Ulice:</h5> {address}</p>
+                    <p><h5>Datum:</h5> {dateFormat(date_and_time, "dddd, mmmm dS, yyyy")}</p>
+                    <p><h5>Čas:</h5>   {dateFormat(date_and_time, "h:MM:ss TT")}</p>
+
+                   </Col>
+
+                   <Col xs={4} md={6}>
+                     <Thumbnail src="http://www.canterburyicehockey.com.au/wp-content/themes/canterbury-ice-hockey/library/images/default-post-image.jpg" alt="242x200">
 
                      </Thumbnail>
                    </Col>
-                   <Col>
-                    <p>Místo: {city}</p>
-                    <p>Ulice: {address}</p>
-                    <p>Datum: {date_and_time}</p>
-                    <p>Čas:   {date_and_time}</p>
-                   </Col>
                    </Row>
                    <Row>
-                   <Col>
-                   <h2>Popis</h2>
-                   <p>{about}</p>
-                   </Col>
+
                    </Row>
                    <Row>
-                     <h2>Účastníci TODO / {user_count}</h2>
+                     <h2>Účastníci {Subscribers.length} / {user_count}</h2>
                    </Row>
                    <Row>
-                   <Col xs={5} md={3}>
-                   <Thumbnail src=" http://cliparts.co/cliparts/dc4/5BA/dc45BA8xi.jpg" alt="60x50">
-                     <h3>Pavel Skočdopole</h3>
-
-                   </Thumbnail>
-                   </Col>
-                   <Col xs={5} md={3}>
-                   <Thumbnail src=" http://cliparts.co/cliparts/dc4/5BA/dc45BA8xi.jpg" alt="60x50">
-                     <h3>Jana Světlá</h3>
-
-                   </Thumbnail>
-                   </Col>
-                   <Col xs={5} md={3}>
-                   <Thumbnail src=" http://cliparts.co/cliparts/dc4/5BA/dc45BA8xi.jpg" alt="60x50">
-                     <h3>Fanda Kovář</h3>
-
-                   </Thumbnail>
-                   </Col>
-                   <Col xs={5} md={3}>
-                   <Thumbnail src=" http://cliparts.co/cliparts/dc4/5BA/dc45BA8xi.jpg" alt="60x50">
-                     <h3>Jeník Novák</h3>
-                   </Thumbnail>
-                   </Col>
+                   {Subscribers.length === 0 ?
+                    <div>Loading...</div> :
+                    <ParticipantList Subscribers={Subscribers}/>
+                  }
                    </Row>
 
                  </Grid>
