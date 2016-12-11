@@ -345,13 +345,6 @@ class CreateActivityPageRaw extends Component {
       dateValid = "has-error";
     }
 
-    var windowHeight = $(window).height();
-    if(windowHeight > 690) {
-      windowHeight = 900
-    }
-
-
-
     var imgStyle = {
         backgroundImage: 'url(' + bgImage + ')',
         backgroundSize: 'cover'
@@ -377,7 +370,7 @@ class CreateActivityPageRaw extends Component {
                 <div className="cols-sm-10">
                   <div className={"input-group " + nameValid}>
                     {/* <span className="input-group-addon"><i className="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-                    <input type="text" className="form-control" name="activity" id="activity"
+                      <input type="text" className="form-control" name="activity" id="activity"
                     placeholder="Vložte název aktivity" onChange={this.handleNameChange} required/> */}
                     <span className="input-group-addon"><i className="fa fa-envelope fa" aria-hidden="true"></i></span>
                     <input type="text" onChange={this.handleNameChange} className="form-control" name="activity" id="activity"  placeholder="Vložte název aktivity"
@@ -391,50 +384,50 @@ class CreateActivityPageRaw extends Component {
 
 
 
-<div className="form-group ">
-  <label htmlFor="activity" className="cols-sm-2 control-label">Kategorie</label>
-  <div className="cols-sm-10">
-    <div className={"input-group " + categoryValid}>
-      <span className="input-group-addon"><i className="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+              <div className="form-group ">
+                <label htmlFor="activity" className="cols-sm-2 control-label">Kategorie</label>
+                <div className="cols-sm-10">
+                  <div className={"input-group " + categoryValid}>
+                    <span className="input-group-addon"><i className="fa fa-lock fa-lg" aria-hidden="true"></i></span>
 
-<Select
-    name="form-field-name"
-    value={this.state ? this.state.kategory : ''}
-    options={kategoryOptions}
-    title="Zvolte kategorii"
-    onChange={this.handleKategoryChange}
-    clearable={true}
-    placeholder="Zvolte kategorii"
-    required
-/>
+                    <Select
+                      name="form-field-name"
+                      value={this.state ? this.state.kategory : ''}
+                      options={kategoryOptions}
+                      title="Zvolte kategorii"
+                      onChange={this.handleKategoryChange}
+                      clearable={true}
+                      placeholder="Zvolte kategorii"
+                      required
+                    />
 
- </div>
-    {this.categoryCheckText()}
-  </div>
-</div>
+                  </div>
+                  {this.categoryCheckText()}
+                </div>
+              </div>
 
-<div className="form-group ">
-  <label htmlFor="activity" className="cols-sm-2 control-label">Podkategorie</label>
-  <div className="cols-sm-10">
-    <div className={"input-group " + subcategoryValid}>
-      <span className="input-group-addon"><i className="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+              <div className="form-group ">
+                <label htmlFor="activity" className="cols-sm-2 control-label">Podkategorie</label>
+                <div className="cols-sm-10">
+                  <div className={"input-group " + subcategoryValid}>
+                    <span className="input-group-addon"><i className="fa fa-lock fa-lg" aria-hidden="true"></i></span>
 
-<Select
-    name="form-field-name"
-    value={this.state ? this.state.subkategory : ''}
-    options={this.state ? this.state.subkategoryOptions : []}
-    onChange={this.handleSubkategoryChange}
-    clearable={true}
-    placeholder="Zvolte podkategorii"
-    disabled={this.state ? (this.state.subDisabled == null ? true : this.state.subDisabled) : true}
-    autocomplete={true}
-    required
-/>
+                    <Select
+                      name="form-field-name"
+                      value={this.state ? this.state.subkategory : ''}
+                      options={this.state ? this.state.subkategoryOptions : []}
+                      onChange={this.handleSubkategoryChange}
+                      clearable={true}
+                      placeholder="Zvolte podkategorii"
+                      disabled={this.state ? (this.state.subDisabled == null ? true : this.state.subDisabled) : true}
+                      autocomplete={true}
+                      required
+                    />
 
- </div>
- {this.subcategoryCheckText()}
-  </div>
-</div>
+                  </div>
+                  {this.subcategoryCheckText()}
+                </div>
+              </div>
 
 
               <div className="form-group">
@@ -444,14 +437,14 @@ class CreateActivityPageRaw extends Component {
                     <span className="input-group-addon"><i className="fa fa-users fa" aria-hidden="true"></i></span>
                     <Autocomplete
                       className="form-control"
-                        onPlaceSelected={(place) => {
+                      onPlaceSelected={(place) => {
                         console.log(place);
                         this.handleAddressChange(place);
-                        }}
-                        types={['geocode']}
-                        placeholder="Vložte adresu"
-                        required
-                      />
+                      }}
+                      types={['geocode']}
+                      placeholder="Vložte adresu"
+                      required
+                    />
 
                   </div>
                   {this.addressCheckText()}
@@ -464,8 +457,8 @@ class CreateActivityPageRaw extends Component {
                 <div className="cols-sm-10">
                   <div className="input-group">
                     <span className="input-group-addon"></span>
-                    {/* <input type="text" className="form-control" name="user_count" id="user_count"  placeholder="Vložte počet účastníků" onChange={this.handleUserCountChange}/> */}
-                    <Number className='number-picker' min={1} value={this.state ? (this.state.user_count == null ? 2 : this.state.user_count) : 2} step={1} id="user_count" onChange={this.handleUserCountChange}/>
+                    <input type="text" className="form-control" name="user_count" id="user_count"  placeholder="Vložte počet účastníků" onChange={this.handleUserCountChange}/>
+                    {/* <Number className='number-picker' min={1} value={this.state ? (this.state.user_count == null ? 2 : this.state.user_count) : 2} step={1} id="user_count" onChange={this.handleUserCountChange}/> */}
                   </div>
                 </div>
               </div>
