@@ -21,6 +21,7 @@ export class ProfileForm extends Component {
     this.dropChange = this.dropChange.bind(this);
     this.clickSave = this.clickSave.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.isCreated = true;
     this.state = {
       profile:null,
       inputState:"readOnly",
@@ -35,10 +36,6 @@ export class ProfileForm extends Component {
       Povolání:"",
       about:""
     };
-    /*this.drop = {
-      1:"Muž",
-      2:"Žena",
-    };*/
     this.isLoaded = false;
   }
 
@@ -60,10 +57,9 @@ export class ProfileForm extends Component {
 
 
   componentDidMount(){
-    console.log("CUSTOMER ID::", this.customerId);
       api.get('/Customers/'+this.customerId+'/profile')
         .then((response) => {
-
+          this.isCreated = true;
           var profile = [];
           var data = response.data;
 
@@ -82,11 +78,38 @@ export class ProfileForm extends Component {
           this.setState({profile:profile});
         })
         .catch(error => {
+          this.isCreated = false;
+          var profile = [];
+          var data = {
+                city:"",
+                marital_status:"",
+                gender:"",
+                height:"",
+                weight:"",
+                birth_date:"",
+                profession:"",
+                aboutMe:""
+              };
+
+          for(var colName in data){
+            var o = {};
+            o.key = colName;
+            o.val = data[colName];
+            if(colName === "birth_date"){
+              o.type = "date";
+            };
+            profile.push(o);
+          }
+
+          profile = this.mapNames(profile);
+          this.isLoaded = true;
+          this.setState({profile:profile});
+          /*
           console.log(error);
           const { response } = error;
           const { errors } = response.data.error.details;
 
-          this.setState({ errors });
+          this.setState({ errors });*/
         });
   }
 
@@ -103,10 +126,15 @@ export class ProfileForm extends Component {
           break;
         case "birth_date":
           obj[i].key = "birth_date";
-          var oldDate = obj[i].val.split("-");
-          var day = oldDate[2].substring(0,2);
-          obj[i].val = oldDate[0] + "-" + oldDate[1] + "-" + day;
-          this.setState({[obj[i].key]:obj[i].val});
+          if(obj[i].val){
+            var oldDate = obj[i].val.split("-");
+            var day = oldDate[2].substring(0,2);
+            obj[i].val = oldDate[0] + "-" + oldDate[1] + "-" + day;
+            this.setState({[obj[i].key]:obj[i].val});
+          } else {
+            obj[i].val = "";
+            this.setState({[obj[i].key]:obj[i].val});
+          }
           break;
         case "gender":
           obj[i].key = "Pohlaví";
@@ -151,7 +179,11 @@ export class ProfileForm extends Component {
   }
 
   save(key, val){
+    if(key === "Datum nar."){
+      key = "birth_date";
+    }
     this.setState({[key]:val});
+
   }
 
   clickSave(key){
@@ -166,22 +198,35 @@ export class ProfileForm extends Component {
         aboutMe: this.state.about,
       };
 
-    api.put('/Customers/'+this.customerId+'/profile', regData)
-      .then((response) => {
-        console.log("success",response);
-      })
-      .catch(error => {
-        console.log(error);
-        const { response } = error;
-        const { errors } = response.data.error.details;
+      if(!regData.birth_date) {
+        delete regData.birth_date;
+      }
 
-        this.setState({ errors });
-      });
+      if(this.isCreated){
+        api.put('/Customers/'+this.customerId+'/profile', regData)
+          .then((response) => {
+          })
+          .catch(error => {
+            const { response } = error;
+            const { errors } = response.data.error.details;
+
+            this.setState({ errors });
+          });
+      } else {
+        api.post('/Customers/'+this.customerId+'/profile', regData)
+          .then((response) => {
+          })
+          .catch(error => {
+            const { response } = error;
+            const { errors } = response.data.error.details;
+
+            this.setState({ errors });
+          });
+      }
   }
 
   render() {
-
-    if(this.isLoaded){
+    if(this.isLoaded && this.customerId){
       var profile = this.state.profile;
       var opts = {};
       opts['readOnly'] = this.state.inputState;
