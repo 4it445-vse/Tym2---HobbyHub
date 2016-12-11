@@ -15,35 +15,14 @@ constructor(props){
   };
 }
 
-  // componentWillMount() {
-  //   const { Participants } = this.state.PArticipants;
-  //
-  //   var Participants = []
-  //   console.log('subs')
-  //   console.log(Subscribers)
-  //   Subscribers.forEach((subsObj)=> {
-  //     api(`Customers/${subsObj.customer_id}`
-  //     ).then((response) => {
-  //       console.log('customer')
-  //       console.log(response.data)
-  //       Participants.push(response.data)
-  //     });
-  //       this.setState({Participants: Participants})
-  //   });
-  //
-  // }
-
   componentDidMount(){
 
-    console.log('list')
-    console.log(this.state.Subscribers)
     var Subscribers = this.state.Subscribers
     var Participants = []
 
     if (Subscribers != []){
       Subscribers.map(subObj => {
-        console.log('jeden sub obj')
-        console.log(subObj)
+
         api(`Customers/${subObj.customer_id}`
         ).then((customerResponse) => {
           // console.log('participant')
@@ -54,9 +33,6 @@ constructor(props){
           this.setState({Participants: Participants})
         })
       });
-      console.log('participants done')
-
-      console.log(Participants)
 
       }
     }

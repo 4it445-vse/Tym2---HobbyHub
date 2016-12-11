@@ -214,7 +214,7 @@ this.handleSubkategoryChange = this.handleSubkategoryChange.bind(this);
           <Row>
             <Col xs={6} md={4}>
               {/*}<ChoiceFilter placeholder="All categories" label="Category" data={ this.state.ActivityCategories } /> */}
-              <h3 className="section-heading">Kategorie</h3>
+              <h3 class="section-heading">Kategorie</h3>
               <Select
                 name="form-field-name"
                 value={this.state ? this.state.kategory : ''}

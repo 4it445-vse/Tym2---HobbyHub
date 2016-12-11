@@ -19,14 +19,12 @@ export class ActivityDetailPageRaw extends Component {
     super(props);
     this.state = {
       activity: null,
-      Participants: [],
       Subscribers: [],
-      // Customers: [],
     };
     this.props.userLogged(true)
   }
 
-  componentWillMount() {
+  componentDidMount() {
     const { activityId } = this.props.params;
     var Owner_id = null
     api(`Activities/${activityId}`
@@ -34,37 +32,16 @@ export class ActivityDetailPageRaw extends Component {
       this.setState({ activity: response.data });
     })
 
-    var Subscribers = []
-    var Participants = []
     api(`hasActivities?filter={"where":{"activity_id":${activityId}}}`
     ).then((response) => {
-      Subscribers = (response.data)
-      Subscribers.push({activity_id: activityId, customer_id: this.state.activity.customer_id})
-      this.setState({Subscribers: Subscribers})
+      this.setState({Subscribers: response.data})
     })
-
-
-
-
-    // console.log('subs')
-    // console.log(Subscribers)
-    // Subscribers.forEach((subObj) => {
-    //   api(`Customers/${subObj.customer_id}`
-    //   ).then((customerResponse) => {
-    //     console.log('participant')
-    //     console.log(customerResponse.data)
-    //     Participants.push(customerResponse.data)
-    //   });
-    // });
-    // console.log('participants')
-    // console.log(Participants)
-    // this.setState({Participants: Participants})
 
   }
 
   render() {
     console.log(this.state)
-    const { activity, Subscribers, Participants } = this.state;
+    const { activity, Subscribers } = this.state;
     if (!activity) {
       return <div>Loading...</div>;
     }
@@ -111,16 +88,16 @@ export class ActivityDetailPageRaw extends Component {
                    </Col>
                    </Row>
                    <Row>
-
+                   {/* <UserSearching/> */}
                    </Row>
                    <Row>
                      <h2>Účastníci {Subscribers.length} / {user_count}</h2>
                    </Row>
                    <Row>
-                   {Subscribers.length === 0 ?
-                    <div>Loading...</div> :
+                   {(Subscribers.length === 0 || !activity) ?
+                     <div>Loading...</div> :
                     <ParticipantList Subscribers={Subscribers}/>
-                  }
+                   }
                    </Row>
 
                  </Grid>

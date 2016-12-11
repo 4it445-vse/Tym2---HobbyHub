@@ -24,7 +24,8 @@ class LoginPageRaw extends Component {
     this.handleEmailBlur = this.handleEmailBlur.bind(this);
     this.testRequest = this.testRequest.bind(this);
     this._addNotification = this._addNotification.bind(this);
-    userLogged(false)
+    this.props.userLogged(false);
+    // userLogged(false)
     this.state = {
       emailValid: true
     };

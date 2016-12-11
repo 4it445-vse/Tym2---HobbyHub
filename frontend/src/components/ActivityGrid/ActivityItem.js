@@ -3,13 +3,22 @@ import { Link } from 'react-router';
 import { Thumbnail, Button } from 'react-bootstrap';
 import ReactTooltip from 'react-tooltip';
 
-import { loadState } from  '../../store/localState'
+import { loadState } from  '../../store/localState';
+
+import { AttendButton } from '../Activity/AttendButton.js'
 
 
 // import { AttendActivityButtonContainer } from '../ActivityGrid/AttendActivityButton.js';
 // import { ViewActivityButtonContainer } from '../ActivityGrid/ViewActivityButton.js';
 
 export class ActivityItem extends Component {
+
+constructor(props){
+  super(props);
+  this.state = {
+    canSubscribe: true,
+  };
+}
 
   renderName () {
     var name = this.props.activity.name
@@ -48,7 +57,6 @@ export class ActivityItem extends Component {
 
     var user_id = loadState().auth.userId
 
-
     return (
       <Thumbnail src="https://www.ticketstream.cz/tsp/static/czech/cs/partnership/images/16.png" alt="242x200">
         <h3>
@@ -58,8 +66,8 @@ export class ActivityItem extends Component {
         <p>Město: <span className="city">{city}</span></p>
         <p>Datum: <span className="date">{parsedDate}</span></p>
         <p>
-          {user_id === customer_id ? null : <Button bsStyle="primary">Attend</Button>}&nbsp;
-          <Link className="btn btn-default" to={`/activityDetail/${id}`} role="button">View</Link>
+          <AttendButton activity={activity} subBsStyle="primary" subContent="Přihlásit" unsubBsStyle="info" unsubContent="Odhlásit"/>&nbsp;
+          <Link className="btn btn-default" to={`/activityDetail/${id}`} role="button">Detail</Link>
           {/* <AttendActivityButtonContainer activity={activity} />
           <ViewActivityButtonContainer activity={activity} /> */}
         </p>

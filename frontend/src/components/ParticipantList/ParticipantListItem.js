@@ -10,8 +10,7 @@ export class ParticipantListItem extends Component {
   render() {
     const { participant } = this.props;
     const { id, title, price, shortInfo, userImage, username } = participant;
-    console.log('participant item')
-    console.log(participant)
+
     return (
       <Thumbnail src={require(`../../img/avatar_${Math.floor(Math.random() * 6) + 1}.jpg`)} alt="60x50">
         <h3><Link to={`/userDetail/${id}`}>{username}</Link></h3>

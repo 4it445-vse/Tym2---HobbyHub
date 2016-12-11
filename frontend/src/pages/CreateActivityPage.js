@@ -232,17 +232,17 @@ class CreateActivityPageRaw extends Component {
     event.preventDefault();
     console.log('submitted')
     var customer_id = loadState().auth.userId
-    console.log(customer_id)
+    // console.log(customer_id)
 
 // TODO Odebrat
-      console.log('Name: ' + this.state.name)
-      console.log('Kategory: ' + this.state.kategory)
-      console.log('Subkategory: ' + this.state.subkategory)
-      console.log('City: ' + this.state.city)
-      console.log('Address: ' + this.state.address)
-      console.log('Date: ' + this.state.date_and_time)
-      console.log('Users: ' + this.state.user_count)
-      console.log('About: ' + this.state.about)
+      // console.log('Name: ' + this.state.name)
+      // console.log('Kategory: ' + this.state.kategory)
+      // console.log('Subkategory: ' + this.state.subkategory)
+      // console.log('City: ' + this.state.city)
+      // console.log('Address: ' + this.state.address)
+      // console.log('Date: ' + this.state.date_and_time)
+      // console.log('Users: ' + this.state.user_count)
+      // console.log('About: ' + this.state.about)
 
 
       var user_count = 2
@@ -277,6 +277,7 @@ class CreateActivityPageRaw extends Component {
         console.log('data', data);
 
         if (data){
+        api.post(`/hasActivities/subscribeToActivity`, {"id": data.id})  
         this._addNotification("success", event);
         setTimeout(() => {
           this.props.history.push(`/activityDetail/${data.id}`)
