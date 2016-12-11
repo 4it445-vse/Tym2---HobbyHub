@@ -40,18 +40,25 @@ constructor(props){
   render() {
     const { Subscribers } = this.props;
 
-    return (
-      <div className="participants">
-      {this.state.Participants.length === 0 ?
-       <div>Loading...</div> :
-       <Col xs={5} md={3}>
-         {this.state.Participants.map(participant =>
-           <ParticipantListItem participant={participant} key={participant.id}/>
-         )}
-         </Col>
 
-     }
-     </div>
-    );
+    if (this.state.Participants.length === 0){
+      return (
+        <div className="participants">
+         <div>Loading...</div>
+        </div>
+      );
+    } else {
+      return (
+        <div className="participants">
+
+        {this.state.Participants.map(participant =>
+          <Col xs={6} md={3}>
+            <ParticipantListItem participant={participant} key={participant.id}/>
+          </Col>
+        )}
+        </div>
+      );
+    }
+
   }
 }

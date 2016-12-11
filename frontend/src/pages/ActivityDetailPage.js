@@ -5,6 +5,9 @@ import api from '../api.js';
 import { ParticipantList } from '../components/ParticipantList/ParticipantList.js';
 import { Thumbnail, Grid, Button, Col, Row } from 'react-bootstrap';
 
+import { AttendButton } from '../components/Activity/AttendButton.js'
+
+
 var dateFormat = require('dateformat');
 
 import { connect } from 'react-redux';
@@ -78,7 +81,6 @@ export class ActivityDetailPageRaw extends Component {
                     <p><h5>Ulice:</h5> {address}</p>
                     <p><h5>Datum:</h5> {dateFormat(date_and_time, "dddd, mmmm dS, yyyy")}</p>
                     <p><h5>Čas:</h5>   {dateFormat(date_and_time, "h:MM:ss TT")}</p>
-
                    </Col>
 
                    <Col xs={4} md={6}>
@@ -91,7 +93,9 @@ export class ActivityDetailPageRaw extends Component {
                    {/* <UserSearching/> */}
                    </Row>
                    <Row>
-                     <h2>Účastníci {Subscribers.length} / {user_count}</h2>
+
+                     <h2>Účastníci {Subscribers.length} / {user_count}   <AttendButton onSubmit={this.forceUpdate()} activity={activity} subBsStyle="success" subClassName="glyphicon glyphicon-plus" unsubBsStyle="danger" unsubClassName="glyphicon glyphicon-minus"/></h2>
+
                    </Row>
                    <Row>
                    {(Subscribers.length === 0 || !activity) ?
