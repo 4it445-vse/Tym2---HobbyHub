@@ -1,13 +1,12 @@
 import React, { Component } from 'react'
-import { Link, browserHistory } from 'react-router';
-import $ from 'jquery';
+import { Link, /*browserHistory*/ } from 'react-router';
+//import $ from 'jquery';
 import api from '../api.js';
 
 import './RegistrationPage.css';
 import { connect } from 'react-redux';
 import { userLogged } from '../actions';
 
-var ReactDOM = require('react-dom');
 var NotificationSystem = require('react-notification-system');
 
 const bgImage = require('../img/Rock-climbing-Wallpaper.jpg');
@@ -173,9 +172,9 @@ class RegistrationPageRaw extends Component {
 
   handleUserBlur(){
     if(this.state.username){
-    const regData = {
+    /*const regData = {
         username: this.state.username
-      };
+      };*/
 
     api.get('Customers/'+this.state.username+'/findByUsername')
       .then(({ data }) => {
@@ -197,10 +196,10 @@ class RegistrationPageRaw extends Component {
     console.log(this.state.emailValid);
     if(this.state.email &&
       this.emailValid){
-      const regData = {
+    /*  const regData = {
           username: this.state.email
         };
-
+*/
       //TODO: Dodělat až bude odpovídající služba
       api.get('Customers/'+this.state.email+'/findByEmail')
         .then(({ data }) => {
