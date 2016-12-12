@@ -1,21 +1,25 @@
-import React, {Component} from 'react';
-import { Jumbotron, Grid, Col, Row } from 'react-bootstrap';
-import { connect } from 'react-redux';
+import React, {Component} from 'react'
+import { Jumbotron, Grid, Col, Row } from 'react-bootstrap'
+import { connect } from 'react-redux'
 import { userLogged, isUserLogged } from '../actions'
-import api from '../api.js';
-import SearchBar from 'search-bar-component';
+import api from '../api.js'
+import SearchBar from 'search-bar-component'
 import { ActivityItem } from '../components/ActivityGrid/ActivityItem.js'
 import lodash from 'lodash'
-import { ChoiceFilter } from '../components/ActivityGrid/ChoiceFilter.js'
 import { createFilter } from 'react-search-input'
-import Datetime from 'react-datetime';
-import Select from 'react-select';
-import './DateTimePicker.css';
-import './Select.css';
-
+import Datetime from 'react-datetime'
+import Select from 'react-select'
+import Masonry from 'react-masonry-component'
+import AbsoluteGrid from 'react-absolute-grid'
+import './DateTimePicker.css'
 import './LandingPage.css'
 
-const KEYS_TO_FILTERS = ['name', 'about', 'city', 'subcategory_id']
+const KEYS_TO_FILTERS = ['name', 'about', 'city'];
+const CATEGORY_FILTER = ['subcategory_id'];
+
+var masonryOptions = {
+    transitionDuration: 0
+};
 
 const sport = [
   { value: '1', label: 'Fotbal' },
@@ -53,32 +57,11 @@ export class LandingPageRaw extends Component {
 
   constructor(props) {
     super(props);
-    this.onSubmit = this.onSubmit.bind(this);
+    LandingPageRaw.onSubmit = LandingPageRaw.onSubmit.bind(this);
     this.props.userLogged(isUserLogged());
     this.state = {
     searchTerm: '',
-    ActivityCategories: [
-          { label: 'Sport', value: '1'},
-          { label: 'Board games', value: '2' },
-          { label: 'Trips', value: '3' },
-          { label: 'Events', value: '4' }
-        ],
-    ActivitySubcategories: [
-          { label: 'Hockey', value: 'Hockey', id: '1' },
-          { label: 'Football', value: 'Football', id: '1' },
-          { label: 'Tennis', value: 'Tennis', id: '1' },
-          { label: 'Sky diving', value: 'Sky diving', id: '1' },
-          { label: 'Chess', value: 'Chess', id: '2' },
-          { label: 'Monopoly', value: 'Monopoly', id: '2' },
-          { label: 'Poker', value: 'Poker', id: '2' },
-          { label: '"IT RAINS"', value: '"IT RAINS"', id: '2' },
-          { label: 'Hiking', value: 'Hiking', id: '3' },
-          { label: 'Hitch-hiking', value: 'Hitch-hiking', id: '3' },
-          { label: 'Walks by the lake', value: 'Walks by the lake', id: '3' },
-          { label: 'Birthday Party', value: 'Birthday Party', id: '4' },
-          { label: 'Drinking games', value: 'Drinking games', id: '4' },
-          { label: 'Tour de Pub', value: 'Tour de Pub', id: '4' }
-        ],
+    subcategory: '',
   Activities: [],
   };
   this.searchUpdatedDebounced = lodash.debounce(
@@ -90,7 +73,7 @@ this.handleKategoryChange = this.handleKategoryChange.bind(this);
 this.handleSubkategoryChange = this.handleSubkategoryChange.bind(this);
 }
 
-  onSubmit(event) {
+  static onSubmit(event) {
     event.preventDefault();
   }
 
@@ -102,7 +85,6 @@ this.handleSubkategoryChange = this.handleSubkategoryChange.bind(this);
     }
 
     handleDateChange(e) {
-      console.log(e)
      this.setState({date_and_time: e._d});
     }
 
@@ -126,41 +108,41 @@ this.handleSubkategoryChange = this.handleSubkategoryChange.bind(this);
         switch(val.value) {
             case '1':
               this.setState({
-              subkategoryOptions: sport,
+              subcategoryOptions: sport,
               searchTerm: val.value
             });
             firstElement = sport[0].value
             break;
             case '2':
               this.setState({
-                subkategoryOptions: hry,
+                subcategoryOptions: hry,
                 searchTerm: val.value
               });
               firstElement = hry[0].value
             break;
             case '3':
               this.setState({
-                subkategoryOptions: cestovani,
+                subcategoryOptions: cestovani,
                 searchTerm: val.value
             });
             firstElement = cestovani[0].value
             break;
             case '4':
               this.setState({
-                subkategoryOptions: jine,
-                searchTerm: val.value
+                subcategoryOptions: jine,
+                subcategory: "20"
               });
               firstElement = jine[0].value
             break;
             case null:
               this.setState({
-                subkategoryOptions: [],
+                subcategoryOptions: [],
                 searchTerm: 's'
               });
             break;
             default:
             this.setState({
-              subkategoryOptions: []
+              subcategoryOptions: []
             });
           };
 
@@ -168,22 +150,30 @@ this.handleSubkategoryChange = this.handleSubkategoryChange.bind(this);
       }
     }
 
-    handleSubkategoryChange(val){
+    handleSubkategoryChange(val) {
       console.log(val)
       if (val == null) {
         this.setState({subkategory: ''});
 
       } else {
-        this.setState({subkategory: val.value,
-        searchTerm: val.value});
+        this.setState({
+          subcategory: val.value});
       }
     }
 
   render() {
-    const { Activities, ActivityCategories, ActivitySubcategories } = this.state;
-    const filteredActivities = Activities.filter(createFilter(this.state.searchTerm, KEYS_TO_FILTERS))
+    const { Activities } = this.state;
+    const subFilteredActivities = Activities.filter(createFilter(this.state.searchTerm, KEYS_TO_FILTERS));
+    const filteredActivities = subFilteredActivities.filter(createFilter(this.state.subcategory, CATEGORY_FILTER));
 
-    var kategoryOptions = [
+    var childElements = filteredActivities.map(function(activity){
+   return (
+     <Col xs={12} sm={6} md={4} lg={3}>
+       <ActivityItem activity={ activity } key={ activity.id }/>
+     </Col>
+    )})
+
+    var categoryOptions = [
         { value: '1', label: 'Sport' },
         { value: '2', label: 'Hry' },
         { value: '3', label: 'Cestování' },
@@ -202,7 +192,7 @@ this.handleSubkategoryChange = this.handleSubkategoryChange.bind(this);
         <Grid>
           <Row>
             <SearchBar placeholder="Search for activity..."
-              onChange={(searchTerm, resolve) => {
+              onChange={(searchTerm)=> {
                 this.searchUpdatedDebounced(searchTerm);
               }}
               onSearch={(searchTerm) => {
@@ -214,11 +204,11 @@ this.handleSubkategoryChange = this.handleSubkategoryChange.bind(this);
           <Row>
             <Col xs={6} md={4}>
               {/*}<ChoiceFilter placeholder="All categories" label="Category" data={ this.state.ActivityCategories } /> */}
-              <h3 class="section-heading">Kategorie</h3>
+              <h3 className="section-heading">Kategorie</h3>
               <Select
                 name="form-field-name"
                 value={this.state ? this.state.kategory : ''}
-                options={kategoryOptions}
+                options={categoryOptions}
                 title="Zvolte kategorii"
                 onChange={this.handleKategoryChange}
                 clearable={true}
@@ -227,11 +217,10 @@ this.handleSubkategoryChange = this.handleSubkategoryChange.bind(this);
             </Col>
             <Col xs={6} md={4}>
               {/*<ChoiceFilter placeholder="All subcategories" label="Subcategory" data={ this.state.ActivitySubcategories } />*/}
-              <h3 class="section-heading">Podkategorie</h3>
+              <h3 className="section-heading">Podkategorie</h3>
               <Select
-                name="form-field-name"
                 value={this.state ? this.state.subkategory : ''}
-                options={this.state ? this.state.subkategoryOptions : []}
+                options={this.state ? this.state.subcategoryOptions : []}
                 title="Zvolte kategorii"
                 onChange={this.handleSubkategoryChange}
                 clearable={true}
@@ -241,23 +230,27 @@ this.handleSubkategoryChange = this.handleSubkategoryChange.bind(this);
               />
             </Col>
             <Col xs={6} md={2}>
-              <h3 class="section-heading">From</h3>
+              <h3 className="section-heading">From</h3>
               <Datetime className="datetime" name="date" id="date" onChange={this.handleDateChange} />
             </Col>
             <Col xs={6} md={2}>
-              <h3 class="section-heading">To</h3>
+              <h3 className="section-heading">To</h3>
               <Datetime className="datetime" name="date" id="date" onChange={this.handleDateChange} />
             </Col>
           </Row>
           <br />
           <br />
-          {filteredActivities.map(activity => {
-            return (
-              <Col xs={6} md={3}>
-                <ActivityItem activity={ activity } key={ activity.id }/>
-              </Col>
-            )
-          })}
+
+          <Masonry
+            className={'my-gallery-class'} // default ''
+            elementType={'ul'} // default 'div'
+            options={masonryOptions} // default {}
+            disableImagesLoaded={false} // default false
+            updateOnEachImageLoad={false} // default false and works only if disableImagesLoaded is false
+          >
+            {childElements}
+          </Masonry>
+
 
         </Grid>
       </div>

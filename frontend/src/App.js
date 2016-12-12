@@ -3,8 +3,16 @@ import { Provider } from 'react-redux'
 import { Router, applyRouterMiddleware, browserHistory } from 'react-router';
 import { useScroll } from 'react-router-scroll';
 
-import 'bootstrap/dist/css/bootstrap.css';
-import './App.css';
+import './assets/bootstrap/css/bootstrap.min.css'
+import './assets/css/font-awesome.min.css'
+import './assets/css/animate.css'
+import './assets/css/owl.carousel.css'
+import './assets/css/owl.theme.css'
+import './assets/css/owl.transitions.css'
+import './assets/css/material.css'
+import './assets/css/style.css'
+import './assets/css/responsive.css'
+import './assets/css/color/blue.css' 
 
 import { createRoutes } from './createRoutes.js';
 

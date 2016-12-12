@@ -3,7 +3,7 @@ import { Link, /*browserHistory*/ } from 'react-router';
 //import $ from 'jquery';
 import api from '../api.js';
 
-import './RegistrationPage.css';
+// import './RegistrationPage.css';
 import { connect } from 'react-redux';
 import { userLogged } from '../actions';
 
