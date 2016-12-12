@@ -6,6 +6,7 @@ import { ParticipantList } from '../components/ParticipantList/ParticipantList.j
 import { Thumbnail, Grid, Button, Col, Row } from 'react-bootstrap';
 
 import { AttendButton } from '../components/Activity/AttendButton.js'
+import { UserSearching } from '../components/UserSearching/UserSearching.js'
 
 
 var dateFormat = require('dateformat');
@@ -44,6 +45,8 @@ export class ActivityDetailPageRaw extends Component {
 
   render() {
     console.log(this.state)
+    const { activityId } = this.props.params;
+    console.log(activityId)
     const { activity, Subscribers } = this.state;
     if (!activity) {
       return <div>Loading...</div>;
@@ -94,7 +97,7 @@ export class ActivityDetailPageRaw extends Component {
                    </Row>
                    <Row>
 
-                     <h2>Účastníci {Subscribers.length} / {user_count}   <AttendButton onSubmit={this.forceUpdate()} activity={activity} subBsStyle="success" subClassName="glyphicon glyphicon-plus" unsubBsStyle="danger" unsubClassName="glyphicon glyphicon-minus"/></h2>
+                     <h2>Účastníci {Subscribers.length} / {user_count}   <AttendButton activity={activity} subBsStyle="success" subClassName="glyphicon glyphicon-plus" unsubBsStyle="danger" unsubClassName="glyphicon glyphicon-minus"/></h2>
 
                    </Row>
                    <Row>
@@ -102,6 +105,11 @@ export class ActivityDetailPageRaw extends Component {
                      <div>Loading...</div> :
                     <ParticipantList Subscribers={Subscribers}/>
                    }
+                   </Row>
+                   <Row>
+
+                     <UserSearching activityId={activityId}/>
+
                    </Row>
 
                  </Grid>

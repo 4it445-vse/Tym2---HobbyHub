@@ -27,9 +27,15 @@ export class UserSearching extends Component {
   }
 
   _onSearchUser(username) {
-    this.setState({
-      searchTerm: username
-    })
+    if (username.split("").length > 1){
+      this.setState({
+        searchTerm: username
+      })
+    } else {
+      this.setState({
+        searchTerm: null
+      })
+    }
   }
 
   _renderSearchBar(){
@@ -58,16 +64,19 @@ export class UserSearching extends Component {
   }
 
   render() {
+    console.log(this.props)
+    const { activityId } = this.props
     return (
       <div className="container-fluid">
         {this._renderSearchBar()}
         <Grid>
           {
-            this._getUsers().map( user => {
+            (this.state.searchTerm != null) ? this._getUsers().map( user => {
               return (
-                <User name={user.username} id={user.id} />
+                <User name={user.username} id={user.id} email={user.email} activityId={activityId}/>
               )
-            })
+            }) :
+            null
           }
         </Grid>
         <br/>
