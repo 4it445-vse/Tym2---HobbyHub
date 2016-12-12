@@ -10,8 +10,8 @@ import { createFilter } from 'react-search-input'
 import Datetime from 'react-datetime'
 import Select from 'react-select'
 import Masonry from 'react-masonry-component'
+import AbsoluteGrid from 'react-absolute-grid'
 import './DateTimePicker.css'
-import './Select.css'
 import './LandingPage.css'
 
 const KEYS_TO_FILTERS = ['name', 'about', 'city'];
