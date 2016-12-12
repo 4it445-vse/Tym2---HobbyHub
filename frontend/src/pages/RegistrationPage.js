@@ -37,6 +37,13 @@ class RegistrationPageRaw extends Component {
     this.pwdValid   = true;
     this.emailValid = true;
     this.pwdComplex = true;
+    api(`hasActivities`
+    ).then((response) => {
+      this.props.history.push('/land')
+    }).catch((data) => {
+      console.log('errors')
+      console.log(data);
+    })
   }
 
   _notificationSystem: null;
@@ -72,16 +79,6 @@ class RegistrationPageRaw extends Component {
   componentDidMount() {
     this._notificationSystem = this.refs.notificationSystem;
 
-    api(`hasActivities`
-    ).then((response) => {
-    }).catch((data) => {
-      console.log('errors')
-      console.log(data);
-      if (data.response.status != 401){
-        this.props.history.push('/land')
-      }
-      return false
-    })
   }
 
   onSubmit(event) {

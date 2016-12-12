@@ -63,12 +63,21 @@ export class LandingPageRaw extends Component {
   constructor(props) {
     super(props);
     LandingPageRaw.onSubmit = LandingPageRaw.onSubmit.bind(this);
-    this.props.userLogged(loggedIn);
     this.state = {
     searchTerm: '',
     subcategory: '',
   Activities: [],
   };
+  api(`hasActivities`
+  ).then((response) => {
+    this.props.userLogged(true);
+  }).catch((data) => {
+    if (data.response.status == 401){
+      this.props.userLogged(false);
+    } else {
+      this.props.userLogged(true);
+    }
+  })
   this.searchUpdatedDebounced = lodash.debounce(
   this.searchUpdated,
   500
