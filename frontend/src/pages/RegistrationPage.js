@@ -72,9 +72,16 @@ class RegistrationPageRaw extends Component {
   componentDidMount() {
     this._notificationSystem = this.refs.notificationSystem;
 
-      if (loadState().length != 0){
+    api(`hasActivities`
+    ).then((response) => {
+    }).catch((data) => {
+      console.log('errors')
+      console.log(data);
+      if (data.response.status == 401){
         this.props.history.push('/land')
       }
+      return false
+    })
   }
 
   onSubmit(event) {
