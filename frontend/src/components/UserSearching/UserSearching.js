@@ -64,7 +64,6 @@ export class UserSearching extends Component {
   }
 
   render() {
-    console.log(this.props)
     const { activityId } = this.props
     return (
       <div className="container-fluid">

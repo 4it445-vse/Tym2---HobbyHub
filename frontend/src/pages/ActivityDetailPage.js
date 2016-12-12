@@ -8,6 +8,7 @@ import { Thumbnail, Grid, Button, Col, Row } from 'react-bootstrap';
 import { AttendButton } from '../components/Activity/AttendButton.js'
 import { UserSearching } from '../components/UserSearching/UserSearching.js'
 
+import { loadState } from  '../store/localState'
 
 var dateFormat = require('dateformat');
 
@@ -29,11 +30,22 @@ export class ActivityDetailPageRaw extends Component {
   }
 
   componentDidMount() {
+    console.log('state')
+    console.log(loadState())
+    if (loadState().length === 0){
+    }
     const { activityId } = this.props.params;
     var Owner_id = null
     api(`Activities/${activityId}`
     ).then((response) => {
       this.setState({ activity: response.data });
+    }).catch((data) => {
+      console.log('errors')
+      console.log(data);
+      if (data.response.status == 401){
+        this.props.history.push('/login')
+      }
+      return false
     })
 
     api(`hasActivities?filter={"where":{"activity_id":${activityId}}}`
@@ -44,9 +56,7 @@ export class ActivityDetailPageRaw extends Component {
   }
 
   render() {
-    console.log(this.state)
     const { activityId } = this.props.params;
-    console.log(activityId)
     const { activity, Subscribers } = this.state;
     if (!activity) {
       return <div>Loading...</div>;

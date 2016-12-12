@@ -16,7 +16,7 @@ export class LoggedUserNavigation extends Component {
 
   onLogout(e) {
     console.log(`logging out`);
-    saveState({})
+    saveState(0)
     setAuthToken(undefined)
     this.props.logoutAction()
     this.props.userLogged(false)

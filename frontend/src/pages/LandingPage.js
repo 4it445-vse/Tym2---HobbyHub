@@ -14,6 +14,9 @@ import AbsoluteGrid from 'react-absolute-grid'
 import './DateTimePicker.css'
 import './LandingPage.css'
 
+import { loadState } from  '../store/localState'
+
+
 const KEYS_TO_FILTERS = ['name', 'about', 'city'];
 const CATEGORY_FILTER = ['subcategory_id'];
 
@@ -53,12 +56,14 @@ const jine = [
   { value: '20', label: 'Jiné' },
 ]
 
+var loggedIn = true
+
 export class LandingPageRaw extends Component {
 
   constructor(props) {
     super(props);
     LandingPageRaw.onSubmit = LandingPageRaw.onSubmit.bind(this);
-    this.props.userLogged(isUserLogged());
+    this.props.userLogged(loggedIn);
     this.state = {
     searchTerm: '',
     subcategory: '',
@@ -82,6 +87,7 @@ this.handleSubkategoryChange = this.handleSubkategoryChange.bind(this);
       .then((response) => {
         this.setState({ Activities: response.data });
       });
+
     }
 
     handleDateChange(e) {

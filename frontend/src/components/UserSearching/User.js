@@ -15,14 +15,10 @@ export class User extends Component {
   }
 
   _onInvite(e) {
-    // TODO
-    console.log(this.props)
-    console.log(this.props.activityId)
-    console.log(this.props.email)
-    api.post(`Activities/${this.props.activityId}/${this.props.email}/invite`
+    api(`Activities/${this.props.activityId}/${encodeURIComponent(this.props.email)}/invite`
     ).then((data) => {
       this.setState({
-        isInvited: data.invited
+        isInvited: true
       })
     })
   }
