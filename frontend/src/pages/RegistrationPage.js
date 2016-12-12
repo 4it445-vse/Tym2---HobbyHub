@@ -77,7 +77,7 @@ class RegistrationPageRaw extends Component {
     }).catch((data) => {
       console.log('errors')
       console.log(data);
-      if (data.response.status == 401){
+      if (data.response.status != 401){
         this.props.history.push('/land')
       }
       return false
