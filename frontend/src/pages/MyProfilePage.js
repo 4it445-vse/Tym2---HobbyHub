@@ -3,6 +3,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { userLogged } from '../actions'
 
+import { ProfileForm } from '../components/Profile/ProfileForm.js';
+
+import './RegistrationPage.css';
+const bgImage = require('../img/Rock-climbing-Wallpaper.jpg');
+
 class MyProfilePageRaw extends Component {
 
   constructor(props) {
@@ -11,9 +16,18 @@ class MyProfilePageRaw extends Component {
   }
 
   render() {
+    var imgStyle = {
+        backgroundImage: 'url(' + bgImage + ')',
+        backgroundSize: 'cover',
+    }
+
     return (
-      <div className="container-fluid">
-        <h1>My Profile</h1>
+      <div className="container-fluid" style={imgStyle}>
+        <div className="row main">
+          <div className="main-profile">
+            <ProfileForm></ProfileForm>
+          </div>
+        </div>
       </div>
     );
   }

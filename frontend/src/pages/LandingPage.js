@@ -14,7 +14,8 @@ import './DateTimePicker.css'
 import './Select.css'
 import './LandingPage.css'
 
-const KEYS_TO_FILTERS = ['name', 'about', 'city', 'subcategory_id'];
+const KEYS_TO_FILTERS = ['name', 'about', 'city'];
+const CATEGORY_FILTER = ['subcategory_id'];
 
 var masonryOptions = {
     transitionDuration: 0
@@ -60,6 +61,7 @@ export class LandingPageRaw extends Component {
     this.props.userLogged(isUserLogged());
     this.state = {
     searchTerm: '',
+    subcategory: '',
   Activities: [],
   };
   this.searchUpdatedDebounced = lodash.debounce(
@@ -83,7 +85,6 @@ this.handleSubkategoryChange = this.handleSubkategoryChange.bind(this);
     }
 
     handleDateChange(e) {
-      console.log(e)
      this.setState({date_and_time: e._d});
     }
 
@@ -129,7 +130,7 @@ this.handleSubkategoryChange = this.handleSubkategoryChange.bind(this);
             case '4':
               this.setState({
                 subcategoryOptions: jine,
-                searchTerm: val.value
+                subcategory: "20"
               });
               firstElement = jine[0].value
             break;
@@ -149,24 +150,25 @@ this.handleSubkategoryChange = this.handleSubkategoryChange.bind(this);
       }
     }
 
-    handleSubkategoryChange(val){
+    handleSubkategoryChange(val) {
       console.log(val)
       if (val == null) {
         this.setState({subkategory: ''});
 
       } else {
-        this.setState({subkategory: val.value,
-        searchTerm: val.value});
+        this.setState({
+          subcategory: val.value});
       }
     }
 
   render() {
     const { Activities } = this.state;
-    const filteredActivities = Activities.filter(createFilter(this.state.searchTerm, KEYS_TO_FILTERS));
+    const subFilteredActivities = Activities.filter(createFilter(this.state.searchTerm, KEYS_TO_FILTERS));
+    const filteredActivities = subFilteredActivities.filter(createFilter(this.state.subcategory, CATEGORY_FILTER));
 
     var childElements = filteredActivities.map(function(activity){
    return (
-     <Col xs={6} md={3}>
+     <Col xs={12} sm={6} md={4} lg={3}>
        <ActivityItem activity={ activity } key={ activity.id }/>
      </Col>
     )})
@@ -217,7 +219,6 @@ this.handleSubkategoryChange = this.handleSubkategoryChange.bind(this);
               {/*<ChoiceFilter placeholder="All subcategories" label="Subcategory" data={ this.state.ActivitySubcategories } />*/}
               <h3 className="section-heading">Podkategorie</h3>
               <Select
-                name="form-field-name"
                 value={this.state ? this.state.subkategory : ''}
                 options={this.state ? this.state.subcategoryOptions : []}
                 title="Zvolte kategorii"

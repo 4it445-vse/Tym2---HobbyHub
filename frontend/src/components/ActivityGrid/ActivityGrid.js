@@ -10,7 +10,7 @@ export class ActivityGrid extends Component {
     return (
       <Row>
         { Activities.map(activity =>
-            <Col xs={6} md={3}>
+          <Col xs={6} md={3}>
           <ActivityItem activity={ activity } key={ activity.id }/>
           </Col>
         ) }

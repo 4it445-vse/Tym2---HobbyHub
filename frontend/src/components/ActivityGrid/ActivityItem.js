@@ -1,12 +1,24 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
-import { Thumbnail, Button } from 'react-bootstrap';
+import { Thumbnail } from 'react-bootstrap';
 import ReactTooltip from 'react-tooltip';
+
+import { loadState } from  '../../store/localState';
+
+import { AttendButton } from '../Activity/AttendButton.js'
+
 
 // import { AttendActivityButtonContainer } from '../ActivityGrid/AttendActivityButton.js';
 // import { ViewActivityButtonContainer } from '../ActivityGrid/ViewActivityButton.js';
 
 export class ActivityItem extends Component {
+
+constructor(props){
+  super(props);
+  this.state = {
+    canSubscribe: true,
+  };
+}
 
   renderName () {
     var name = this.props.activity.name
@@ -21,7 +33,6 @@ export class ActivityItem extends Component {
 
   renderLink (id, parsedName) {
     var name = this.props.activity.name
-    var shortName = `${name.substring(0,18)}` + '...'
     if (name.length >= 18 ) {
       return (
         <Link to={`/activityDetail/${id}`} data-tip={name} id="test">{parsedName}</Link>
@@ -40,7 +51,7 @@ export class ActivityItem extends Component {
     }
     else if (subcategory_id <= 10){
       return (
-        "http://www.lboro.ac.uk/media/wwwlboroacuk/external/content/research/sti/slide1-image-tablet.png"
+        "http://www.prideindiversity.com.au/content/uploads/2016/02/Shoe.png"
       )
       }
     else if (subcategory_id <= 14) {
@@ -55,7 +66,7 @@ export class ActivityItem extends Component {
     }
     else {
       return (
-        "https://aos.iacpublishinglabs.com/question/aq/700px-394px/long-hockey-game_1a13f0def153b9f0.jpg?domain=cx.aos.ask.com"
+        "http://www.sonedesign.jp/img_main/unknown_01.jpg"
       )
     }
   }
@@ -63,11 +74,13 @@ export class ActivityItem extends Component {
   render() {
 
     const { activity } = this.props;
-    const { id, name, city, date_and_time, subcategory_id } = activity;
+    const { id, name, city, date_and_time, customer_id, subcategory_id } = activity;
     const parsedName = this.renderName();
     const generatedLink = this.renderLink(id, parsedName);
     var date = new Date(date_and_time);
     var parsedDate = date.getDate() + '.' + (date.getMonth() + 1) + '.' + date.getFullYear();
+
+    var user_id = loadState().auth.userId
 
     return (
       <Thumbnail src={this.chooseThumbnail(subcategory_id)} alt="242x200">
@@ -78,8 +91,8 @@ export class ActivityItem extends Component {
         <p>Město: <span className="city">{city}</span></p>
         <p>Datum: <span className="date">{parsedDate}</span></p>
         <p>
-          <Button bsStyle="primary">Attend</Button>&nbsp;
-          <Link className="btn btn-default" to={`/activityDetail/${id}`} role="button">View</Link>
+          <AttendButton activity={activity} subBsStyle="primary" subContent="Přihlásit" unsubBsStyle="info" unsubContent="Odhlásit"/>&nbsp;
+          <Link className="btn btn-default" to={`/activityDetail/${id}`} role="button">Detail</Link>
           {/* <AttendActivityButtonContainer activity={activity} />
           <ViewActivityButtonContainer activity={activity} /> */}
         </p>

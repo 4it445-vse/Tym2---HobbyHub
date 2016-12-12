@@ -14,6 +14,8 @@ import Select from 'react-select';
 import Number from 'react-numeric-input'
 import './Select.css';
 
+import { loadState } from  '../store/localState'
+
 var ReactDOM = require('react-dom');
 var NotificationSystem = require('react-notification-system');
 
@@ -57,6 +59,8 @@ class CreateActivityPageRaw extends Component {
     super(props);
     this.onSubmit = this.onSubmit.bind(this);
     this.props.userLogged(isUserLogged());
+
+    console.log(this.props)
 
     this.setState({customerId: getSession().customerId,
                   user_count: 2,
@@ -227,16 +231,18 @@ class CreateActivityPageRaw extends Component {
   onSubmit(event) {
     event.preventDefault();
     console.log('submitted')
+    var customer_id = loadState().auth.userId
+    // console.log(customer_id)
 
 // TODO Odebrat
-      console.log('Name: ' + this.state.name)
-      console.log('Kategory: ' + this.state.kategory)
-      console.log('Subkategory: ' + this.state.subkategory)
-      console.log('City: ' + this.state.city)
-      console.log('Address: ' + this.state.address)
-      console.log('Date: ' + this.state.date_and_time)
-      console.log('Users: ' + this.state.user_count)
-      console.log('About: ' + this.state.about)
+      // console.log('Name: ' + this.state.name)
+      // console.log('Kategory: ' + this.state.kategory)
+      // console.log('Subkategory: ' + this.state.subkategory)
+      // console.log('City: ' + this.state.city)
+      // console.log('Address: ' + this.state.address)
+      // console.log('Date: ' + this.state.date_and_time)
+      // console.log('Users: ' + this.state.user_count)
+      // console.log('About: ' + this.state.about)
 
 
       var user_count = 2
@@ -263,13 +269,15 @@ class CreateActivityPageRaw extends Component {
                       date_and_time: this.state.date_and_time,
                       user_count: user_count,
                       about: this.state.about,
-                      customerId: this.state.customerId}
+                      customer_id: customer_id
+                    }
 
       api.post('Activities', formData)
       .then(({ data }) => {
         console.log('data', data);
 
         if (data){
+        api.post(`/hasActivities/subscribeToActivity`, {"id": data.id})  
         this._addNotification("success", event);
         setTimeout(() => {
           this.props.history.push(`/activityDetail/${data.id}`)

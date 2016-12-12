@@ -8,7 +8,7 @@ function stateThatShouldBeSaved(state) {
     auth,
     userReducer,
   } = state;
-
+  console.log('stateThatShouldBeSaved:', state);
   return {
     auth,
     userReducer,

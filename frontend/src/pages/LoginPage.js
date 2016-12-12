@@ -24,7 +24,8 @@ class LoginPageRaw extends Component {
     this.handleEmailBlur = this.handleEmailBlur.bind(this);
     this.testRequest = this.testRequest.bind(this);
     this._addNotification = this._addNotification.bind(this);
-    userLogged(false)
+    this.props.userLogged(false);
+    // userLogged(false)
     this.state = {
       emailValid: true
     };
@@ -101,15 +102,17 @@ class LoginPageRaw extends Component {
 
     api.post('Customers/login', formData)
       .then(({ data }) => {
+        console.log("LOG DATA", data);
+        const { loginAction } = this.props;
         const {
           id: authToken,
           userId,
-          id, // id je token
+          // id, // id je token
         } = data;
 
-        saveState({...loadState(), authToken: id, userId: userId})
-        setAuthToken(id)
-        //loginAction(id, userId)
+        //saveState({...loadState(), authToken: id, userId: userId})
+        //setAuthToken(id)
+        loginAction(authToken, userId)
 
         this.setState({ error: null });
         this._addNotification("success", event);
