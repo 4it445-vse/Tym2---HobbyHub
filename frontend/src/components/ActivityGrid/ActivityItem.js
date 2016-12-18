@@ -79,7 +79,7 @@ constructor(props){
     const generatedLink = this.renderLink(id, parsedName);
     var date = new Date(date_and_time);
     var parsedDate = date.getDate() + '.' + (date.getMonth() + 1) + '.' + date.getFullYear();
-
+    var parsedTime = date.getHours() + ':' + date.getMinutes();
     var user_id = loadState().auth.userId
 
     return (
@@ -90,6 +90,7 @@ constructor(props){
         </h3>
         <p>Město: <span className="city">{city}</span></p>
         <p>Datum: <span className="date">{parsedDate}</span></p>
+        <p>Od: <span className="date">{parsedTime}</span></p>
         <p>
           <AttendButton activity={activity} subBsStyle="primary" subContent="Přihlásit" unsubBsStyle="info" unsubContent="Odhlásit"/>&nbsp;
           <Link className="btn btn-default" to={`/activityDetail/${id}`} role="button">Detail</Link>

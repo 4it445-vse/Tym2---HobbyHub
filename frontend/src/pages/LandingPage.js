@@ -133,12 +133,10 @@ this.handleSubkategoryChange = this.handleSubkategoryChange.bind(this);
         let anyDate = false;
 
         if (dateFrom) {
-          console.log('dateFrom:', dateFrom);
           anyDate = true;
           where = { ...where, date_and_time: { gte: dateFrom }};
         }
         if (dateTo) {
-          console.log('dateTo:', dateTo);
           anyDate = true;
           where = { ...where, date_and_time: { lte: dateTo }};
         }
@@ -148,7 +146,6 @@ this.handleSubkategoryChange = this.handleSubkategoryChange.bind(this);
           ...where, or:[{name: { like: `%${searchString}%` }}, {city: { like: `%${searchString}%` }}]
         };
       }
-      console.log('where je:', where);
       return where;
     }
 
@@ -243,87 +240,87 @@ this.handleSubkategoryChange = this.handleSubkategoryChange.bind(this);
     ];
 
     return (
-      <div className="container-fluid">
-        <section className="index header" id="home">
-          <div className="container">
-            <div className="intro-text">
-              <h1>Vítá Vás <span>HobbyHub!</span></h1>
-              <p>Místo kde najít parťáky na akce.</p>
-              <Row>
-                {/* <input type="text" className="search-bar-input" maxlength="100" onChange={this.handleSearchChange}/> */}
-                <SearchBarRaw
-                  placeholder="Najdi svou vysněnou událost..."
-                  handleSearchChange={this.handleSearchChange}
-                />
-              </Row>
+          <div className="container-fluid">
+            <section className="index header" id="home">
+              <div className="container">
+                <div className="intro-text">
+                  <h1>Vítá Vás <span>HobbyHub!</span></h1>
+                  <p>Místo kde najít parťáky na akce.</p>
+                  <Row>
+                    {/* <input type="text" className="search-bar-input" maxlength="100" onChange={this.handleSearchChange}/> */}
+                    <SearchBarRaw
+                      placeholder="Najdi svou vysněnou událost..."
+                      handleSearchChange={this.handleSearchChange}
+                    />
+                  </Row>
 
+                </div>
+              </div>
+            </section>
+
+            <div className="container">
+              <div className="row main">
+                <Grid>
+                  <Row>
+                    <Col xs={6} md={4}>
+                      {/*}<ChoiceFilter placeholder="All categories" label="Category" data={ this.state.ActivityCategories } /> */}
+                      <h3 className="section-heading">Kategorie</h3>
+                      <Select
+                        name="form-field-name"
+                        value={this.state ? this.state.kategory : ''}
+                        options={categoryOptions}
+                        title="Zvolte kategorii"
+                        onChange={this.handleKategoryChange}
+                        clearable={true}
+                        placeholder="Zvolte kategorii"
+                      />
+                    </Col>
+                    <Col xs={6} md={4}>
+                      {/*<ChoiceFilter placeholder="All subcategories" label="Subcategory" data={ this.state.ActivitySubcategories } />*/}
+                      <h3 className="section-heading">Podkategorie</h3>
+                      <Select
+                        value={this.state ? this.state.subkategory : ''}
+                        options={this.state ? this.state.subcategoryOptions : []}
+                        title="Zvolte kategorii"
+                        onChange={this.handleSubkategoryChange}
+                        clearable={true}
+                        placeholder="Zvolte kategorii"
+                        disabled={this.state ? (this.state.subDisabled == null ? true : this.state.subDisabled) : true}
+                        autocomplete={true}
+                      />
+                    </Col>
+                    <Col xs={6} md={2}>
+                      <h3 className="section-heading">From</h3>
+                      <Datetime className="datetime" name="date" id="date" onChange={this.handleDateFromChange} />
+                    </Col>
+                    <Col xs={6} md={2}>
+                      <h3 className="section-heading">To</h3>
+                      <Datetime className="datetime" name="date" id="date" onChange={this.handleDateToChange} />
+                    </Col>
+                  </Row>
+                  <br />
+                  <br />
+
+                  <Masonry
+                    className={'my-gallery-class'} // default ''
+                    elementType={'ul'} // default 'div'
+                    options={masonryOptions} // default {}
+                    disableImagesLoaded={false} // default false
+                    updateOnEachImageLoad={false} // default false and works only if disableImagesLoaded is false
+                  >
+                    {
+                      Activities.map(function(activity){
+                        return (
+                          <Col xs={12} sm={6} md={4} lg={3}>
+                            <ActivityItem activity={ activity } key={ activity.id }/>
+                          </Col>
+                      )})
+                    }
+                  </Masonry>
+                </Grid>
+              </div>
             </div>
           </div>
-        </section>
-
-        <div className="container">
-          <div className="row main">
-            <Grid>
-              <Row>
-                <Col xs={6} md={4}>
-                  {/*}<ChoiceFilter placeholder="All categories" label="Category" data={ this.state.ActivityCategories } /> */}
-                  <h3 className="section-heading">Kategorie</h3>
-                  <Select
-                    name="form-field-name"
-                    value={this.state ? this.state.kategory : ''}
-                    options={categoryOptions}
-                    title="Zvolte kategorii"
-                    onChange={this.handleKategoryChange}
-                    clearable={true}
-                    placeholder="Zvolte kategorii"
-                  />
-                </Col>
-                <Col xs={6} md={4}>
-                  {/*<ChoiceFilter placeholder="All subcategories" label="Subcategory" data={ this.state.ActivitySubcategories } />*/}
-                  <h3 className="section-heading">Podkategorie</h3>
-                  <Select
-                    value={this.state ? this.state.subkategory : ''}
-                    options={this.state ? this.state.subcategoryOptions : []}
-                    title="Zvolte kategorii"
-                    onChange={this.handleSubkategoryChange}
-                    clearable={true}
-                    placeholder="Zvolte kategorii"
-                    disabled={this.state ? (this.state.subDisabled == null ? true : this.state.subDisabled) : true}
-                    autocomplete={true}
-                  />
-                </Col>
-                <Col xs={6} md={2}>
-                  <h3 className="section-heading">From</h3>
-                  <Datetime className="datetime" name="date" id="date" onChange={this.handleDateFromChange} />
-                </Col>
-                <Col xs={6} md={2}>
-                  <h3 className="section-heading">To</h3>
-                  <Datetime className="datetime" name="date" id="date" onChange={this.handleDateToChange} />
-                </Col>
-              </Row>
-              <br />
-              <br />
-
-              <Masonry
-                className={'my-gallery-class'} // default ''
-                elementType={'ul'} // default 'div'
-                options={masonryOptions} // default {}
-                disableImagesLoaded={false} // default false
-                updateOnEachImageLoad={false} // default false and works only if disableImagesLoaded is false
-              >
-                {
-                  Activities.map(function(activity){
-                    return (
-                      <Col xs={12} sm={6} md={4} lg={3}>
-                        <ActivityItem activity={ activity } key={ activity.id }/>
-                      </Col>
-                  )})
-                }
-              </Masonry>
-            </Grid>
-          </div>
-        </div>
-      </div>
         );
     }
 }

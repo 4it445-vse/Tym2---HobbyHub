@@ -6,7 +6,9 @@ import { ParticipantList } from '../components/ParticipantList/ParticipantList.j
 import { Thumbnail, Grid, Button, Col, Row } from 'react-bootstrap';
 
 import { AttendButton } from '../components/Activity/AttendButton.js'
+import { UserSearching } from '../components/UserSearching/UserSearching.js'
 
+import { loadState } from  '../store/localState'
 
 var dateFormat = require('dateformat');
 
@@ -28,11 +30,22 @@ export class ActivityDetailPageRaw extends Component {
   }
 
   componentDidMount() {
+    console.log('state')
+    console.log(loadState())
+    if (loadState().length === 0){
+    }
     const { activityId } = this.props.params;
     var Owner_id = null
     api(`Activities/${activityId}`
     ).then((response) => {
       this.setState({ activity: response.data });
+    }).catch((data) => {
+      console.log('errors')
+      console.log(data);
+      if (data.response.status == 401){
+        this.props.history.push('/login')
+      }
+      return false
     })
 
     api(`hasActivities?filter={"where":{"activity_id":${activityId}}}`
@@ -43,7 +56,7 @@ export class ActivityDetailPageRaw extends Component {
   }
 
   render() {
-    console.log(this.state)
+    const { activityId } = this.props.params;
     const { activity, Subscribers } = this.state;
     if (!activity) {
       return <div>Loading...</div>;
@@ -94,7 +107,7 @@ export class ActivityDetailPageRaw extends Component {
                    </Row>
                    <Row>
 
-                     <h2>Účastníci {Subscribers.length} / {user_count}   <AttendButton onSubmit={this.forceUpdate()} activity={activity} subBsStyle="success" subClassName="glyphicon glyphicon-plus" unsubBsStyle="danger" unsubClassName="glyphicon glyphicon-minus"/></h2>
+                     <h2>Účastníci {Subscribers.length} / {user_count}   <AttendButton activity={activity} subBsStyle="success" subClassName="glyphicon glyphicon-plus" unsubBsStyle="danger" unsubClassName="glyphicon glyphicon-minus"/></h2>
 
                    </Row>
                    <Row>
@@ -102,6 +115,11 @@ export class ActivityDetailPageRaw extends Component {
                      <div>Loading...</div> :
                     <ParticipantList Subscribers={Subscribers}/>
                    }
+                   </Row>
+                   <Row>
+
+                     <UserSearching activityId={activityId}/>
+
                    </Row>
 
                  </Grid>

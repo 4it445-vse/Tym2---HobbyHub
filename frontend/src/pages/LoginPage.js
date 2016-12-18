@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router';
+import { Link, browserHistory } from 'react-router';
 import $ from 'jquery';
 
 import './RegistrationPage.css';
@@ -24,6 +24,7 @@ class LoginPageRaw extends Component {
     this.handleEmailBlur = this.handleEmailBlur.bind(this);
     this.testRequest = this.testRequest.bind(this);
     this._addNotification = this._addNotification.bind(this);
+    // if (.userId)
     this.props.userLogged(false);
     // userLogged(false)
     this.state = {
@@ -97,7 +98,7 @@ class LoginPageRaw extends Component {
   }
 
   onSubmit(event) {
-    event.preventDefault();
+      event.preventDefault();
     var formData = {email: this.state.email, password: this.state.password}
 
     api.post('Customers/login', formData)
@@ -113,11 +114,12 @@ class LoginPageRaw extends Component {
         //saveState({...loadState(), authToken: id, userId: userId})
         //setAuthToken(id)
         loginAction(authToken, userId)
-
         this.setState({ error: null });
         this._addNotification("success", event);
         setTimeout(() => {
-          this.props.history.push('/land')
+          console.log(browserHistory)
+          browserHistory.goBack()
+          // this.props.history.push('/land')
         },1500);
       })
       .catch(error => {

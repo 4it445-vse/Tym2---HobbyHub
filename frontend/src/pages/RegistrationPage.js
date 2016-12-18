@@ -7,6 +7,9 @@ import api from '../api.js';
 import { connect } from 'react-redux';
 import { userLogged } from '../actions';
 
+import { loadState } from  '../store/localState'
+
+
 var NotificationSystem = require('react-notification-system');
 
 const bgImage = require('../img/Rock-climbing-Wallpaper.jpg');
@@ -34,6 +37,13 @@ class RegistrationPageRaw extends Component {
     this.pwdValid   = true;
     this.emailValid = true;
     this.pwdComplex = true;
+    api(`hasActivities`
+    ).then((response) => {
+      this.props.history.push('/land')
+    }).catch((data) => {
+      console.log('errors')
+      console.log(data);
+    })
   }
 
   _notificationSystem: null;
@@ -68,6 +78,7 @@ class RegistrationPageRaw extends Component {
 
   componentDidMount() {
     this._notificationSystem = this.refs.notificationSystem;
+
   }
 
   onSubmit(event) {

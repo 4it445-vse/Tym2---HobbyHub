@@ -1,0 +1,28 @@
+- immutable@3.8.1 node_modules\immutable
+frontend@0.1.0 C:\Users\Max\WebstormProjects\Tym2---HobbyHub\frontend
++-- UNMET PEER DEPENDENCY babel@^5.6.23
++-- UNMET PEER DEPENDENCY babel-core@^5.6.20
++-- UNMET PEER DEPENDENCY es6-promise@4.0.5 extraneous
++-- moment@2.16.0 
++-- UNMET PEER DEPENDENCY react@15.4.0
+| `-- fbjs@0.8.6 
+|   +-- isomorphic-fetch@2.2.1
+|   | `-- whatwg-fetch@2.0.1 
+|   `-- ua-parser-js@0.7.12 
++-- react-addons-shallow-compare@15.4.0 
++-- react-dates@4.0.2 
+| +-- array-includes@3.0.2 
+| | +-- define-properties@1.1.2 
+| | | +-- foreach@2.0.5 
+| | | `-- object-keys@1.0.11 
+| | `-- es-abstract@1.6.1 
+| |   +-- es-to-primitive@1.1.1 
+| |   | +-- is-date-object@1.0.1 
+| |   | `-- is-symbol@1.0.1 
+| |   +-- function-bind@1.1.0 
+| |   +-- is-callable@1.1.3 
+| |   `-- is-regex@1.0.3 
+| +-- react-moment-proptypes@1.2.0 
+| `-- react-portal@3.0.0 
+`-- UNMET PEER DEPENDENCY react-dom@15.4.0
+

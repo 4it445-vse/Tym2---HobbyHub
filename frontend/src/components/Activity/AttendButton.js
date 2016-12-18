@@ -13,7 +13,8 @@ export class AttendButton extends Component {
   constructor(props){
     super(props);
     this.state = {
-      canSubscribe: true
+      canSubscribe: true,
+      registeredUser: true,
     }
     this._addNotification = this._addNotification.bind(this);
     this.handleAttendClick = this.handleAttendClick.bind(this);
@@ -109,6 +110,16 @@ export class AttendButton extends Component {
     } else {
       this.setState({canSubscribe: false})
     }
+    }).catch((data) => {
+      console.log('errors')
+      console.log(data);
+      if (data.response.status != 401){
+        this.setState({registeredUser: true})
+        return true
+      } else {
+          this.setState({registeredUser: false})
+          return false
+      }
     })
   }
 
@@ -121,13 +132,14 @@ export class AttendButton extends Component {
     const { activity, subBsStyle, subClassName, subContent, unsubClassName, unsubBsStyle, unsubContent } = this.props;
     var user_id = loadState().auth.userId
     var canSubscribe = this.state.canSubscribe
+    var registeredUser = this.state.registeredUser
 
 // return(
 //   <div>
 //     {canSubscribe ? <Button bsStyle="primary" onClick={this.handleSubmit}>Přihlásit</Button> : null}
 //   </div>
 // )
-
+if (registeredUser){
    if (canSubscribe){
      return(
        <Button className={subClassName} bsStyle={subBsStyle} onClick={this.handleAttendClick}>{subContent}</Button>
@@ -143,5 +155,8 @@ export class AttendButton extends Component {
        )
      }
    };
+ } else {
+   return null
+ };
   }
 }

@@ -22,7 +22,16 @@ export function configureStore(preloadedState, saveState) {
     preloadedState,
   );
 
-  if (saveState) {
+  console.log(saveState)
+  if (saveState == '0') {
+    console.log('logged out ..........................')
+    store.subscribe(throttle(() => {
+      const state = {};
+      console.log('configureStore state:', state);
+      const stateToSave = stateThatShouldBeSaved(state);
+      saveState(stateToSave);
+    }, 1000))
+  } else {
     store.subscribe(throttle(() => {
       const state = store.getState();
       console.log('configureStore state:', state);

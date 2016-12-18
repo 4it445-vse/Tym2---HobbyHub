@@ -465,8 +465,8 @@ class CreateActivityPageRaw extends Component {
                 <div className="cols-sm-10">
                   <div className="input-group">
                     <span className="input-group-addon"><i className="fa fa-users fa" aria-hidden="true"></i></span>
-                    <input type="text" className="form-control" name="user_count" id="user_count"  placeholder="Vložte počet účastníků" onChange={this.handleUserCountChange}/>
-                    {/* <Number className='number-picker' min={1} value={this.state ? (this.state.user_count == null ? 2 : this.state.user_count) : 2} step={1} id="user_count" onChange={this.handleUserCountChange}/> */}
+                    {/* <input type="text" className="form-control" name="user_count" id="user_count"  placeholder="Vložte počet účastníků" onChange={this.handleUserCountChange}/> */}
+                    <Number className='number-picker' min={1} value={this.state ? (this.state.user_count == null ? 2 : this.state.user_count) : 2} step={1} id="user_count" onChange={this.handleUserCountChange}/>
                   </div>
                 </div>
               </div>
