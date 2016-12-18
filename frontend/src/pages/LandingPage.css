@@ -13,6 +13,17 @@ body {
  * https://twitter.com/jedwatson https://twitter.com/jossmackison https://twitter.com/keystonejs
  * MIT License: https://github.com/JedWatson/react-select
 */
+.container-fluid {
+     padding-right: 0;
+     padding-left: 0;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.search-col {
+  padding: 0
+}
+
 .Select {
   position: relative;
 }
@@ -411,6 +422,8 @@ input {
   margin: 0;
   padding: 10px 40px 10px 10px;
   width: 100%;
+  color: #28abe3;
+  font-size: large;
 }
 
 .has-suggestions .search-bar-input {
@@ -441,10 +454,10 @@ input {
 }
 
 .search-bar-submit {
-  background-color: #e5e5e5;
+  background-color: #28abe3;
   background-image: url(../img/search.svg);
   background-size: 35%;
-  border: 1px solid #ddd;
+  border: 0.1em solid #28abe3;
   border-top-right-radius: 2px;
   border-bottom-right-radius: 2px;
   padding: 0 20px;
