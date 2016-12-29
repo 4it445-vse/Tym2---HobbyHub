@@ -2,14 +2,8 @@ import React, { Component } from 'react';
 import { Link } from 'react-router';
 import { Thumbnail } from 'react-bootstrap';
 import ReactTooltip from 'react-tooltip';
-
-import { loadState } from  '../../store/localState';
-
 import { AttendButton } from '../Activity/AttendButton.js'
 
-
-// import { AttendActivityButtonContainer } from '../ActivityGrid/AttendActivityButton.js';
-// import { ViewActivityButtonContainer } from '../ActivityGrid/ViewActivityButton.js';
 
 export class ActivityItem extends Component {
 
@@ -19,17 +13,6 @@ constructor(props){
     canSubscribe: true,
   };
 }
-
-  renderName () {
-    var name = this.props.activity.name
-    var shortName = `${name.substring(0,18)}` + '...'
-    if (name.length >= 18 ) {
-      return shortName
-    }
-      else {
-        return name
-      }
-  }
 
   renderLink (id, parsedName) {
     var name = this.props.activity.name
@@ -74,13 +57,10 @@ constructor(props){
   render() {
 
     const { activity } = this.props;
-    const { id, name, city, date_and_time, customer_id, subcategory_id } = activity;
-    const parsedName = this.renderName();
-    const generatedLink = this.renderLink(id, parsedName);
+    const { id, name, city, date_and_time, subcategory_id } = activity;
     var date = new Date(date_and_time);
     var parsedDate = date.getDate() + '.' + (date.getMonth() + 1) + '.' + date.getFullYear();
     var parsedTime = date.getHours() + ':' + date.getMinutes();
-    var user_id = loadState().auth.userId
 
     return (
       <Thumbnail src={this.chooseThumbnail(subcategory_id)} alt="242x200">

@@ -8,6 +8,11 @@
     position: static !important;
 }
 
+.navbar-default .navbar-toggle {
+    border-color: #28abe3;
+    background-color: white;
+}
+
 .navbar-nav li a {
  line-height: 32px;
 }
