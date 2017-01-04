@@ -22,7 +22,7 @@ module.exports = function(Activity) {
 
 
 
- Activity.createActivity = function(subcategory_id, name, city, address, date_and_time, user_count, about, cb) {
+ Activity.createActivity = function(category_id, subcategory_id, name, city, address, date_and_time, user_count, about, cb) {
  	const app = require('../../server/server.js');
 	const { ActivitySubcategory } = app.models;
 	
@@ -42,6 +42,7 @@ module.exports = function(Activity) {
 
 	console.log("cbbb: ", typeof cb);
 	Activity.create({
+		"category_id": category_id,
 		"subcategory_id": subcategory_id,
 		"name": name,
 		"city": city,
@@ -153,6 +154,7 @@ module.exports = function(Activity) {
     {
       description : 'Create new Activity MY',
 	  accepts: [
+		{arg: 'category_id', type: 'number', required: true},
 	    {arg: 'subcategory_id', type: 'number', required: true},
 		{arg: 'name', type: 'string', required: true},
 		{arg: 'city', type: 'string', required: true},

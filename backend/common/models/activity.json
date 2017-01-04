@@ -49,6 +49,11 @@
       "type": "belongsTo",
       "model": "ActivitySubcategory",
       "foreignKey": "subcategory_id"
+    },
+	"activityCategory": {
+      "type": "belongsTo",
+      "model": "ActivityCategory",
+      "foreignKey": "category_id"
     }
   },
   "acls": [
