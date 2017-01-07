@@ -50,7 +50,7 @@
       "model": "ActivitySubcategory",
       "foreignKey": "subcategory_id"
     },
-	"activityCategory": {
+    "activityCategory": {
       "type": "belongsTo",
       "model": "ActivityCategory",
       "foreignKey": "category_id"
