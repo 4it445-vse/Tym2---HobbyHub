@@ -79,5 +79,9 @@
   "HasInterest": {
     "dataSource": "mysqlds",
     "public": true
+  },
+  "Rating": {
+    "dataSource": "mysqlds",
+    "public": true
   }
 }

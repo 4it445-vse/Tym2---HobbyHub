@@ -3,27 +3,7 @@
 module.exports = function(app) {
 debugger;
 
-  app.dataSources.mysqlds.autoupdate('testModel', function(err) {
-    const { Testmodel } = app.models;
-    if (!Testmodel) { return; }
 
-    EshopCategory.count({}, function(err, count) {
-      if (count !== 0) { return };
-
-      EshopCategory.create([
-        {
-          name: 'Car',
-        },
-        {
-          name: 'Motorbike',
-        }
-      ], function(err, categories) {
-        if (err) throw err;
-
-        console.log('Models created: \n', categories);
-      });
-    });
-  });
 /*
   app.dataSources.mysqlds.autoupdate('EshopProduct', function(err) {
     const { EshopProduct } = app.models;
@@ -183,25 +163,6 @@ app.dataSources.mysqlds.autoupdate('ACL', function(err) { });
 app.dataSources.mysqlds.autoupdate('RoleMapping', function(err) { });
 app.dataSources.mysqlds.autoupdate('AccessToken', function(err) { });
 
-app.dataSources.mysqlds.autoupdate('User', function(err) {
-  const { User } = app.models;
-  if (!User) { return; }
-
-  User.count({}, function(err, count) {
-    if (count !== 0) { return };
-
-    User.create([
-      {
-        email: 'test@mail.com',
-        password: 'testtest'
-      }
-    ], function(err, categories) {
-      if (err) throw err;
-
-      console.log('Models created: \n', categories);
-    });
-  });
-});
 
 
 
@@ -222,6 +183,25 @@ app.dataSources.mysqlds.autoupdate('HasInterest', function(err) {
     });
   });
 
+  
+  
+app.dataSources.mysqlds.autoupdate('Rating', function(err) {
+    const { Rating } = app.models;
+    if (!Rating) { return; }
+
+    Rating.count({}, function(err, count) {
+      if (count !== 0) { return };
+
+      Rating.create([
+        { "evaluator_user_id": "1", "evaluated_user_id": "2", "activity": "1", "reliability": "2", "sympathy": "3", "friendliness": "4" }
+		
+      ], function(err, Rating) {
+        if (err) throw err;
+
+        console.log('Models created: \n', Rating);
+      });
+    });
+  });
 
 app.dataSources.mysqlds.autoupdate('Interest', function(err) {
     const { Interest } = app.models;
@@ -289,6 +269,9 @@ app.dataSources.mysqlds.autoupdate('Interest', function(err) {
       });
     });
   });
+
+  
+
 
 
 

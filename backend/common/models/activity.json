@@ -76,7 +76,7 @@
       "permission": "ALLOW",
       "property": "find"
     },
-	{
+    {
       "accessType": "EXECUTE",
       "principalType": "ROLE",
       "principalId": "$everyone",

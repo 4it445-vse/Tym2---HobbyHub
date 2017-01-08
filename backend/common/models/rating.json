@@ -1,27 +1,39 @@
 {
-  "name": "HasInterest",
-  "plural": "HasInterests",
+  "name": "Rating",
+  "plural": "Ratings",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {
     "validateUpsert": true
   },
-  "properties": {},
-  "validations": [],
-  "relations": {
-    "interest": {
-      "type": "belongsTo",
-      "model": "Interest",
-      "foreignKey": "interest_id"
+  "properties": {
+    "activity": {
+      "type": "number"
     },
-    "customer": {
-      "type": "belongsTo",
-      "model": "Customer",
-      "foreignKey": "customer_id"
+    "reliability": {
+      "type": "number"
+    },
+    "sympathy": {
+      "type": "number"
+    },
+    "friendliness": {
+      "type": "number"
     }
   },
-  "acls": [
-    {
+  "validations": [],
+  "relations": {
+   "EvaluatorCustomer": {
+      "type": "belongsTo",
+      "model": "Customer",
+      "foreignKey": "evaluator_user_id"
+    },
+	"EvaluatedCustomer": {
+      "type": "belongsTo",
+      "model": "Customer",
+      "foreignKey": "evaluated_user_id"
+    }
+  },
+  "acls": [{
       "accessType": "*",
       "principalType": "ROLE",
       "principalId": "$everyone",
@@ -32,7 +44,6 @@
       "principalType": "ROLE",
       "principalId": "$authenticated",
       "permission": "ALLOW"
-    }
-  ],
+    }],
   "methods": {}
 }

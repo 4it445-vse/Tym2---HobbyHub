@@ -14,12 +14,13 @@
   },
   "validations": [],
   "relations": {
-	"InterestCustomers": {
+    "InterestCustomers": {
       "type": "hasMany",
       "model": "Customer",
       "foreignKey": "interest_id",
       "through": "hasInterest"
-    }},
+    }
+  },
   "acls": [],
   "methods": {}
 }

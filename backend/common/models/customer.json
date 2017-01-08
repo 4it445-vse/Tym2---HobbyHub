@@ -24,11 +24,21 @@
       "foreignKey": "customer_id",
       "through": "hasActivity"
     },
-	"CustomerInterests": {
+    "CustomerInterests": {
       "type": "hasMany",
       "model": "Interest",
       "foreignKey": "customer_id",
       "through": "hasInterest"
+    },
+	"EvaluatorCustomerRatings": {
+      "type": "hasMany",
+      "model": "Rating",
+      "foreignKey": "evaluator_user_id"
+    },
+	"EvaluatedCustomerRatings": {
+      "type": "hasMany",
+      "model": "Rating",
+      "foreignKey": "evaluated_user_id"
     }
   },
   "acls": [
