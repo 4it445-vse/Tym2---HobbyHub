@@ -36,7 +36,14 @@ module.exports = function(Rating) {
             if (err) {
                 return cb(err);
             }
-
+			if ( activity < 0 || activity > 5 ||
+			activity < 0 || activity > 5 ||
+			reliability < 0 || reliability > 5 ||
+			sympathy < 0 || sympathy > 5 ||
+			friendliness < 0 || friendliness > 5 ) {
+				return cb({message: 'Parameters must be between 0-5', status: 402});
+			}
+			
             console.log('rating: ', rating); // voila!
             if (!empty(rating)) {
 			
@@ -110,5 +117,136 @@ module.exports = function(Rating) {
     }
 	);
 
+	
+	
+    Rating.status = function(id, cb) {
+        const app = require('../../server/server.js');
+                var ctx = LoopBackContext.getCurrentContext();
+        var currentUser = ctx && ctx.get('currentUserId');
+        console.log('currentUser.username: ', currentUser); // voila!
+        const { Customer } = app.models;
+            Customer.findById(id, function(err, cstmr) {
+            if (err) {
+                return cb(err);
+            }
+            if (!cstmr) {
+                return cb({message: 'Customer Not found', status: 404});
+            }
+
+			Rating.findOne({where: {and: [{evaluator_user_id: currentUser}, {evaluated_user_id: id}]}}, function(err, rating) {
+            if (err) {
+                return cb(err);
+            }
+
+            console.log('rating: ', rating); // voila!
+            if (empty(rating)) {
+				return cb(null, false);
+            }
+			else
+            {
+                console.log('Vote found:', rating);
+                cb(null, rating);
+			}
+        });
+
+        });
+    };
+	
+	
+    Rating.remoteMethod(
+            'status',
+            {
+                description: 'Get Rating status MY',
+                accepts: {
+                    arg: 'id',
+                    type: 'number',
+                    description: 'Evaluated user id',
+                    required: true,
+                    http: {source: 'path'}
+                },
+                accessType: 'READ',
+                returns: {arg: 'stats', type: 'object', root: true},
+                http: [
+                    {verb: 'get', path: '/:id/status'}
+                ]
+            }
+
+    );
+
+	
+	 Rating.average = function(id, cb) {
+        const app = require('../../server/server.js');
+                var ctx = LoopBackContext.getCurrentContext();
+        var currentUser = ctx && ctx.get('currentUserId');
+        console.log('currentUser.username: ', currentUser); // voila!
+        const { Customer } = app.models;
+            Customer.findById(id, function(err, cstmr) {
+            if (err) {
+                return cb(err);
+            }
+            if (!cstmr) {
+                return cb({message: 'Customer Not found', status: 404});
+            }
+
+			Rating.find({where: {and: [{evaluator_user_id: currentUser}, {evaluated_user_id: id}]}}, function(err, ratings) {
+            if (err) {
+                return cb(err);
+            }
+			console.log('Rating.type: ', typeof ratings); // voila!
+			
+			let activity  = 0;
+			let reliability  = 0;
+			let sympathy  = 0;
+			let friendliness  = 0;
+			
+			if (ratings.length) {
+			ratings.forEach((rating) => {
+            activity += rating.activity;
+			reliability += rating.reliability;
+			sympathy += rating.sympathy;
+			friendliness += rating.friendliness;
+          });
+			activity = activity / ratings.length;
+			reliability = reliability / ratings.length;
+			sympathy = sympathy / ratings.length;
+			friendliness = friendliness / ratings.length;
+		  }
+		    
+			
+			var response = {
+				Activity: activity,
+                Reliability: reliability,
+				Sympathy: sympathy,
+				Friendliness: friendliness
+			};
+			
+            console.log('rating: ', ratings); // voila!
+            cb(null, response);
+        });
+
+        });
+    };
+	
+	
+    Rating.remoteMethod(
+            'average',
+            {
+                description: 'Get average Rating MY',
+                accepts: {
+                    arg: 'id',
+                    type: 'number',
+                    description: 'Evaluated user id',
+                    required: true,
+                    http: {source: 'path'}
+                },
+                accessType: 'READ',
+                returns: {arg: 'stats', type: 'object', root: true},
+                http: [
+                    {verb: 'get', path: '/:id/average'}
+                ]
+            }
+
+    );
+	
 
 };
