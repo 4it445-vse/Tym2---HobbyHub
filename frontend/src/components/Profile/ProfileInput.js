@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { InputGroup, FormGroup, FormControl, Button, Input, Glyphicon} from 'react-bootstrap';
+import { InputGroup, FormGroup, FormControl, Button } from 'react-bootstrap'; //, Input, Glyphicon
 
 //import { ProfileInput } from 'ProfileInput.js';
 

@@ -3,7 +3,7 @@ import { Grid, Col, Row } from 'react-bootstrap'
 import { connect } from 'react-redux'
 import { userLogged, isUserLogged } from '../actions'
 import api from '../api.js'
-import { SearchBarRaw } from '../components/ActivityGrid/SearchBar.js'
+//import { SearchBarRaw } from '../components/ActivityGrid/SearchBar.js'
 import { ActivityItem } from '../components/ActivityGrid/ActivityItem.js'
 import { LandingPageHeader } from '../components/ActivityGrid/LandingPageHeader.js'
 import lodash from 'lodash'
@@ -263,7 +263,7 @@ this.handleSubkategoryChange = this.handleSubkategoryChange.bind(this);
 
     const mappedActivities = Activities.map(function(activity){
                           return (
-                            <Col xs={12} sm={6} md={4} lg={3}>
+                            <Col xs={12} sm={6} md={4} lg={3} key={ activity.id }>
                               <ActivityItem activity={ activity } key={ activity.id }/>
                             </Col>
                         )

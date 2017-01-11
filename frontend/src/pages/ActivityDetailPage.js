@@ -1,9 +1,7 @@
 import React, {Component} from 'react';
-import lodash from 'lodash';
-import $ from 'jquery';
 import api from '../api.js';
 import { ParticipantList } from '../components/ParticipantList/ParticipantList.js';
-import { Thumbnail, Grid, Button, Col, Row } from 'react-bootstrap';
+import { Thumbnail, Grid, Col, Row } from 'react-bootstrap';
 
 import { AttendButton } from '../components/Activity/AttendButton.js'
 import { UserSearching } from '../components/UserSearching/UserSearching.js'
@@ -14,10 +12,6 @@ var dateFormat = require('dateformat');
 
 import { connect } from 'react-redux';
 import { userLogged } from '../actions'
-
-const IMAGE_3 = 'http://www.pixelstalk.net/wp-content/uploads/2016/09/Adventure-HD-Wallpaper.jpg'
-
-import classNames from 'classnames';
 
 export class ActivityDetailPageRaw extends Component {
   constructor(props) {
@@ -35,14 +29,13 @@ export class ActivityDetailPageRaw extends Component {
     if (loadState().length === 0){
     }
     const { activityId } = this.props.params;
-    var Owner_id = null
     api(`Activities/${activityId}`
     ).then((response) => {
       this.setState({ activity: response.data });
     }).catch((data) => {
       console.log('errors')
       console.log(data);
-      if (data.response.status == 401){
+      if (data.response.status === 401){
         this.props.history.push('/login')
       }
       return false
@@ -63,7 +56,6 @@ export class ActivityDetailPageRaw extends Component {
     }
 
     const {
-      id,
       name,
       about,
       city,

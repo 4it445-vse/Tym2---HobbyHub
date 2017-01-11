@@ -6,10 +6,9 @@ import './RegistrationPage.css';
 import { connect } from 'react-redux';
 import { userLogged, loginAction } from '../actions'
 import api from '../api.js';
-import { setAuthToken } from '../api'
-import { loadState, saveState } from  '../store/localState'
+//import { setAuthToken } from '../api'
+import { loadState } from  '../store/localState' //, saveState
 
-var ReactDOM = require('react-dom');
 var NotificationSystem = require('react-notification-system');
 
 const bgImage = require('../img/Rock-climbing-Wallpaper.jpg')
@@ -24,7 +23,7 @@ class LoginPageRaw extends Component {
     this.handleEmailBlur = this.handleEmailBlur.bind(this);
     this.testRequest = this.testRequest.bind(this);
     this._addNotification = this._addNotification.bind(this);
-    // if (.userId)
+
     this.props.userLogged(false);
     // userLogged(false)
     this.state = {
@@ -51,6 +50,12 @@ class LoginPageRaw extends Component {
           level: 'error'
         });
         break;
+        default:
+        this._notificationSystem.addNotification({
+          title: 'Error!',
+          message: 'Během přihlášení došlo k neočekávané chybě.',
+          level: 'error'
+        });
     }
   }
 
@@ -133,27 +138,28 @@ class LoginPageRaw extends Component {
 
   handleEmailBlur(){
     return 1 // smazat az bude findByEmail
-    if(this.state.email ){
-      const regData = {
-          username: this.state.email
-        };
-
-      api.get('Customers/'+this.state.email+'/findByEmail')
-        .then(({ data }) => {
-          console.log('data', data);
-          if(data.length>0){
-            this.setState({emailValid:true});
-          } else {
-            this.setState({emailValid:false});
-          }
-        })
-        .catch(error => {
-          console.log(error);
-          this.setState({emailValid:false});
-        });
-    } else {
-      this.setState({emailValid:false});
-    }
+    // if(this.state.email ){
+    //   // dočasně zakomentováno ať konzole neprudí
+    //   // const regData = {
+    //   //     username: this.state.email
+    //   //   }
+    //
+    //   api.get('Customers/'+this.state.email+'/findByEmail')
+    //     .then(({ data }) => {
+    //       console.log('data', data);
+    //       if(data.length>0){
+    //         this.setState({emailValid:true});
+    //       } else {
+    //         this.setState({emailValid:false});
+    //       }
+    //     })
+    //     .catch(error => {
+    //       console.log(error);
+    //       this.setState({emailValid:false});
+    //     })
+    // } else {
+    //   this.setState({emailValid:false});
+    // }
   }
 
   emailCheckText(){

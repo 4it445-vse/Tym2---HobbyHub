@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { Jumbotron, Thumbnail, Grid, Button, Col, Row, Form, FormGroup, InputGroup, FormControl, Radio, ButtonGroup, DropdownButton, MenuItem, ControlLabel } from 'react-bootstrap';
+import {  Button, Form, FormGroup,  FormControl,  ButtonGroup, DropdownButton, MenuItem, ControlLabel } from 'react-bootstrap'; //Jumbotron, Thumbnail, Grid, Col, Row, InputGroup, Radio,
 
 import { ProfileInput } from '../Profile/ProfileInput.js';
 
-import Datetime from 'react-datetime';
+//import Datetime from 'react-datetime';
 
 import api from '../../api.js';
 
-import { userLogged, isUserLogged, getSession } from '../../actions'
+import { userLogged } from '../../actions' //isUserLogged, getSession
 
 import { loadState } from '../../store/localState.js'
 
@@ -63,15 +63,21 @@ export class ProfileForm extends Component {
           var profile = [];
           var data = response.data;
 
+
           for(var colName in data){
+            if(colName === "birth_date"){
             var o = {};
             o.key = colName;
             o.val = data[colName];
-            if(colName === "birth_date"){
-              o.type = "date";
-            };
+            o.type = "date";
+            profile.push(o);
+          } else {
+            o.key = colName;
+            o.val = data[colName];
             profile.push(o);
           }
+          }
+
 
           profile = this.mapNames(profile);
           this.isLoaded = true;
@@ -92,14 +98,19 @@ export class ProfileForm extends Component {
               };
 
           for(var colName in data){
+            if(colName === "birth_date"){
             var o = {};
             o.key = colName;
             o.val = data[colName];
-            if(colName === "birth_date"){
-              o.type = "date";
-            };
+            o.type = "date";
+            profile.push(o);
+          } else {
+            o.key = colName;
+            o.val = data[colName];
             profile.push(o);
           }
+          }
+
 
           profile = this.mapNames(profile);
           this.isLoaded = true;
@@ -164,6 +175,7 @@ export class ProfileForm extends Component {
         case "customer_id":
           delete obj[i];
           break;
+          default:
       }
     }
     return obj;

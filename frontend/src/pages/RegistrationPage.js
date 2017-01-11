@@ -7,9 +7,6 @@ import api from '../api.js';
 import { connect } from 'react-redux';
 import { userLogged } from '../actions';
 
-import { loadState } from  '../store/localState'
-
-
 var NotificationSystem = require('react-notification-system');
 
 const bgImage = require('../img/Rock-climbing-Wallpaper.jpg');
