@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import {  Button, Form, FormGroup,  FormControl,  ButtonGroup,
-  DropdownButton, MenuItem, ControlLabel, Collapse, Well } from 'react-bootstrap'; //Jumbotron, Thumbnail, Grid, Col, Row, InputGroup, Radio,
+  DropdownButton, MenuItem, ControlLabel, Collapse, Well, Panel } from 'react-bootstrap'; //Jumbotron, Thumbnail, Grid, Col, Row, InputGroup, Radio,
 
 import { ProfileInput } from '../Profile/ProfileInput.js';
 import { UserActivities } from './UserActivities.js';
@@ -431,16 +431,14 @@ export class ProfileForm extends Component {
               </div>
             </FormGroup>
 
-            <Button onClick={ ()=> this.setState({ open: !this.state.open })}>
+            <Button bsStyle="link" onClick={ ()=> this.setState({ open: !this.state.open })}>
               Advanced settings
             </Button>
             <div>&nbsp;</div>
             <Collapse in={this.state.open}>
               <div>
-
                 <ProfileInput type="email"  validate="true" name="Nový Email" save={(key, val) => this.save(key, val)} click={(key, val) => this.clickSaveEmail(key, val)}></ProfileInput>
                 <Well>
-
                   <h2>Změna hesla:</h2>
 
                   <ProfileInput type="password" noBtn="true" name="Staré"  save={(key, val) => this.save(key, val)} click={(key, val) => this.clickSavePwd(key, val)}>
@@ -451,10 +449,10 @@ export class ProfileForm extends Component {
                   <Button type="submit" onClick={this.clickSavePwd}>
                     Submit
                   </Button>
-
                 </Well>
               </div>
             </Collapse>
+
           </Form>
           <UserActivities customerId={this.customerId}/>
         </div>
