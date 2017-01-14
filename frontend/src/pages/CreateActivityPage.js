@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { Link, browserHistory } from 'react-router';
-import $ from 'jquery';
+//import { Link, browserHistory } from 'react-router';
+//import $ from 'jquery';
 
 import './RegistrationPage.css';
 import { connect } from 'react-redux';
@@ -16,7 +16,7 @@ import './Select.css';
 
 import { loadState } from  '../store/localState'
 
-var ReactDOM = require('react-dom');
+//var ReactDOM = require('react-dom');
 var NotificationSystem = require('react-notification-system');
 
 const bgImage = require('../img/Rock-climbing-Wallpaper.jpg')
@@ -122,7 +122,7 @@ class CreateActivityPageRaw extends Component {
 
   handleNameChange(e) {
    this.setState({name: e.target.value});
-   if (e.target.value == ""){
+   if (e.target.value === ""){
      this.nameValid = false;
   } else {
     this.nameValid = true;
@@ -131,7 +131,7 @@ class CreateActivityPageRaw extends Component {
   handleKategoryChange(val){
     console.log(val)
 
-    if (val == null) {
+    if (val === null) {
       this.setState({kategory: ''});
       this.setState({subDisabled: true});
       this.setState({subkategory: ''});
@@ -181,7 +181,7 @@ class CreateActivityPageRaw extends Component {
   }
   handleSubkategoryChange(val){
     console.log(val)
-    if (val == null) {
+    if (val === null) {
       this.setState({subkategory: ''});
       this.subcategoryValid = false;
     } else {
@@ -194,7 +194,7 @@ class CreateActivityPageRaw extends Component {
   }
   handleAddressChange(e) {
     console.log(e)
-    if (e.name == ""){
+    if (e.name === ""){
       this.addressValid = false;
    } else {
      this.setState({address: e.formatted_address});
@@ -206,7 +206,7 @@ class CreateActivityPageRaw extends Component {
   handleDateChange(e) {
     console.log(e)
    this.setState({date_and_time: e._d});
-   if (e._d== null){
+   if (e._d === null){
      this.dateValid = false;
   } else {
     this.dateValid = true;
@@ -221,7 +221,7 @@ class CreateActivityPageRaw extends Component {
   }
 
   handleNameblur(e){
-    if (e.target.value == ""){
+    if (e.target.value === ""){
       this.nameValid = false;
    } else {
      this.nameValid = true;
@@ -247,7 +247,7 @@ class CreateActivityPageRaw extends Component {
 
       var user_count = 2
       console.log({test: this.state.user_count})
-      if (this.state.user_count == ""){
+      if (this.state.user_count === ""){
         user_count = 2
       } else {
         user_count = this.state.user_count
@@ -427,7 +427,7 @@ class CreateActivityPageRaw extends Component {
                       onChange={this.handleSubkategoryChange}
                       clearable={true}
                       placeholder="Zvolte podkategorii"
-                      disabled={this.state ? (this.state.subDisabled == null ? true : this.state.subDisabled) : true}
+                      disabled={this.state ? (this.state.subDisabled === null ? true : this.state.subDisabled) : true}
                       autocomplete={true}
                       required
                     />
@@ -466,7 +466,7 @@ class CreateActivityPageRaw extends Component {
                   <div className="input-group">
                     <span className="input-group-addon"><i className="fa fa-users fa" aria-hidden="true"></i></span>
                     {/* <input type="text" className="form-control" name="user_count" id="user_count"  placeholder="Vložte počet účastníků" onChange={this.handleUserCountChange}/> */}
-                    <Number className='number-picker' min={1} value={this.state ? (this.state.user_count == null ? 2 : this.state.user_count) : 2} step={1} id="user_count" onChange={this.handleUserCountChange}/>
+                    <Number className='number-picker' min={1} value={this.state ? (this.state.user_count === null ? 2 : this.state.user_count) : 2} step={1} id="user_count" onChange={this.handleUserCountChange}/>
                   </div>
                 </div>
               </div>
@@ -489,7 +489,7 @@ class CreateActivityPageRaw extends Component {
                 <div className="cols-sm-10">
                   <div className="input-group">
                     <span className="input-group-addon"><i className="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-                    <textarea required className="form-control" className="form-control" rows="5" name="comment" id="comment" placeholder="Krátký popis" onChange={this.handleAboutChange}></textarea>
+                    <textarea required className="form-control" rows="5" name="comment" id="comment" placeholder="Krátký popis" onChange={this.handleAboutChange}></textarea>
                   </div>
                 </div>
               </div>

@@ -18,6 +18,11 @@
       "type": "hasMany",
       "model": "ActivitySubcategory",
       "foreignKey": "category_id"
+    },
+    "activity": {
+      "type": "hasMany",
+      "model": "ActivityCategory",
+      "foreignKey": "category_id"
     }
   },
   "acls": [],

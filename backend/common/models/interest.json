@@ -1,0 +1,26 @@
+{
+  "name": "Interest",
+  "plural": "Interests",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "interest": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {
+    "InterestCustomers": {
+      "type": "hasMany",
+      "model": "Customer",
+      "foreignKey": "interest_id",
+      "through": "hasInterest"
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

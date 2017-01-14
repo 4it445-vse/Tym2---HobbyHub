@@ -24,6 +24,11 @@ body {
   padding: 0
 }
 
+.row.main.test {
+    margin-top: 0;
+    margin-bottom: 35px;
+}
+
 .Select {
   position: relative;
 }
