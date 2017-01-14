@@ -5,6 +5,7 @@ import {  Button, Form, FormGroup,  FormControl,  ButtonGroup,
   DropdownButton, MenuItem, ControlLabel, Collapse, Well } from 'react-bootstrap'; //Jumbotron, Thumbnail, Grid, Col, Row, InputGroup, Radio,
 
 import { ProfileInput } from '../Profile/ProfileInput.js';
+import { UserActivities } from './UserActivities.js';
 
 //import { ProfileMultiselect } from '../Profile/ProfileMultiselect.js';
 
@@ -455,6 +456,7 @@ export class ProfileForm extends Component {
               </div>
             </Collapse>
           </Form>
+          <UserActivities customerId={this.customerId}/>
         </div>
       );
     } else {

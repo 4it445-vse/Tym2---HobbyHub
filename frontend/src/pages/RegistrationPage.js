@@ -38,8 +38,8 @@ class RegistrationPageRaw extends Component {
     ).then((response) => {
       this.props.history.push('/land')
     }).catch((data) => {
-      console.log('errors')
-      console.log(data);
+      // console.log('errors')
+      // console.log(data);
     })
   }
 
