@@ -13,6 +13,7 @@ import './assets/css/material.css'
 import './assets/css/style.css'
 import './assets/css/responsive.css'
 import './assets/css/color/blue.css' 
+import './assets/css/bootstrap-multiselect.css'
 
 import { createRoutes } from './createRoutes.js';
 
