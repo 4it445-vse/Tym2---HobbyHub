@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import {  Button, Form, FormGroup,  FormControl,  ButtonGroup, DropdownButton, MenuItem, ControlLabel } from 'react-bootstrap'; //Jumbotron, Thumbnail, Grid, Col, Row, InputGroup, Radio,
 
 import { ProfileInput } from '../Profile/ProfileInput.js';
+import { UserActivities } from './UserActivities.js';
 
 //import Datetime from 'react-datetime';
 
@@ -271,6 +272,8 @@ export class ProfileForm extends Component {
             </FormGroup>
 
           </Form>
+
+          <UserActivities customerId={this.customerId}/>
 
         </div>
       );
