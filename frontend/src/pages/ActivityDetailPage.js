@@ -1,17 +1,19 @@
 import React, {Component} from 'react';
 import api from '../api.js';
 import { ParticipantList } from '../components/ParticipantList/ParticipantList.js';
-import { Thumbnail, Grid, Col, Row } from 'react-bootstrap';
+import {  Grid, Col, Row } from 'react-bootstrap'; //Thumbnail,
 
 import { AttendButton } from '../components/Activity/AttendButton.js'
 import { UserSearching } from '../components/UserSearching/UserSearching.js'
 
-import { loadState } from  '../store/localState'
+//import { loadState } from  '../store/localState'
 
 var dateFormat = require('dateformat');
 
 import { connect } from 'react-redux';
 import { userLogged } from '../actions'
+
+import { Map, Marker } from 'google-maps-react'
 
 export class ActivityDetailPageRaw extends Component {
   constructor(props) {
@@ -24,19 +26,16 @@ export class ActivityDetailPageRaw extends Component {
   }
 
   componentDidMount() {
-    console.log('state')
-    console.log(loadState())
-    if (loadState().length === 0){
-    }
     const { activityId } = this.props.params;
     api(`Activities/${activityId}`
     ).then((response) => {
       this.setState({ activity: response.data });
     }).catch((data) => {
-      console.log('errors')
-      console.log(data);
       if (data.response.status === 401){
         this.props.history.push('/login')
+      } else {
+        console.log('errors')
+        console.log(data);
       }
       return false
     })
@@ -82,16 +81,31 @@ export class ActivityDetailPageRaw extends Component {
                   <br/>
                   <h2>Kdy a kde?</h2>
 
-                    <p><h5>Místo:</h5> {city}</p>
-                    <p><h5>Ulice:</h5> {address}</p>
-                    <p><h5>Datum:</h5> {dateFormat(date_and_time, "dddd, mmmm dS, yyyy")}</p>
-                    <p><h5>Čas:</h5>   {dateFormat(date_and_time, "h:MM:ss TT")}</p>
+                    <div><h5>Místo:</h5> {city}</div>
+                    <div><h5>Ulice:</h5> {address}</div>
+                    <div><h5>Datum:</h5> {dateFormat(date_and_time, "dddd, mmmm dS, yyyy")}</div>
+                    <div><h5>Čas:</h5>   {dateFormat(date_and_time, "h:MM:ss TT")}</div>
                    </Col>
 
                    <Col xs={4} md={6}>
-                     <Thumbnail src="http://www.canterburyicehockey.com.au/wp-content/themes/canterbury-ice-hockey/library/images/default-post-image.jpg" alt="242x200">
+                   <div width='100px' height='100px'>
+                   <Map google={window.google} zoom={16} initialCenter={{lat: 50.1129793, lng: 14.614941600000066 + 0.007}}>
+{/* {console.log('window')}
+{console.log(window.location)} */}
+                   <Marker
+                    name={'Test'}
+                    position={{lat: 50.1129793, lng: 14.614941600000066}} />
 
-                     </Thumbnail>
+                    {/* <InfoWindow onClose={this.onInfoWindowClose}>
+                    <div>
+                        <h1>{this.state.selectedPlace.name}</h1>
+                    </div>
+                    </InfoWindow> */}
+                    </Map>
+                    </div>
+                     {/* <Thumbnail src="http://www.canterburyicehockey.com.au/wp-content/themes/canterbury-ice-hockey/library/images/default-post-image.jpg" alt="242x200">
+
+                     </Thumbnail> */}
                    </Col>
                    </Row>
                    <Row>

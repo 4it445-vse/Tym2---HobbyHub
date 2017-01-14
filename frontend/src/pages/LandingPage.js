@@ -54,13 +54,7 @@ export class LandingPageRaw extends Component {
   constructor(props) {
     super(props);
     LandingPageRaw.onSubmit = LandingPageRaw.onSubmit.bind(this);
-    var logged = false
-    api(`hasActivities`
-    ).then((response) => {
-      logged = true
-    }).catch((data) => {
-    })
-    this.props.userLogged(logged);
+
     this.state = {
     subcategory: '',
     subcategory_id: '',
@@ -68,7 +62,7 @@ export class LandingPageRaw extends Component {
     dateFrom: '',
     dateTo: '',
     Activities: [],
-    logged: logged,
+    logged: false,
   };
 this.fetchActivitiesDebounced = lodash.debounce(
   this.fetchActivities,
@@ -83,6 +77,19 @@ this.handleDateFromChange = this.handleDateFromChange.bind(this);
 this.handleDateToChange = this.handleDateToChange.bind(this);
 this.handleKategoryChange = this.handleKategoryChange.bind(this);
 this.handleSubkategoryChange = this.handleSubkategoryChange.bind(this);
+
+
+}
+
+componentWillMount(props){
+  api(`hasActivities`
+  ).then((response) => {
+    this.props.userLogged(true);
+    this.setState({logged: true})
+  }).catch((data) => {
+    this.props.userLogged(false);
+    this.setState({logged: false})
+  })
 
 
 }
@@ -198,7 +205,7 @@ this.handleSubkategoryChange = this.handleSubkategoryChange.bind(this);
         });
     }
 
-    componentDidMount() {
+    componentDidMount(props) {
         this.fetchActivities();
       }
 

@@ -4,7 +4,7 @@ import React, { Component } from 'react'
 
 import './RegistrationPage.css';
 import { connect } from 'react-redux';
-import { userLogged, isUserLogged, getSession } from '../actions'
+import { userLogged, getSession } from '../actions'
 import api from '../api.js';
 
 import Datetime from 'react-datetime';
@@ -58,7 +58,7 @@ class CreateActivityPageRaw extends Component {
   constructor(props) {
     super(props);
     this.onSubmit = this.onSubmit.bind(this);
-    this.props.userLogged(isUserLogged());
+    this.props.userLogged(true);
 
     console.log(this.props)
 
@@ -84,6 +84,14 @@ class CreateActivityPageRaw extends Component {
     this.subcategoryValid = true;
     this.addressValid = true;
     this.dateValid = true;
+  }
+
+  componentWillMount(props){
+    api(`hasActivities`
+    ).then((response) => {
+    }).catch((data) => {
+      window.location = '/land'
+    })
   }
 
   _notificationSystem: null;
@@ -193,12 +201,20 @@ class CreateActivityPageRaw extends Component {
    this.setState({city: e.target.value});
   }
   handleAddressChange(e) {
-    console.log(e)
+    // console.log(e)
+    // console.log('lat')
+    // console.log(e.geometry.location.lat())
+    // console.log('lng')
+    // console.log(e.geometry.location.lng())
+    // console.log('ende')
+
     if (e.name === ""){
       this.addressValid = false;
    } else {
      this.setState({address: e.formatted_address});
      this.setState({city: e.address_components[2].long_name})
+     this.setState({lat: e.geometry.location.lat()})
+     this.setState({lng: e.geometry.location.lng()})
      this.addressValid = true;
    }
   }
@@ -269,7 +285,9 @@ class CreateActivityPageRaw extends Component {
                       date_and_time: this.state.date_and_time,
                       user_count: user_count,
                       about: this.state.about,
-                      customer_id: customer_id
+                      customer_id: customer_id,
+                      lat: this.state.lat,
+                      lng: this.state.lng
                     }
 
       api.post('Activities', formData)
