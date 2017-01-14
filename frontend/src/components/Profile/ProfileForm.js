@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import {  Button, Form, FormGroup,  FormControl,  ButtonGroup,
-  DropdownButton, MenuItem, ControlLabel, Collapse, Well, Panel } from 'react-bootstrap'; //Jumbotron, Thumbnail, Grid, Col, Row, InputGroup, Radio,
+  DropdownButton, MenuItem, ControlLabel, Collapse, Well, Panel, Tab, Tabs } from 'react-bootstrap'; //Jumbotron, Thumbnail, Grid, Col, Row, InputGroup, Radio,
 
 import { ProfileInput } from '../Profile/ProfileInput.js';
 import { UserActivities } from './UserActivities.js';
@@ -381,80 +381,88 @@ export class ProfileForm extends Component {
 
       return (
         <div>
-          <h3>Můj Profil</h3>
+          <Tabs defaultActiveKey={1} animation={false}>
+            <Tab eventKey={1} id={1} title="Profil">
+              <h3>Můj Profil</h3>
 
-          <br></br>
-          <Form>
-            {profile.map((profil) =>
-              <ProfileInput type={profil.type || "text"} name={profil.key} save={(key, val) => this.save(key, val)}
-                click={(key, val) => this.clickSave(key, val)} value={profil.val}></ProfileInput>
-            )}
+              <br></br>
+              <Form>
+                {profile.map((profil) =>
+                  <ProfileInput type={profil.type || "text"} name={profil.key} save={(key, val) => this.save(key, val)}
+                    click={(key, val) => this.clickSave(key, val)} value={profil.val}></ProfileInput>
+                )}
 
-            <table width="100%">
-              <tbody>
-                <tr>
-                  <td style={{
-                    width: "100px",
-                    overflow: "hidden",
-                    display: "inline-block",
-                    whiteSpace: "nowrap"
-                  }}><h4>Koníčky:</h4></td>
-                  <td width="100%">
-                    <div style={{display: 'flex', justifyContent: 'center'}}>
-                      <Multiselect data={this.horses} onChange={this.multiselectChange} multiple />
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td><h4>Pohlaví:</h4></td>
-                  <td>
-                    <div style={{display: 'flex', justifyContent: 'center'}}>
-                      <ButtonGroup>
-                        <DropdownButton onSelect={this.dropChange} title={this.state.Pohlaví} id="bg-nested-dropdown">
-                          <MenuItem eventKey="Muž">Muž</MenuItem>
-                          <MenuItem eventKey="Žena">Žena</MenuItem>
-                        </DropdownButton>
-                      </ButtonGroup>
-                    </div></td>
-                </tr>
-              </tbody>
+                <table width="100%">
+                  <tbody>
+                    <tr>
+                      <td style={{
+                        width: "100px",
+                        overflow: "hidden",
+                        display: "inline-block",
+                        whiteSpace: "nowrap"
+                      }}><h4>Koníčky:</h4></td>
+                      <td width="100%">
+                        <div style={{display: 'flex', justifyContent: 'center'}}>
+                          <Multiselect data={this.horses} onChange={this.multiselectChange} multiple />
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td><h4>Pohlaví:</h4></td>
+                      <td>
+                        <div style={{display: 'flex', justifyContent: 'center'}}>
+                          <ButtonGroup>
+                            <DropdownButton onSelect={this.dropChange} title={this.state.Pohlaví} id="bg-nested-dropdown">
+                              <MenuItem eventKey="Muž">Muž</MenuItem>
+                              <MenuItem eventKey="Žena">Žena</MenuItem>
+                            </DropdownButton>
+                          </ButtonGroup>
+                        </div></td>
+                    </tr>
+                  </tbody>
 
-            </table>
+                </table>
 
-            <FormGroup controlId="formControlsTextarea">
-              <ControlLabel><h4>O mě</h4></ControlLabel>
-              <FormControl rows="5" style={{resize:"vertical"}} {...opts} componentClass="textarea" value={this.state.about} onChange={this.textChange}/>
-              <div style={{position: "relative",width: "100%"}}>
-                <Button onClick={this.handleClick} style={{position: "absolute",right: "10px",top: "-43px"}} >
-                  <span className={"glyphicon glyphicon-"+btnText}></span>
+                <FormGroup controlId="formControlsTextarea">
+                  <ControlLabel><h4>O mě</h4></ControlLabel>
+                  <FormControl rows="5" style={{resize:"vertical"}} {...opts} componentClass="textarea" value={this.state.about} onChange={this.textChange}/>
+                  <div style={{position: "relative",width: "100%"}}>
+                    <Button onClick={this.handleClick} style={{position: "absolute",right: "10px",top: "-43px"}} >
+                      <span className={"glyphicon glyphicon-"+btnText}></span>
+                    </Button>
+                  </div>
+                </FormGroup>
+
+                <Button bsStyle="link" onClick={ ()=> this.setState({ open: !this.state.open })}>
+                  Advanced settings
                 </Button>
-              </div>
-            </FormGroup>
+                <div>&nbsp;</div>
+                <Collapse in={this.state.open}>
+                  <div>
+                    <ProfileInput type="email"  validate="true" name="Nový Email" save={(key, val) => this.save(key, val)} click={(key, val) => this.clickSaveEmail(key, val)}></ProfileInput>
+                    <Well>
+                      <h2>Změna hesla:</h2>
 
-            <Button bsStyle="link" onClick={ ()=> this.setState({ open: !this.state.open })}>
-              Advanced settings
-            </Button>
-            <div>&nbsp;</div>
-            <Collapse in={this.state.open}>
-              <div>
-                <ProfileInput type="email"  validate="true" name="Nový Email" save={(key, val) => this.save(key, val)} click={(key, val) => this.clickSaveEmail(key, val)}></ProfileInput>
-                <Well>
-                  <h2>Změna hesla:</h2>
+                      <ProfileInput type="password" noBtn="true" name="Staré"  save={(key, val) => this.save(key, val)} click={(key, val) => this.clickSavePwd(key, val)}>
+                      </ProfileInput>
+                      <ProfileInput type="password" validate="true" noBtn="true" name="Nové"  save={(key, val) => this.save(key, val)} click={(key, val) => this.clickSavePwd(key, val)}>
+                      </ProfileInput>
 
-                  <ProfileInput type="password" noBtn="true" name="Staré"  save={(key, val) => this.save(key, val)} click={(key, val) => this.clickSavePwd(key, val)}>
-                  </ProfileInput>
-                  <ProfileInput type="password" validate="true" noBtn="true" name="Nové"  save={(key, val) => this.save(key, val)} click={(key, val) => this.clickSavePwd(key, val)}>
-                  </ProfileInput>
+                      <Button type="submit" onClick={this.clickSavePwd}>
+                        Submit
+                      </Button>
+                    </Well>
+                  </div>
+                </Collapse>
 
-                  <Button type="submit" onClick={this.clickSavePwd}>
-                    Submit
-                  </Button>
-                </Well>
-              </div>
-            </Collapse>
+              </Form>
+            </Tab>
+            <Tab eventKey={2} id={2} title="Aktivity">
+              <UserActivities customerId={this.customerId}/>
+            </Tab>
+          </Tabs>
 
-          </Form>
-          <UserActivities customerId={this.customerId}/>
+
         </div>
       );
     } else {
