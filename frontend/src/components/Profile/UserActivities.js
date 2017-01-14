@@ -45,7 +45,7 @@ export class UserActivities extends Component {
   }
 
   _renderActivities(header, activities){
-    if(activities.length == 0){
+    if(activities.length === 0){
       return null
     }
     return (
@@ -53,7 +53,7 @@ export class UserActivities extends Component {
         <h3>{header}</h3>
         {activities.map( activity => {
           return (
-            <Link to={"/activityDetail/" + activity.id}>
+            <Link to={"/activityDetail/" + activity.id} key={activity.id}>
               <h4>{activity.name}</h4>
             </Link>
           )
