@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Rating from 'react-rating-system';
-import { Well } from 'react-bootstrap';
 
 import { Comments } from './Comments.js'
 import { loadState } from '../../store/localState.js'
@@ -67,7 +66,7 @@ export class UserRating extends Component {
 
   render() {
     const { rating, editable } = this.state
-    const { commentedUserId } = this.props
+    const { customerId } = this.props
     return (
       <div>
         <h3>Mé hodnocení</h3>
@@ -84,7 +83,7 @@ export class UserRating extends Component {
             containerStyle={{ maxWidth: '200px' }}
           />
         </div>
-        <Comments commentedUserId={commentedUserId}/>
+        <Comments commentedUserId={customerId}/>
       </div>
     )
   }

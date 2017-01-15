@@ -20,7 +20,25 @@ export class Comments extends Component {
   }
 
   componentDidMount(){
+    let { commentedUserId } = this.props
+    let comments = []
 
+    api('/Customers/'+commentedUserId+'/toCustomerComments')
+      .then((response) => {
+
+        for (let comment of response.data){
+          api('/Customers/'+comment.from_user_id)
+            .then((_response) => {
+              comment.author = _response.data.username
+              comments.push(comment)
+            })
+        }
+
+        this.setState({
+          ...this.state,
+          comments: comments
+        })
+      })
   }
 
   _renderComments(){
@@ -37,8 +55,8 @@ export class Comments extends Component {
     }
     return (
       <div>
-        {comments.map( comment => {
-          return <Comment text={comment.text} author={comment.author} />
+        {comments.map( c => {
+          return <Comment key={c.id} text={c.text} author={c.author} />
         })}
       </div>
     )
