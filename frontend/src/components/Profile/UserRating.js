@@ -2,17 +2,11 @@ import React, { Component } from 'react';
 import Rating from 'react-rating-system';
 import { Well } from 'react-bootstrap';
 
+import { Comments } from './Comments.js'
 import { loadState } from '../../store/localState.js'
 import api from '../../api.js';
 
 const STAR_ICON = require('../../img/star.png')
-
-const Comment = (props) => (
-  <Well>
-    <p><em>{props.text}</em></p>
-    <p className="text-right"><em>- {props.author}</em></p>
-  </Well>
-);
 
 export class UserRating extends Component {
 
@@ -73,6 +67,7 @@ export class UserRating extends Component {
 
   render() {
     const { rating, editable } = this.state
+    const { commentedUserId } = this.props
     return (
       <div>
         <h3>Mé hodnocení</h3>
@@ -89,12 +84,7 @@ export class UserRating extends Component {
             containerStyle={{ maxWidth: '200px' }}
           />
         </div>
-        <br/>
-        <h3>Napsali o mně</h3>
-        <Comment
-          text="Zatím Vás slovně nikdo neohodnotil!"
-          author="HobbyHub"
-        />
+        <Comments commentedUserId={commentedUserId}/>
       </div>
     )
   }
