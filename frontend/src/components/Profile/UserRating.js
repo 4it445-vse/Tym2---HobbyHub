@@ -18,7 +18,7 @@ export class UserRating extends Component {
     this._preventRepeatedVote = this._preventRepeatedVote.bind(this)
     this.state = {
       rating: 0,
-      editable: true // this.props.customerId !== this.loggedUserId // prevent self-vote
+      editable: true //this.props.customerId !== this.loggedUserId // prevent self-vote
     }
     this._preventRepeatedVote()
   }
@@ -26,7 +26,7 @@ export class UserRating extends Component {
   componentDidMount(){
     this._loadRating()
     if(this.state.editable) {
-      // TODO this._preventRepeatedVote()
+      this._preventRepeatedVote()
     }
   }
 
@@ -49,7 +49,6 @@ export class UserRating extends Component {
   }
 
   _onRateUser(numberOfStars) {
-    console.log(`alreadyVoted`,this.userAlreadyVoted);
     if(this.userAlreadyVoted){ return null }
     let reqData = {
       sympathy: numberOfStars,
@@ -75,7 +74,7 @@ export class UserRating extends Component {
             callback={this._onRateUser}
             initialValue={rating}
             editable={editable}
-            lockRating={true}
+            lockRating={false}
             image={STAR_ICON}
             fillBG="#f1c40f"
             initialBG="#6a6a6a"
