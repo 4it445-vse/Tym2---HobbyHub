@@ -230,6 +230,7 @@ export class ProfileForm extends Component {
         case "customer_id":
           delete obj[i];
           break;
+          default:
       }
     }
     return obj;

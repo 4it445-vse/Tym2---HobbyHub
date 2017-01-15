@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Link, browserHistory } from 'react-router';
-import $ from 'jquery';
+//import $ from 'jquery';
 
 import './RegistrationPage.css';
 import { connect } from 'react-redux';
@@ -167,13 +167,10 @@ class LoginPageRaw extends Component {
   }
 
   render() {
-    var windowHeight = $(window).height();
-    if (windowHeight > 690) { windowHeight = 690 }
 
     var imgStyle = {
         backgroundImage: 'url(' + bgImage + ')',
         backgroundSize: 'cover',
-        height: windowHeight,
     }
 
     var emailValid = "";
