@@ -100,6 +100,46 @@ export class ProfileForm extends Component {
           profile = this.mapNames(profile);
           this.isLoaded = true;
           this.setState({profile:profile});
+
+          api.get('/Interests')
+            .then((response) => {
+
+              var data = [];
+              for(var i = 0; i<response.data.length; i++){
+                data[i]={
+                  value:response.data[i].interest,
+                  id:response.data[i].id
+                };
+              }
+              this.horses = data;
+
+              api.get('/HasInterests/?filter={"where":{"customer_id":'+this.customerId+'}}')
+              .then((response) => {
+                //this.myHobbies = response;
+                const data = response.data;
+                //this.myHobbies = data;
+                for(var i=0;i<response.data.length;i++){
+                  var id = response.data[i].interest_id - 1;
+                  this.horses[id].selected = true;
+                }
+                this.setState({myHobbies:data});
+              })
+              .catch(error => {
+                const { response } = error;
+                const { errors } = response.data.error.details;
+
+                this.setState({ errors });
+              });
+            })
+            .catch(error => {
+              const { response } = error;
+              const { errors } = response.data.error.details;
+
+              this.setState({ errors });
+            });
+
+
+
         })
         .catch(error => {
           this.isCreated = false;
@@ -139,43 +179,6 @@ export class ProfileForm extends Component {
           profile = this.mapNames(profile);
           this.isLoaded = true;
           this.setState({profile:profile});
-        });
-
-      api.get('/Interests')
-        .then((response) => {
-
-          var data = [];
-          for(var i = 0; i<response.data.length; i++){
-            data[i]={
-              value:response.data[i].interest,
-              id:response.data[i].id
-            };
-          }
-          this.horses = data;
-
-          api.get('/HasInterests/?filter={"where":{"customer_id":'+this.customerId+'}}')
-          .then((response) => {
-            //this.myHobbies = response;
-            const data = response.data;
-            //this.myHobbies = data;
-            for(var i=0;i<response.data.length;i++){
-              var id = response.data[i].interest_id - 1;
-              this.horses[id].selected = true;
-            }
-            this.setState({myHobbies:data});
-          })
-          .catch(error => {
-            const { response } = error;
-            const { errors } = response.data.error.details;
-
-            this.setState({ errors });
-          });
-        })
-        .catch(error => {
-          const { response } = error;
-          const { errors } = response.data.error.details;
-
-          this.setState({ errors });
         });
   }
 
@@ -395,7 +398,7 @@ export class ProfileForm extends Component {
       return (
         <div>
           <Tabs defaultActiveKey={1} animation={false}>
-            <Tab eventKey={1} id={1} title="Profil">
+            <Tab eventKey={1} title="Profil">
               <h3>Můj Profil</h3>
 
               <br></br>
@@ -470,7 +473,7 @@ export class ProfileForm extends Component {
 
               </Form>
             </Tab>
-            <Tab eventKey={2} id={2} title="Aktivity">
+            <Tab eventKey={2} title="Aktivity">
               <UserActivities customerId={this.customerId}/>
             </Tab>
           </Tabs>
