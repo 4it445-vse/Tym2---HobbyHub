@@ -157,31 +157,6 @@ this.handleSubkategoryChange = this.handleSubkategoryChange.bind(this);
       }
     };
 
-    // paramsForSerchString() {
-    //   var dateFrom = this.state.dateFrom;
-    //   var dateTo = this.state.dateTo;
-    //   var searchString = this.state.searchString;
-    //   var where = {};
-    //   if (dateFrom || dateTo) {
-    //     let anyDate = false;
-    //
-    //     if (dateFrom) {
-    //       anyDate = true;
-    //       where = { ...where, date_and_time: { gte: dateFrom }};
-    //     }
-    //     if (dateTo) {
-    //       anyDate = true;
-    //       where = { ...where, date_and_time: { lte: dateTo }};
-    //     }
-    //   }
-    //   if (searchString) {
-    //     where = {
-    //       ...where, or:[{name: { like: `%${searchString}%` }}, {city: { like: `%${searchString}%` }}]
-    //     };
-    //   }
-    //   return where;
-    // }
-
     fetchActivities() {
       api('Activities', { params: {filter: {where: {and: [ this.paramsForSerchString() ] }}}}  )
         .then((response) => {
