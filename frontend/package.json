@@ -36,6 +36,7 @@
     "react-search-bar": "^1.1.4",
     "react-search-input": "^0.10.3",
     "react-select": "^1.0.0-rc.2",
+    "react-star-rating": "^1.4.2",
     "react-stonecutter": "^0.3.3",
     "redux": "^3.6.0",
     "search-bar-component": "2.0.5"
