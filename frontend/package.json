@@ -18,6 +18,7 @@
     "lodash": "^4.16.4",
     "react": "^15.3.2",
     "react-bootstrap": "^0.30.6",
+    "react-bootstrap-multiselect": "^2.3.0",
     "react-burger-menu": "^1.10.8",
     "react-datepicker": "^0.34.0",
     "react-datetime": "^2.7.5",
@@ -38,6 +39,7 @@
     "react-search-bar": "^1.1.4",
     "react-search-input": "^0.10.3",
     "react-select": "^1.0.0-rc.2",
+    "react-star-rating": "^1.4.2",
     "react-stonecutter": "^0.3.3",
     "redux": "^3.6.0",
     "search-bar-component": "2.0.5"

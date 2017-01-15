@@ -208,7 +208,6 @@ class RegistrationPageRaw extends Component {
           username: this.state.email
         };
 */
-      //TODO: Dodělat až bude odpovídající služba
       api.get('Customers/'+this.state.email+'/findByEmail')
         .then(({ data }) => {
           console.log('data', data);
