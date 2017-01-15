@@ -1,0 +1,25 @@
+.btn-circle-huge {
+  width: 100px;
+  height: 100px;
+  padding:40px;
+  border-radius: 50%;
+}
+
+.vertical-center {
+  min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
+
+  display: flex;
+  align-items: center;
+}
+
+.vertical-cen {
+  position:relative;
+   top:50%;
+   transform: translateY(-50%);
+   -webkit-transform: translateY(-50%);
+   -ms-transform: translateY(-50%);
+}
+
+.btn-vertical-center {
+  /*margin-top: 50%;*/
+}

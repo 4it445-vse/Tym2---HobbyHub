@@ -76,15 +76,15 @@ export class AttendButton extends Component {
 
   handleUnsubClick(event){
     event.preventDefault();
-        console.log('unsub click')
-    console.log(event)
     var activity_id = this.props.activity.id
-
     api.post(`hasActivities/unsubscribeActivity`, {"id": activity_id}
   ).then((data) => {
     if (data){
     // this._addNotification("success", event);
     this.setState({canSubscribe: true});
+    if (window.location.pathname.includes('activityDetail')) {
+      window.location = '/activityDetail/' + activity_id
+    }
   }else{
     // isUserLogged = data
     this.setState({ errors: {} });

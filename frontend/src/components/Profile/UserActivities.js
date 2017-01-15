@@ -45,7 +45,7 @@ export class UserActivities extends Component {
   }
 
   _renderActivities(header, activities){
-    if(activities.length == 0){
+    if(activities.length === 0){
       return null
     }
     return (

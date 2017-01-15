@@ -278,7 +278,7 @@ class CreateActivityPageRaw extends Component {
       ){
 
       var formData = {name: this.state.name,
-                      kategory: this.state.kategory,
+                      category_id: this.state.kategory,
                       subcategory_id: this.state.subkategory,
                       city: this.state.city,
                       address: this.state.address,
