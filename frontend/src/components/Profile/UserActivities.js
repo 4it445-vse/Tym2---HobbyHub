@@ -71,7 +71,6 @@ export class UserActivities extends Component {
 
     return (
       <div>
-        <br/>
         {this._renderActivities("Aktivity, které organizuji", activitiesUserOrganizes)}
         {this._renderActivities("Aktivity, na které jsem přihlášen", activitiesUserAttends)}
         {this._renderActivities("Aktivity, kterých jsem se zúčastnil", activitiesUserAttended)}
