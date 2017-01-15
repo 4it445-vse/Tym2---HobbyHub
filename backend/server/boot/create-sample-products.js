@@ -276,7 +276,7 @@ app.dataSources.mysqlds.autoupdate('Interest', function(err) {
 
 
 
- 
+  app.dataSources.mysqlds.autoupdate('CustomerHasComment', function(err) { });
   app.dataSources.mysqlds.autoupdate('Profile', function(err) { });
   app.dataSources.mysqlds.autoupdate('EshopOrder', function(err) { });
   app.dataSources.mysqlds.autoupdate('EshopOrderItem', function(err) { });
