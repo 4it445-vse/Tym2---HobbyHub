@@ -1,4 +1,7 @@
 import React, { Component } from 'react'
+//import { Link, browserHistory } from 'react-router';
+//import $ from 'jquery';
+
 import './RegistrationPage.css';
 import { connect } from 'react-redux';
 import { userLogged, isUserLogged, getSession } from '../actions'
@@ -8,10 +11,12 @@ import Datetime from 'react-datetime';
 import './DateTimePicker.css';
 import Autocomplete from 'react-google-autocomplete';
 import Select from 'react-select';
+import Number from 'react-numeric-input'
 import './Select.css';
 
 import { loadState } from  '../store/localState'
 
+//var ReactDOM = require('react-dom');
 var NotificationSystem = require('react-notification-system');
 
 const bgImage = require('../img/Rock-climbing-Wallpaper.jpg')
@@ -136,6 +141,7 @@ class CreateActivityPageRaw extends Component {
       this.setState({kategory: val.value});
       this.setState({subDisabled: false});
       this.categoryValid = true;
+      console.log(val.value)
 
       var firstElement = ''
 
@@ -174,6 +180,7 @@ class CreateActivityPageRaw extends Component {
     }
   }
   handleSubkategoryChange(val){
+    console.log(val)
     if (val === null) {
       this.setState({subkategory: ''});
       this.subcategoryValid = false;
@@ -186,6 +193,7 @@ class CreateActivityPageRaw extends Component {
    this.setState({city: e.target.value});
   }
   handleAddressChange(e) {
+    console.log(e)
     if (e.name === ""){
       this.addressValid = false;
    } else {
@@ -196,6 +204,7 @@ class CreateActivityPageRaw extends Component {
   }
 
   handleDateChange(e) {
+    console.log(e)
    this.setState({date_and_time: e._d});
    if (e._d === null){
      this.dateValid = false;
@@ -204,6 +213,7 @@ class CreateActivityPageRaw extends Component {
   }
   }
   handleUserCountChange(val) {
+    console.log(val);
    this.setState({user_count: val});
   }
   handleAboutChange(e) {
@@ -236,6 +246,7 @@ class CreateActivityPageRaw extends Component {
 
 
       var user_count = 2
+      console.log({test: this.state.user_count})
       if (this.state.user_count === ""){
         user_count = 2
       } else {
@@ -369,12 +380,14 @@ class CreateActivityPageRaw extends Component {
                     {/* <span className="input-group-addon"><i className="fa fa-lock fa-lg" aria-hidden="true"></i></span>
                       <input type="text" className="form-control" name="activity" id="activity"
                     placeholder="Vložte název aktivity" onChange={this.handleNameChange} required/> */}
-                    <span className="input-group-addon"><i className="fa fa-trophy fa" aria-hidden="true"></i></span>
+                    <span className="input-group-addon"><i className="fa fa-envelope fa" aria-hidden="true"></i></span>
                     <input type="text" onChange={this.handleNameChange} className="form-control" name="activity" id="activity"  placeholder="Vložte název aktivity"
                       required/>
                   </div>
                   {this.nameCheckText()}
+
                 </div>
+
               </div>
 
 
@@ -383,7 +396,7 @@ class CreateActivityPageRaw extends Component {
                 <label htmlFor="activity" className="cols-sm-2 control-label">Kategorie</label>
                 <div className="cols-sm-10">
                   <div className={"input-group " + categoryValid}>
-                    <span className="input-group-addon"><i className="fa fa-bicycle fa" aria-hidden="true"></i></span>
+                    <span className="input-group-addon"><i className="fa fa-lock fa-lg" aria-hidden="true"></i></span>
 
                     <Select
                       name="form-field-name"
@@ -405,7 +418,7 @@ class CreateActivityPageRaw extends Component {
                 <label htmlFor="activity" className="cols-sm-2 control-label">Podkategorie</label>
                 <div className="cols-sm-10">
                   <div className={"input-group " + subcategoryValid}>
-                    <span className="input-group-addon"><i className="fa fa-bicycle fa" aria-hidden="true"></i></span>
+                    <span className="input-group-addon"><i className="fa fa-lock fa-lg" aria-hidden="true"></i></span>
 
                     <Select
                       name="form-field-name"
@@ -414,7 +427,7 @@ class CreateActivityPageRaw extends Component {
                       onChange={this.handleSubkategoryChange}
                       clearable={true}
                       placeholder="Zvolte podkategorii"
-                      disabled={this.state ? (this.state.subDisabled == null ? true : this.state.subDisabled) : true}
+                      disabled={this.state ? (this.state.subDisabled === null ? true : this.state.subDisabled) : true}
                       autocomplete={true}
                       required
                     />
@@ -429,10 +442,11 @@ class CreateActivityPageRaw extends Component {
                 <label htmlFor="address" className="cols-sm-2 control-label">Adresa</label>
                 <div className="cols-sm-10">
                   <div className={"input-group " + addressValid}>
-                    <span className="input-group-addon"><i className="glyphicon glyphicon-map-marker" aria-hidden="true"></i></span>
+                    <span className="input-group-addon"><i className="fa fa-users fa" aria-hidden="true"></i></span>
                     <Autocomplete
                       className="form-control"
                       onPlaceSelected={(place) => {
+                        console.log(place);
                         this.handleAddressChange(place);
                       }}
                       types={['geocode']}
@@ -448,16 +462,12 @@ class CreateActivityPageRaw extends Component {
 
               <div className="form-group">
                 <label htmlFor="user_count" className="cols-sm-2 control-label">Počet účastníků</label>
-                <div className="input-group">
-                  <span className="input-group-addon"><i className="fa fa-users fa" aria-hidden="true"></i></span>
-                  {/* <input type="text" className="form-control" name="user_count" id="user_count"  placeholder="Vložte počet účastníků" onChange={this.handleUserCountChange}/> */}
-                  <input type="number"
-                    step={1}
-                    min={1}
-                    max={100}
-                    id="user_count"
-                    className="form-control"
-                    onChange={this.handleUserCountChange}/>
+                <div className="cols-sm-10">
+                  <div className="input-group">
+                    <span className="input-group-addon"><i className="fa fa-users fa" aria-hidden="true"></i></span>
+                    {/* <input type="text" className="form-control" name="user_count" id="user_count"  placeholder="Vložte počet účastníků" onChange={this.handleUserCountChange}/> */}
+                    <Number className='number-picker' min={1} value={this.state ? (this.state.user_count === null ? 2 : this.state.user_count) : 2} step={1} id="user_count" onChange={this.handleUserCountChange}/>
+                  </div>
                 </div>
               </div>
 
@@ -466,7 +476,7 @@ class CreateActivityPageRaw extends Component {
                 <div className="cols-sm-10">
 
                   <div className={"input-group " + dateValid}>
-                    <span className="input-group-addon"><i className="fa fa-calendar fa" aria-hidden="true"></i></span>
+                    <span className="input-group-addon"><i className="fa fa-users fa" aria-hidden="true"></i></span>
                     {/* <input type="text" className="form-control" name="date" id="date"  placeholder="Datum" onChange={this.handleDateChange}/> */}
                     <Datetime required className="datetime" name="date" id="date" onChange={this.handleDateChange} placeholder="Vložte datum a čas"/>
                   </div>
@@ -478,7 +488,7 @@ class CreateActivityPageRaw extends Component {
                 <label htmlFor="about" className="cols-sm-2 control-label">Popis</label>
                 <div className="cols-sm-10">
                   <div className="input-group">
-                    <span className="input-group-addon"><i className="fa fa-align-justify fa" aria-hidden="true"></i></span>
+                    <span className="input-group-addon"><i className="fa fa-lock fa-lg" aria-hidden="true"></i></span>
                     <textarea required className="form-control" rows="5" name="comment" id="comment" placeholder="Krátký popis" onChange={this.handleAboutChange}></textarea>
                   </div>
                 </div>

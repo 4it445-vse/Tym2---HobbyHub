@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
-import ReactTooltip from 'react-tooltip';
+//import ReactTooltip from 'react-tooltip';
 import api from '../../api.js';
 
 import { loadState } from  '../../store/localState';
 
-var ReactDOM = require('react-dom');
-var NotificationSystem = require('react-notification-system');
+//var ReactDOM = require('react-dom');
+//var NotificationSystem = require('react-notification-system');
 
 export class AttendButton extends Component {
 
@@ -113,7 +113,7 @@ export class AttendButton extends Component {
     }).catch((data) => {
       console.log('errors')
       console.log(data);
-      if (data.response.status != 401){
+      if (data.response.status !== 401){
         this.setState({registeredUser: true})
         return true
       } else {
@@ -154,9 +154,9 @@ if (registeredUser){
          <Button className={unsubClassName} bsStyle={unsubBsStyle} onClick={this.handleUnsubClick}>{unsubContent}</Button>
        )
      }
-   };
+   }
  } else {
    return null
- };
+   }
   }
 }

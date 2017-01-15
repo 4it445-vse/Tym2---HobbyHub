@@ -8,15 +8,15 @@ const logo = require('../../img/paper-plane.png')
 export const DefaultNavigation = () => (
   <div className="container-fluid" id="navfluid">
   <div className="navbar-header">
-    <Link to="/" className="navbar-brand vcenter changeFont" href="#"><span><img className="img-responsive2 vcenter" src={logo}/></span> HobbyHub</Link>
+    <Link to="/" className="navbar-brand vcenter changeFont" href="#"><span><img className="img-responsive2 vcenter" src={logo} alt="logo"/></span> HobbyHub</Link>
     <Nav pullRight>
       <DropdownButton noCaret pullRight
           title={ _.times( 3, (i) => <span key={i} className="icon-bar"></span> )}
           className="navbar-toggle navbar-right" id="bg-nested-dropdown">
-        <MenuItem><Link to="/login"><text className="text-muted">
-          <span className="glyphicon glyphicon-user"></span> Přihlásit se</text></Link></MenuItem>
-        <MenuItem><Link to="/register"><text className="text-muted">
-          <span className="glyphicon glyphicon-plus"></span> Registrace</text></Link></MenuItem>
+        <MenuItem href="/login"><text className="text-muted">
+          <span className="glyphicon glyphicon-user"></span> Přihlásit se</text></MenuItem>
+        <MenuItem href="/register"><text className="text-muted">
+          <span className="glyphicon glyphicon-plus"></span> Registrace</text></MenuItem>
       </DropdownButton>
     </Nav>
   </div>

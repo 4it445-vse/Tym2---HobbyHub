@@ -1,42 +1,22 @@
 {
-  "name": "Profile",
-  "plural": "profiles",
+  "name": "HasInterest",
+  "plural": "HasInterests",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {
     "validateUpsert": true
   },
-  "properties": {
-    "city": {
-      "type": "string"
-    },
-    "marital_status": {
-      "type": "string"
-    },
-    "birth_date": {
-      "type": "date"
-    },
-    "gender": {
-      "type": "string"
-    },
-    "height": {
-      "type": "number"
-    },
-    "weight": {
-      "type": "number"
-    },
-    "profession": {
-      "type": "string"
-    },
-    "aboutMe": {
-      "type": "string"
-    }
-  },
+  "properties": {},
   "validations": [],
   "relations": {
-    "profile": {
+    "interest": {
       "type": "belongsTo",
-      "model": "Profile",
+      "model": "Interest",
+      "foreignKey": "interest_id"
+    },
+    "customer": {
+      "type": "belongsTo",
+      "model": "Customer",
       "foreignKey": "customer_id"
     }
   },

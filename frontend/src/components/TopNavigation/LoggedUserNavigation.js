@@ -16,7 +16,7 @@ export class LoggedUserNavigation extends Component {
 
   onLogout(e) {
     console.log(`logging out`);
-    saveState(0)
+    saveState({})
     setAuthToken(undefined)
     this.props.logoutAction()
     this.props.userLogged(false)
@@ -28,22 +28,22 @@ export class LoggedUserNavigation extends Component {
       <div>
         <div className="container-fluid" id="navfluid">
           <div className="navbar-header">
-            <Link to="/" className="navbar-brand vcenter changeFont" href="#"><span><img className="img-responsive2 vcenter" src={logo}/></span> HobbyHub</Link>
+            <Link to="/" className="navbar-brand vcenter changeFont" href="#"><span><img className="img-responsive2 vcenter" src={logo} alt="logo"/></span> HobbyHub</Link>
             <Nav pullRight>
               <DropdownButton noCaret pullRight
                 title={ _.times( 3, (i) => <span key={i} className="icon-bar"></span> )}
                 className="navbar-toggle navbar-right" id="bg-nested-dropdown">
-                <MenuItem><Link to="/createActivity"><text className="text-success">
-                  <span className="glyphicon glyphicon-flag"></span> Vytvořit událost</text></Link></MenuItem>
+                <MenuItem  href="/createActivity"><text className="text-success">
+                  <span className="glyphicon glyphicon-flag"></span> Vytvořit událost</text></MenuItem>
                 <MenuItem divider />
-                <MenuItem><Link to="/profile"><text className="text-muted">
-                  <span className="glyphicon glyphicon-user"></span> Můj profil</text></Link></MenuItem>
-                <MenuItem><Link to="/friends"><text className="text-muted">
-                  <span className="glyphicon glyphicon-heart"></span> Přátelé</text></Link></MenuItem>
-                <MenuItem><Link to="/settings"><text className="text-muted">
-                  <span className="glyphicon glyphicon-cog"></span> Nastavení</text></Link></MenuItem>
-                <MenuItem onClick={this.onLogout}><Link to="/login"><text className="text-muted">
-                  <span className="glyphicon glyphicon-log-out"></span> Odhlásit se</text></Link></MenuItem>
+                <MenuItem href="/profile"><text className="text-muted">
+                  <span className="glyphicon glyphicon-user"></span> Můj profil</text></MenuItem>
+                <MenuItem href="/friends"><text className="text-muted">
+                  <span className="glyphicon glyphicon-heart"></span> Přátelé</text></MenuItem>
+                <MenuItem href="/settings"><text className="text-muted">
+                  <span className="glyphicon glyphicon-cog"></span> Nastavení</text></MenuItem>
+                <MenuItem onClick={this.onLogout} href="/login"><text className="text-muted">
+                  <span className="glyphicon glyphicon-log-out"></span> Odhlásit se</text></MenuItem>
               </DropdownButton>
             </Nav>
           </div>

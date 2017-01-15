@@ -1,47 +1,39 @@
 {
-  "name": "Profile",
-  "plural": "profiles",
+  "name": "Rating",
+  "plural": "Ratings",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {
     "validateUpsert": true
   },
   "properties": {
-    "city": {
-      "type": "string"
-    },
-    "marital_status": {
-      "type": "string"
-    },
-    "birth_date": {
-      "type": "date"
-    },
-    "gender": {
-      "type": "string"
-    },
-    "height": {
+    "activity": {
       "type": "number"
     },
-    "weight": {
+    "reliability": {
       "type": "number"
     },
-    "profession": {
-      "type": "string"
+    "sympathy": {
+      "type": "number"
     },
-    "aboutMe": {
-      "type": "string"
+    "friendliness": {
+      "type": "number"
     }
   },
   "validations": [],
   "relations": {
-    "profile": {
+   "EvaluatorCustomer": {
       "type": "belongsTo",
-      "model": "Profile",
-      "foreignKey": "customer_id"
+      "model": "Customer",
+      "foreignKey": "evaluator_user_id"
+    },
+	"EvaluatedCustomer": {
+      "type": "belongsTo",
+      "model": "Customer",
+      "foreignKey": "evaluated_user_id"
     }
   },
-  "acls": [
-    {
+  "acls": [{
       "accessType": "*",
       "principalType": "ROLE",
       "principalId": "$everyone",
@@ -52,7 +44,6 @@
       "principalType": "ROLE",
       "principalId": "$authenticated",
       "permission": "ALLOW"
-    }
-  ],
+    }],
   "methods": {}
 }

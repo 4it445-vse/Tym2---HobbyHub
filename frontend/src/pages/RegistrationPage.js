@@ -7,9 +7,6 @@ import api from '../api.js';
 import { connect } from 'react-redux';
 import { userLogged } from '../actions';
 
-import { loadState } from  '../store/localState'
-
-
 var NotificationSystem = require('react-notification-system');
 
 const bgImage = require('../img/Rock-climbing-Wallpaper.jpg');
@@ -41,8 +38,8 @@ class RegistrationPageRaw extends Component {
     ).then((response) => {
       this.props.history.push('/land')
     }).catch((data) => {
-      console.log('errors')
-      console.log(data);
+      // console.log('errors')
+      // console.log(data);
     })
   }
 
@@ -211,7 +208,6 @@ class RegistrationPageRaw extends Component {
           username: this.state.email
         };
 */
-      //TODO: Dodělat až bude odpovídající služba
       api.get('Customers/'+this.state.email+'/findByEmail')
         .then(({ data }) => {
           console.log('data', data);

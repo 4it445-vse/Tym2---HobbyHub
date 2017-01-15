@@ -2,8 +2,14 @@ import React, { Component } from 'react';
 import { Link } from 'react-router';
 import { Thumbnail } from 'react-bootstrap';
 import ReactTooltip from 'react-tooltip';
+
+//import { loadState } from  '../../store/localState';
+
 import { AttendButton } from '../Activity/AttendButton.js'
 
+
+// import { AttendActivityButtonContainer } from '../ActivityGrid/AttendActivityButton.js';
+// import { ViewActivityButtonContainer } from '../ActivityGrid/ViewActivityButton.js';
 
 export class ActivityItem extends Component {
 
@@ -13,6 +19,17 @@ constructor(props){
     canSubscribe: true,
   };
 }
+
+  renderName () {
+    var name = this.props.activity.name
+    var shortName = `${name.substring(0,18)}...`
+    if (name.length >= 18 ) {
+      return shortName
+    }
+      else {
+        return name
+      }
+  }
 
   renderLink (id, parsedName) {
     var name = this.props.activity.name
@@ -44,7 +61,7 @@ constructor(props){
     }
     else if (subcategory_id <= 20) {
       return (
-        "http://ajapaworld.com/wp-content/uploads/2016/08/keep-calm-and-play-board-games-7.png"
+        "http://sd.keepcalm-o-matic.co.uk/i/keep-calm-and-play-board-games-18.png"
       )
     }
     else {
@@ -57,10 +74,15 @@ constructor(props){
   render() {
 
     const { activity } = this.props;
-    const { id, name, city, date_and_time, subcategory_id } = activity;
+    const { logged } = this.props;
+    const { id, name, city, date_and_time, subcategory_id } = activity; //, customer_id
+    // const parsedName = this.renderName();
+  //  const generatedLink = this.renderLink(id, parsedName);
     var date = new Date(date_and_time);
     var parsedDate = date.getDate() + '.' + (date.getMonth() + 1) + '.' + date.getFullYear();
-    var parsedTime = date.getHours() + ':' + date.getMinutes();
+  //  var parsedTime = date.getHours() + ':' + date.getMinutes();
+    var parsedTime = date.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
+  //  var user_id = loadState().auth.userId
 
     return (
       <Thumbnail src={this.chooseThumbnail(subcategory_id)} alt="242x200">
@@ -72,7 +94,11 @@ constructor(props){
         <p>Datum: <span className="date">{parsedDate}</span></p>
         <p>Od: <span className="date">{parsedTime}</span></p>
         <p>
-          <AttendButton activity={activity} subBsStyle="primary" subContent="Přihlásit" unsubBsStyle="info" unsubContent="Odhlásit"/>&nbsp;
+        {logged ?
+          <AttendButton activity={activity} subBsStyle="primary" subContent="Přihlásit" unsubBsStyle="info" unsubContent="Odhlásit"/> :
+         null
+        }&nbsp;
+          {/* <AttendButton activity={activity} subBsStyle="primary" subContent="Přihlásit" unsubBsStyle="info" unsubContent="Odhlásit"/>&nbsp; */}
           <Link className="btn btn-default" to={`/activityDetail/${id}`} role="button">Detail</Link>
           {/* <AttendActivityButtonContainer activity={activity} />
           <ViewActivityButtonContainer activity={activity} /> */}

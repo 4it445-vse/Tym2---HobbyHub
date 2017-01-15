@@ -1,9 +1,9 @@
 import React, {Component} from 'react'
 import { Grid, Col, Row } from 'react-bootstrap'
 import { connect } from 'react-redux'
-import { userLogged, isUserLogged } from '../actions'
+import { userLogged } from '../actions'
 import api from '../api.js'
-import { SearchBarRaw } from '../components/ActivityGrid/SearchBar.js'
+//import { SearchBarRaw } from '../components/ActivityGrid/SearchBar.js'
 import { ActivityItem } from '../components/ActivityGrid/ActivityItem.js'
 import { LandingPageHeader } from '../components/ActivityGrid/LandingPageHeader.js'
 import lodash from 'lodash'
@@ -54,14 +54,21 @@ export class LandingPageRaw extends Component {
   constructor(props) {
     super(props);
     LandingPageRaw.onSubmit = LandingPageRaw.onSubmit.bind(this);
-    this.props.userLogged(isUserLogged());
+    var logged = false
+    api(`hasActivities`
+    ).then((response) => {
+      logged = true
+    }).catch((data) => {
+    })
+    this.props.userLogged(logged);
     this.state = {
     subcategory: '',
     subcategory_id: '',
     searchString: '',
     dateFrom: '',
     dateTo: '',
-  Activities: [],
+    Activities: [],
+    logged: logged,
   };
 this.fetchActivitiesDebounced = lodash.debounce(
   this.fetchActivities,
@@ -76,6 +83,8 @@ this.handleDateFromChange = this.handleDateFromChange.bind(this);
 this.handleDateToChange = this.handleDateToChange.bind(this);
 this.handleKategoryChange = this.handleKategoryChange.bind(this);
 this.handleSubkategoryChange = this.handleSubkategoryChange.bind(this);
+
+
 }
 
     static onSubmit(event) {
@@ -235,11 +244,12 @@ this.handleSubkategoryChange = this.handleSubkategoryChange.bind(this);
 
   render() {
     const { Activities } = this.state;
+    const { logged } = this.state;
 
     const mappedActivities = Activities.map(function(activity){
                           return (
-                            <Col xs={12} sm={6} md={4} lg={3}>
-                              <ActivityItem activity={ activity } key={ activity.id }/>
+                            <Col xs={12} sm={6} md={4} lg={3} key={ activity.id }>
+                              <ActivityItem activity={ activity } key={ activity.id } logged={logged}/>
                             </Col>
                         )
                       });

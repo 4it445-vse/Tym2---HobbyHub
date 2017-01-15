@@ -71,5 +71,17 @@
   "Profile": {
     "dataSource": "mysqlds",
     "public": true
+  },
+  "Interest": {
+    "dataSource": "mysqlds",
+    "public": true
+  },
+  "HasInterest": {
+    "dataSource": "mysqlds",
+    "public": true
+  },
+  "Rating": {
+    "dataSource": "mysqlds",
+    "public": true
   }
 }

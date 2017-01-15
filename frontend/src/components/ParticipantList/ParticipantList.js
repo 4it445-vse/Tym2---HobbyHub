@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Col, Row } from 'react-bootstrap';
+import { Col } from 'react-bootstrap'; //Row
 
 import { ParticipantListItem } from './ParticipantListItem.js';
 import api from '../../api.js';
@@ -20,26 +20,21 @@ constructor(props){
     var Subscribers = this.state.Subscribers
     var Participants = []
 
-    if (Subscribers != []){
+    if (Subscribers !== []){
       Subscribers.map(subObj => {
 
         api(`Customers/${subObj.customer_id}`
         ).then((customerResponse) => {
-          // console.log('participant')
-          // console.log(customerResponse.data)
           Participants.push(customerResponse.data)
-          // console.log('participants loop')
-          // console.log(Participants)
           this.setState({Participants: Participants})
         })
+        return subObj
       });
 
       }
     }
 
   render() {
-    const { Subscribers } = this.props;
-
 
     if (this.state.Participants.length === 0){
       return (
