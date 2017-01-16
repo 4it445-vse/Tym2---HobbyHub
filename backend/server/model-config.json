@@ -32,22 +32,6 @@
     "dataSource": "db",
     "public": false
   },
-  "EshopProduct": {
-    "dataSource": "mysqlds",
-    "public": true
-  },
-  "EshopCategory": {
-    "dataSource": "mysqlds",
-    "public": true
-  },
-  "EshopOrder": {
-    "dataSource": "mysqlds",
-    "public": true
-  },
-  "EshopOrderItem": {
-    "dataSource": "mysqlds",
-    "public": false
-  },
   "Customer": {
     "dataSource": "mysqlds",
     "public": true
@@ -85,6 +69,10 @@
     "public": true
   },
   "CustomerHasComment": {
+    "dataSource": "mysqlds",
+    "public": true
+  },
+  "ActivityHasComment": {
     "dataSource": "mysqlds",
     "public": true
   }

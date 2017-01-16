@@ -49,6 +49,11 @@
       "type": "hasMany",
       "model": "CustomerHasComment",
       "foreignKey": "to_user_id"
+    },
+    "FromCustomerComments": {
+      "type": "hasMany",
+      "model": "ActivityHasComment",
+      "foreignKey": "from_user_id"
     }
   },
   "acls": [

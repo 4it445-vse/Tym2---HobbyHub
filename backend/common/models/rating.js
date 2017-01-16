@@ -13,7 +13,6 @@ module.exports = function(Rating) {
                 var ctx = LoopBackContext.getCurrentContext();
         var currentUser = ctx && ctx.get('currentUserId');
         const { Customer } = app.models;
-                console.log('currentUser.username: ', currentUser); // voila!
         var customer;
 
         Customer.findById(user_id, function(err, act) {
@@ -24,14 +23,11 @@ module.exports = function(Rating) {
                 return cb({message: 'Customer Not found', status: 404});
             }
             vote2(currentUser, user_id, activity, reliability, sympathy, friendliness, cb);
-            // console.log('act.user_count: ', act); // voila!
-            // console.log('act.user_count: ', act.user_count); // voila!
         });
 
     };
 
     function vote2(currentUser, user_id, activity, reliability, sympathy, friendliness, cb) {
-        //console.log('activity user_count: ', user_count); // voila!
         Rating.findOne({where: {and: [{evaluator_user_id: currentUser}, {evaluated_user_id: user_id}]}}, function(err, rating) {
             if (err) {
                 return cb(err);
@@ -43,10 +39,8 @@ module.exports = function(Rating) {
 			friendliness < 0 || friendliness > 5 ) {
 				return cb({message: 'Parameters must be between 0-5', status: 402});
 			}
-			
-            console.log('rating: ', rating); // voila!
+
             if (!empty(rating)) {
-			
 					rating.updateAttributes({
 					"activity": activity,
 					"reliability": reliability,
@@ -72,9 +66,7 @@ module.exports = function(Rating) {
             }, function(err, rating) {
                 if (err)
                     return cb(err);
-
                 console.log('New vote has been created:', rating);
-
                 cb(null, rating);
             }
             );
@@ -123,7 +115,6 @@ module.exports = function(Rating) {
         const app = require('../../server/server.js');
                 var ctx = LoopBackContext.getCurrentContext();
         var currentUser = ctx && ctx.get('currentUserId');
-        console.log('currentUser.username: ', currentUser); // voila!
         const { Customer } = app.models;
             Customer.findById(id, function(err, cstmr) {
             if (err) {
@@ -137,14 +128,11 @@ module.exports = function(Rating) {
             if (err) {
                 return cb(err);
             }
-
-            console.log('rating: ', rating); // voila!
             if (empty(rating)) {
 				return cb(null, false);
             }
 			else
             {
-                console.log('Vote found:', rating);
                 cb(null, rating);
 			}
         });
@@ -178,7 +166,6 @@ module.exports = function(Rating) {
         const app = require('../../server/server.js');
                 var ctx = LoopBackContext.getCurrentContext();
         var currentUser = ctx && ctx.get('currentUserId');
-        console.log('currentUser.username: ', currentUser); // voila!
         const { Customer } = app.models;
             Customer.findById(id, function(err, cstmr) {
             if (err) {
@@ -192,7 +179,6 @@ module.exports = function(Rating) {
             if (err) {
                 return cb(err);
             }
-			console.log('Rating.type: ', typeof ratings); // voila!
 			
 			let activity  = 0;
 			let reliability  = 0;
@@ -219,8 +205,6 @@ module.exports = function(Rating) {
 				Sympathy: sympathy,
 				Friendliness: friendliness
 			};
-			
-            console.log('rating: ', ratings); // voila!
             cb(null, response);
         });
 

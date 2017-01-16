@@ -26,10 +26,7 @@ module.exports = function(Activity) {
         const app = require('../../server/server.js');
                 const { ActivitySubcategory } = app.models;
                 var ctx = LoopBackContext.getCurrentContext();
-        console.log("first STEEEEPPP: ", typeof ctx);
         var currentUser = ctx && ctx.get('currentUserId');
-        console.log("second STEEEEPPP: ", typeof currentUser);
-        console.log('currentUser.username: ', currentUser); // voila!
 
         ActivitySubcategory.findById(subcategory_id, function(err, act) {
             if (err) {
@@ -39,7 +36,6 @@ module.exports = function(Activity) {
                 return cb({message: 'subcategory_id not found', status: 404});
             }
 
-            console.log("cbbb: ", typeof cb);
             Activity.create({
                 "category_id": category_id,
                 "subcategory_id": subcategory_id,
@@ -50,8 +46,8 @@ module.exports = function(Activity) {
                 "user_count": user_count,
                 "about": about,
                 "customer_id": currentUser,
-				"lat": lat,
-				"lng": lng
+                "lat": lat,
+                "lng": lng
             }, function(err, act) {
                 if (err)
                     return cb(err);
@@ -69,7 +65,6 @@ module.exports = function(Activity) {
         const app = require('../../server/server.js');
                 var ctx = LoopBackContext.getCurrentContext();
         var currentUser = ctx && ctx.get('currentUserId');
-        console.log('currentUser.username: ', currentUser); // voila!
         const { hasActivity } = app.models;
                 Activity.findById(id, function(err, act) {
             if (err) {
@@ -100,14 +95,12 @@ module.exports = function(Activity) {
 
         var ctx = LoopBackContext.getCurrentContext();
         var currentUser = ctx && ctx.get('currentUserId');
-        console.log('currentUser.username: ', currentUser); // voila!
         const app = require('../../server/server.js');
                 const { Customer } = app.models;
                 Customer.find({where: {email: email}}, function(err, user) {
             if (err) {
                 return cb(err);
             }
-            console.log('user by email: ', user[0]); // voila!
             if (!user[0])
                 return cb({message: 'User with this email not found', status: 404});
 
@@ -118,7 +111,6 @@ module.exports = function(Activity) {
                 if (!act) {
                     return cb({message: 'Activity Not found', status: 404});
                 }
-                console.log('act obj: ', act.id); // voila!
 
                 var smtpConfig = {
                     host: 'smtp.gmail.com',
