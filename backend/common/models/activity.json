@@ -30,6 +30,14 @@
     "about": {
       "type": "string",
       "required": true
+    },
+    "lat": {
+      "type": "string",
+      "required": false
+    },
+    "lng": {
+      "type": "string",
+      "required": false
     }
   },
   "validations": [],

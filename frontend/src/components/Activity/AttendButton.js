@@ -53,10 +53,12 @@ export class AttendButton extends Component {
 
 
     api.post(`hasActivities/subscribeToActivity`, {"id": activity_id}
+
   ).then((data) => {
     if (data){
     // this._addNotification("success", event);
     this.setState({canSubscribe: false});
+    window.location = '/activityDetail/' + activity_id
   }else{
     // isUserLogged = data
     this.setState({ errors: {} });
@@ -74,15 +76,15 @@ export class AttendButton extends Component {
 
   handleUnsubClick(event){
     event.preventDefault();
-        console.log('unsub click')
-    console.log(event)
     var activity_id = this.props.activity.id
-
     api.post(`hasActivities/unsubscribeActivity`, {"id": activity_id}
   ).then((data) => {
     if (data){
     // this._addNotification("success", event);
     this.setState({canSubscribe: true});
+    if (window.location.pathname.includes('activityDetail')) {
+      window.location = '/activityDetail/' + activity_id
+    }
   }else{
     // isUserLogged = data
     this.setState({ errors: {} });
@@ -111,8 +113,6 @@ export class AttendButton extends Component {
       this.setState({canSubscribe: false})
     }
     }).catch((data) => {
-      console.log('errors')
-      console.log(data);
       if (data.response.status !== 401){
         this.setState({registeredUser: true})
         return true

@@ -83,5 +83,9 @@
   "Rating": {
     "dataSource": "mysqlds",
     "public": true
+  },
+  "CustomerHasComment": {
+    "dataSource": "mysqlds",
+    "public": true
   }
 }

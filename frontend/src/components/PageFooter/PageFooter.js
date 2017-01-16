@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 
 import './PageFooter.css';
 
@@ -9,7 +9,13 @@ const ig_icon = require('../../img/instagram_icon.png')
 const Icon = (props) => (
   <li>
     <a className="navbar-brand vcenter changeFont" href="#">
-      <span><img className="img-responsive2 vcenter" src={props.src}/></span>
+      <span>
+        <img
+          role="presentation"
+          className="img-responsive2 vcenter"
+          src={props.src}
+        />
+      </span>
     </a>
   </li>
 )

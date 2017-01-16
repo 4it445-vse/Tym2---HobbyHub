@@ -12,6 +12,7 @@ import  LoginPage  from './pages/LoginPage'
 import  CreateActivityPage  from './pages/CreateActivityPage'
 import  LandingPage  from './pages/LandingPage.js';
 import  ActivityDetailPage  from './pages/ActivityDetailPage.js';
+// import  UserDetailPage  from './pages/UserDetailPage.js';
 
 export function createRoutes() {
   return (

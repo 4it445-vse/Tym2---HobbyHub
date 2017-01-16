@@ -22,7 +22,7 @@ module.exports = function(Activity) {
 
 
 
-    Activity.createActivity = function(category_id, subcategory_id, name, city, address, date_and_time, user_count, about, cb) {
+    Activity.createActivity = function(category_id, subcategory_id, name, city, address, date_and_time, user_count, about, lat, lng, cb) {
         const app = require('../../server/server.js');
                 const { ActivitySubcategory } = app.models;
                 var ctx = LoopBackContext.getCurrentContext();
@@ -49,7 +49,9 @@ module.exports = function(Activity) {
                 "date_and_time": date_and_time,
                 "user_count": user_count,
                 "about": about,
-                "customer_id": currentUser
+                "customer_id": currentUser,
+				"lat": lat,
+				"lng": lng
             }, function(err, act) {
                 if (err)
                     return cb(err);
@@ -166,7 +168,9 @@ module.exports = function(Activity) {
                     {arg: 'address', type: 'string', required: true},
                     {arg: 'date_and_time', type: 'date', required: true},
                     {arg: 'user_count', type: 'number', required: true},
-                    {arg: 'about', type: 'string', required: true}
+                    {arg: 'about', type: 'string', required: true},
+                    {arg: 'lat', type: 'string', required: false},
+                    {arg: 'lng', type: 'string', required: false}
                 ],
                 accessType: 'READ',
                 returns: {root: true, type: 'boolean'},
