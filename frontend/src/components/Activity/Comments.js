@@ -60,7 +60,7 @@ export class Comments extends Component {
     if(comments.length === 0){
       return(
         <Comment
-          text="Zatím událost nikdo neokomentoval. Buďte první, kdo vyjádří svůj názor!"
+          text="Tuto událost zatím nikdo neokomentoval. Buďte první, kdo vyjádří svůj názor!"
           author="HobbyHub"
         />
       )
