@@ -5,17 +5,15 @@ import { userLogged } from '../actions'
 import api from '../api.js'
 //import { SearchBarRaw } from '../components/ActivityGrid/SearchBar.js'
 import { ActivityItem } from '../components/ActivityGrid/ActivityItem.js'
+import { LandingPageTabs } from '../components/ActivityGrid/LandingPageTabs.js'
 import { LandingPageHeader } from '../components/ActivityGrid/LandingPageHeader.js'
 import lodash from 'lodash'
 import Datetime from 'react-datetime'
 import Select from 'react-select'
-import Masonry from 'react-masonry-component'
+// import Masonry from 'react-masonry-component'
+import { loadState } from '../store/localState.js'
 import './DateTimePicker.css'
 import './LandingPage.css'
-
-var masonryOptions = {
-    transitionDuration: 0
-};
 
 const sport = [
   { value: '1', label: 'Fotbal' },
@@ -53,22 +51,20 @@ export class LandingPageRaw extends Component {
 
   constructor(props) {
     super(props);
+
     LandingPageRaw.onSubmit = LandingPageRaw.onSubmit.bind(this);
-    var logged = false
-    api(`hasActivities`
-    ).then((response) => {
-      logged = true
-    }).catch((data) => {
-    })
-    this.props.userLogged(logged);
+
     this.state = {
+    customerId : loadState().auth.userId,
     subcategory: '',
     subcategory_id: '',
     searchString: '',
     dateFrom: '',
     dateTo: '',
     Activities: [],
-    logged: logged,
+    activitiesUserOrganizes: [],
+    activitiesUserAttends: [],
+    logged: false
   };
 this.fetchActivitiesDebounced = lodash.debounce(
   this.fetchActivities,
@@ -83,15 +79,24 @@ this.handleDateFromChange = this.handleDateFromChange.bind(this);
 this.handleDateToChange = this.handleDateToChange.bind(this);
 this.handleKategoryChange = this.handleKategoryChange.bind(this);
 this.handleSubkategoryChange = this.handleSubkategoryChange.bind(this);
+}
 
-
+componentWillMount(props){
+  api(`hasActivities`
+  ).then((response) => {
+    this.props.userLogged(true);
+    this.setState({logged: true})
+  }).catch((data) => {
+    this.props.userLogged(false);
+    this.setState({logged: false})
+  })
 }
 
     static onSubmit(event) {
       event.preventDefault();
     }
 
-    parseDatetoDateTime(date) {
+    parseDateToDateTime(date) {
       if (date != null) {
         return new Date(date).toISOString().slice(0, 19).replace('T', ' ');
       }
@@ -99,13 +104,13 @@ this.handleSubkategoryChange = this.handleSubkategoryChange.bind(this);
     }
 
     handleDateFromChange(e) {
-      var dateFrom = this.parseDatetoDateTime(e._d);
+      var dateFrom = this.parseDateToDateTime(e._d);
       this.setState({dateFrom});
       this.fetchActivitiesDebounced();
    };
 
     handleDateToChange(e) {
-      var dateTo = this.parseDatetoDateTime(e._d);
+      var dateTo = this.parseDateToDateTime(e._d);
       this.setState({dateTo});
       this.fetchActivitiesDebounced();
    };
@@ -166,39 +171,41 @@ this.handleSubkategoryChange = this.handleSubkategoryChange.bind(this);
       }
     };
 
-    // paramsForSerchString() {
-    //   var dateFrom = this.state.dateFrom;
-    //   var dateTo = this.state.dateTo;
-    //   var searchString = this.state.searchString;
-    //   var where = {};
-    //   if (dateFrom || dateTo) {
-    //     let anyDate = false;
-    //
-    //     if (dateFrom) {
-    //       anyDate = true;
-    //       where = { ...where, date_and_time: { gte: dateFrom }};
-    //     }
-    //     if (dateTo) {
-    //       anyDate = true;
-    //       where = { ...where, date_and_time: { lte: dateTo }};
-    //     }
-    //   }
-    //   if (searchString) {
-    //     where = {
-    //       ...where, or:[{name: { like: `%${searchString}%` }}, {city: { like: `%${searchString}%` }}]
-    //     };
-    //   }
-    //   return where;
-    // }
-
     fetchActivities() {
       api('Activities', { params: {filter: {where: {and: [ this.paramsForSerchString() ] }}}}  )
         .then((response) => {
           this.setState({ Activities: response.data });
         });
+        api('/Customers/'+this.state.customerId+'/activities').then((response) => {
+          this.setState({
+              ...this.state,
+              activitiesUserOrganizes: response.data
+          })
+        });
+        api('/Customers/'+this.state.customerId+'/CustomerActivities').then((response) => {
+          let activitiesUserAttends = []
+          let activitiesUserAttended = []
+          let today = new Date().getTime()
+
+          for (let activity of response.data) {
+            let activityDate = new Date(activity.date_and_time).getTime()
+
+            if(today < activityDate){
+              activitiesUserAttends.push(activity)
+            } else {
+              activitiesUserAttended.push(activity)
+            }
+          }
+
+          this.setState({
+              ...this.state,
+              activitiesUserAttends: activitiesUserAttends,
+              activitiesUserAttended: activitiesUserAttended
+          })
+        })
     }
 
-    componentDidMount() {
+    componentDidMount(props) {
         this.fetchActivities();
       }
 
@@ -268,17 +275,6 @@ this.handleSubkategoryChange = this.handleSubkategoryChange.bind(this);
     }
 
   render() {
-    const { Activities } = this.state;
-    const { logged } = this.state;
-
-    const mappedActivities = Activities.map(function(activity){
-                          return (
-                            <Col xs={12} sm={6} md={4} lg={3} key={ activity.id }>
-                              <ActivityItem activity={ activity } key={ activity.id } logged={logged}/>
-                            </Col>
-                        )
-                      });
-
     var categoryOptions = [
         { value: '1', label: 'Sport' },
         { value: '2', label: 'Hry' },
@@ -293,6 +289,7 @@ this.handleSubkategoryChange = this.handleSubkategoryChange.bind(this);
 
           <div className="container">
             <div className="row main test">
+
               <Grid>
                 <Row>
                   <Col xs={6} md={4}>
@@ -331,17 +328,15 @@ this.handleSubkategoryChange = this.handleSubkategoryChange.bind(this);
                 </Row>
                 <br />
                 <br />
+                <Row>
+                  <LandingPageTabs
+                    Activities={this.state.Activities}
+                    logged={this.state.customerId}
+                    activitiesUserOrganizes={this.state.activitiesUserOrganizes}
+                    activitiesUserAttends={this.state.activitiesUserAttends}
+                  />
+                </Row>
 
-                <Masonry
-                  className={'my-gallery-class'} // default ''
-                  elementType={'div'} // default 'div'
-                  options={masonryOptions} // default {}
-                  disableImagesLoaded={false} // default false
-                  updateOnEachImageLoad={false} // default false and works only if disableImagesLoaded is false
-                >
-                  { mappedActivities }
-
-                </Masonry>
               </Grid>
             </div>
           </div>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import SearchBar from 'search-bar-component';
-import { PageHeader, Grid} from 'react-bootstrap'
+import { Grid } from 'react-bootstrap' // PageHeader, 
 import { createFilter } from 'react-search-input'
 import lodash from 'lodash'
 
@@ -41,7 +41,7 @@ export class UserSearching extends Component {
   _renderSearchBar(){
     return (
       <div>
-        <PageHeader><h4>Najdi parťáka a pozvi ho na akci!</h4></PageHeader>
+        <h4>Najdi parťáka a pozvi ho na akci!</h4>
         <SearchBar
           placeholder="Najdi parťáka..."
           onChange={(username) => {this._onSearchUser(username)}}

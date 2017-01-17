@@ -140,6 +140,7 @@ export class ProfileForm extends Component {
 
               this.setState({ errors });
             });
+          //this.setState({profile:profile});
         })
         .catch(error => {
           console.log("ERROR::", error);
@@ -235,6 +236,7 @@ export class ProfileForm extends Component {
         case "customer_id":
           delete obj[i];
           break;
+          default:
       }
     }
     return obj;
@@ -402,7 +404,7 @@ export class ProfileForm extends Component {
           <Tabs defaultActiveKey={1} animation={false}>
             <Tab eventKey={1} title="Profil">
               <h3>Můj Profil</h3>
-
+              <br/>
               <br></br>
               <Form>
                 {profile.map((profil) =>
@@ -477,6 +479,9 @@ export class ProfileForm extends Component {
             </Tab>
             <Tab eventKey={2} title="Aktivity">
               <UserActivities customerId={this.customerId}/>
+            </Tab>
+            <Tab eventKey={3} id={3} title="Mé hodnocení">
+              <UserRating customerId={this.customerId}/>
             </Tab>
           </Tabs>
 

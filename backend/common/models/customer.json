@@ -30,15 +30,30 @@
       "foreignKey": "customer_id",
       "through": "hasInterest"
     },
-	"EvaluatorCustomerRatings": {
+    "EvaluatorCustomerRatings": {
       "type": "hasMany",
       "model": "Rating",
       "foreignKey": "evaluator_user_id"
     },
-	"EvaluatedCustomerRatings": {
+    "EvaluatedCustomerRatings": {
       "type": "hasMany",
       "model": "Rating",
       "foreignKey": "evaluated_user_id"
+    },
+    "FromCustomerComments": {
+      "type": "hasMany",
+      "model": "CustomerHasComment",
+      "foreignKey": "from_user_id"
+    },
+    "ToCustomerComments": {
+      "type": "hasMany",
+      "model": "CustomerHasComment",
+      "foreignKey": "to_user_id"
+    },
+    "FromCustomerComments": {
+      "type": "hasMany",
+      "model": "ActivityHasComment",
+      "foreignKey": "from_user_id"
     }
   },
   "acls": [

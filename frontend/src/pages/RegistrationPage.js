@@ -146,7 +146,7 @@ class RegistrationPageRaw extends Component {
     }
 
     if(event.target.name === "password"){
-      if (event.target.value.match(/^((?=\S*?[A-Z])(?=\S*?[a-z])(?=\S*?[0-9])(?=\S*?[!"$%^&*_]).{8,12})$/g)) {
+      if (event.target.value.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/g)) {
         this.pwdComplex = true;
       } else {
         this.pwdComplex = false;
@@ -349,7 +349,7 @@ class RegistrationPageRaw extends Component {
 
   pwdCheckText(type){
     if(type === 'pwd' && !this.pwdComplex)    {
-      return (<div>Heslo musí obsahovat: a-z, A-Z, 0-9 a alespoň jeden znak z !"$%^&*_</div>)
+      return (<div>Heslo musí obsahovat: alespoň 8 znaků, jedno malé písmeno, jedno velké písmeno a jedno číslo.</div>)
     }
     if(type === 'con' && !this.pwdValid){
       return (<div>Hesla se neshodují</div>)

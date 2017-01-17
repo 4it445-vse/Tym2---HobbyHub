@@ -47,8 +47,8 @@ constructor(props){
         <div className="participants">
 
         {this.state.Participants.map(participant =>
-          <Col xs={6} md={3}>
-            <ParticipantListItem participant={participant} key={participant.id}/>
+          <Col xs={6} md={3}  key={participant.id}>
+            <ParticipantListItem participant={participant}/>
           </Col>
         )}
         </div>
