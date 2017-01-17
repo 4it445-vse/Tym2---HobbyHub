@@ -11,6 +11,7 @@ import  RegistrationPage  from './pages/RegistrationPage'
 import  LoginPage  from './pages/LoginPage'
 import  CreateActivityPage  from './pages/CreateActivityPage'
 import  CreateProfileCommentPage  from './pages/CreateProfileCommentPage'
+import  CreateActivityCommentPage  from './pages/CreateActivityCommentPage'
 import  LandingPage  from './pages/LandingPage.js';
 import  ActivityDetailPage  from './pages/ActivityDetailPage.js';
 // import  UserDetailPage  from './pages/UserDetailPage.js';
@@ -32,6 +33,10 @@ export function createRoutes() {
         <Route path=":customerId" component={CreateProfileCommentPage}/>
       </Route>
       <Route path="/createActivity" component={CreateActivityPage}/>
+      <Route path="/createActivityComment">
+        <IndexRoute component={CreateActivityCommentPage}/>
+        <Route path=":activityId" component={CreateActivityCommentPage}/>
+      </Route>
       <Route path="/login" component={LoginPage}/>
       <Route path="/register" component={RegistrationPage}/>
       <Route path="*" component={NoMatchPage}/>
