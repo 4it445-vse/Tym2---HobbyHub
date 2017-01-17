@@ -82,7 +82,7 @@ class CreateActivityCommentPageRaw extends Component {
       <div className="container-fluid" style={imgStyle}>
         <div className="row main">
           <div className="main-login main-center">
-            <h2 className="title">Vytvořit komentář</h2>
+            <h2 className="title">Přidat komentář</h2>
             <form className="form-horizontal" method="post" onSubmit={this._onSubmit}>
               <div className="form-group">
                 <div className="cols-sm-10">

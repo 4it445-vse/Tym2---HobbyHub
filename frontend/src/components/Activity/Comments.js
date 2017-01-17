@@ -1,45 +1,56 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router';
 import { Well } from 'react-bootstrap';
+
+import './Comments.css'
 
 import api from '../../api.js';
 
 const Comment = (props) => (
-  <Well>
+  <Well className="comment-well">
     <p><em>{props.text}</em></p>
     <p className="text-right"><em>- {props.author}</em></p>
   </Well>
+);
+
+const AddCommentButton = (props) => (
+  <Link
+    to={'/createActivityComment/'+props.commentedActivityId}
+    id="createCommentLink">
+    <h4>Přidat komentář</h4>
+  </Link>
 );
 
 export class Comments extends Component {
 
   constructor(props) {
     super(props);
+    this._renderComments = this._renderComments.bind(this)
     this.state = {
       comments: []
     }
-    this._onAddComment = this._onAddComment.bind(this)
-    this._renderComments = this._renderComments.bind(this)
   }
 
   componentDidMount(){
-    //let { commentedActivityId } = this.props
-    let comments = []
+    let commentedActivityId = parseFloat(this.props.commentedActivityId)
 
     api('/ActivityHasComments')
       .then((response) => {
 
-        for (let comment of response.data){
+        let relatedComments = response.data.filter(function(c) {
+          return c.activity_id === commentedActivityId
+        })
+
+        for (let comment of relatedComments){
           api('/Customers/'+comment.from_user_id)
             .then((_response) => {
               comment.author = _response.data.username
-              comments.push(comment)
+              this.setState({
+                ...this.state,
+                comments: relatedComments
+              })
             })
         }
-
-        this.setState({
-          ...this.state,
-          comments: comments
-        })
       })
   }
 
@@ -50,7 +61,7 @@ export class Comments extends Component {
       return(
         <Comment
           text="Zatím událost nikdo neokomentoval. Buďte první, kdo vyjádří svůj názor!"
-          author=""
+          author="HobbyHub"
         />
       )
     }
@@ -63,21 +74,12 @@ export class Comments extends Component {
     )
   }
 
-  _onAddComment(){
-    this.props.history.push('/createActivityComment/'+this.props.commentedActivityId)
-  }
-
   render() {
+    let { commentedActivityId } = this.props
     return (
       <div>
         <h3>Komentáře</h3>
-        <button
-          onClick={this._onAddComment}
-          type="button"
-          bsStyle="default"
-          className="btn btn-default">
-            Přidat komentář
-        </button>
+        <AddCommentButton commentedActivityId={ commentedActivityId }/>
         {this._renderComments()}
       </div>
     )
