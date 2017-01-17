@@ -4,6 +4,7 @@ import { ParticipantList } from '../components/ParticipantList/ParticipantList.j
 import {  Grid, Col, Row, Thumbnail } from 'react-bootstrap';
 
 import { AttendButton } from '../components/Activity/AttendButton.js'
+import { Comments } from '../components/Activity/Comments.js'
 import { UserSearching } from '../components/UserSearching/UserSearching.js'
 import $ from 'jquery';
 import './ActivityDetailPage.css'
@@ -212,10 +213,16 @@ export class ActivityDetailPageRaw extends Component {
                    </Row>
 
                    <Row>
-                   <Col xs={12}>
-                      <UserSearching activityId={activityId}/>
-                    </Col>
+                     <Col xs={12}>
+                       <UserSearching activityId={activityId}/>
+                      </Col>
                    </Row>
+
+                   <Row>
+                     <Col xs={12}>
+                       <Comments commentedActivityId={activityId}/>
+                     </Col>
+                  </Row>
 
                  </Grid>
 
