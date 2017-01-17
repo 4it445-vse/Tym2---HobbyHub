@@ -1,15 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 import { Thumbnail } from 'react-bootstrap';
-import ReactTooltip from 'react-tooltip';
-
-//import { loadState } from  '../../store/localState';
-
 import { AttendButton } from '../Activity/AttendButton.js'
-
-
-// import { AttendActivityButtonContainer } from '../ActivityGrid/AttendActivityButton.js';
-// import { ViewActivityButtonContainer } from '../ActivityGrid/ViewActivityButton.js';
 
 export class ActivityItem extends Component {
 
@@ -76,8 +68,6 @@ constructor(props){
     const { activity } = this.props;
     const { logged } = this.props;
     const { id, name, city, date_and_time, subcategory_id } = activity; //, customer_id
-    // const parsedName = this.renderName();
-  //  const generatedLink = this.renderLink(id, parsedName);
     var date = new Date(date_and_time);
     var parsedDate = date.getDate() + '.' + (date.getMonth() + 1) + '.' + date.getFullYear();
   //  var parsedTime = date.getHours() + ':' + date.getMinutes();
@@ -88,16 +78,15 @@ constructor(props){
       <Thumbnail src={this.chooseThumbnail(subcategory_id)} alt="242x200">
         <h3>
           <Link to={`/activityDetail/${id}`} id="test">{name}</Link>
-          <ReactTooltip place="top"  type="info" effect="float" />
         </h3>
         <p>Město: <span className="city">{city}</span></p>
         <p>Datum: <span className="date">{parsedDate}</span></p>
         <p>Od: <span className="date">{parsedTime}</span></p>
         <p>
-        {logged ?
-          <AttendButton activity={activity} subBsStyle="primary" subContent="Přihlásit" unsubBsStyle="info" unsubContent="Odhlásit"/> :
-         null
-        }&nbsp;
+          {logged ?
+            <AttendButton activity={activity} subBsStyle="primary" subContent="Přihlásit" unsubBsStyle="info" unsubContent="Odhlásit"/> :
+            null
+          }&nbsp;
           {/* <AttendButton activity={activity} subBsStyle="primary" subContent="Přihlásit" unsubBsStyle="info" unsubContent="Odhlásit"/>&nbsp; */}
           <Link className="btn btn-default" to={`/activityDetail/${id}`} role="button">Detail</Link>
           {/* <AttendActivityButtonContainer activity={activity} />
