@@ -1,6 +1,6 @@
 {
-  "name": "CustomerHasComment",
-  "plural": "CustomerHasComments",
+  "name": "ActivityHasComment",
+  "plural": "ActivityHasComments",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {
@@ -19,10 +19,10 @@
       "model": "Customer",
       "foreignKey": "from_user_id"
     },
-    "ToCustomer": {
+    "Activity": {
       "type": "belongsTo",
-      "model": "Customer",
-      "foreignKey": "to_user_id"
+      "model": "Activity",
+      "foreignKey": "activity_id"
     }
   },
   "acls": [

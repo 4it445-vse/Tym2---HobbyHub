@@ -5,31 +5,32 @@ var loopback = require('loopback');
 var LoopBackContext = require('loopback-context');
 var empty = require('is-empty');
 
-module.exports = function(Customerhascomment) {
+module.exports = function(Activityhascomment) {
 
-    Customerhascomment.createComment = function(to_user_id, text, cb) {
+    Activityhascomment.createComment = function(to_activity_id, text, cb) {
+
         const app = require('../../server/server.js');
                 var ctx = LoopBackContext.getCurrentContext();
         var currentUser = ctx && ctx.get('currentUserId');
-        const { Customer } = app.models;
-        var customer;
+        const { Activity } = app.models;
+                var activity;
 
-        Customer.findById(to_user_id, function(err, customer) {
+        Activity.findById(to_activity_id, function(err, activity) {
             if (err) {
                 return cb(err);
             }
-            if (!customer) {
-                return cb({message: 'Customer Not found', status: 404});
+            if (!activity) {
+                return cb({message: 'Activity Not found', status: 404});
             }
-            createComment2(currentUser, to_user_id, text, cb);
+            createComment2(currentUser, to_activity_id, text, cb);
         });
 
     };
 
-    function createComment2(currentUser, to_user_id, text, cb) {
-        Customerhascomment.create({
+    function createComment2(currentUser, to_activity_id, text, cb) {
+        Activityhascomment.create({
             "from_user_id": currentUser,
-            "to_user_id": to_user_id,
+            "activity_id": to_activity_id,
             "text": text
         }, function(err, comment) {
             if (err)
@@ -42,14 +43,14 @@ module.exports = function(Customerhascomment) {
     }
     ;
 
-    Customerhascomment.remoteMethod(
+    Activityhascomment.remoteMethod(
             'createComment',
             {
-                description: 'Create new comment for customer MY',
+                description: 'Create new comment for activity MY',
                 accepts: [{
-                        arg: 'to_user_id',
+                        arg: 'activity_id',
                         type: 'number',
-                        description: 'To user id',
+                        description: 'Activity id',
                         required: true
                     },
                     {
@@ -64,4 +65,5 @@ module.exports = function(Customerhascomment) {
             }
     );
 
-};
+}
+;
