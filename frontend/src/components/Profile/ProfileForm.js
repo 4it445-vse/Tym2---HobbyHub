@@ -73,11 +73,14 @@ export class ProfileForm extends Component {
 
   componentDidMount(){
 
+    console.log("IS USER LOGGED::", loadState());
+
       api.get('/Customers/'+this.customerId+'/profile')
         .then((response) => {
           this.isCreated = true;
           var profile = [];
           var data = response.data;
+          console.log("PROFILE DATA::", data);
 
           for(var colName in data){
             var o = {};
@@ -137,11 +140,9 @@ export class ProfileForm extends Component {
 
               this.setState({ errors });
             });
-
-
-
         })
         .catch(error => {
+          console.log("ERROR::", error);
           this.isCreated = false;
           var profile = [];
           var data = {
@@ -162,21 +163,22 @@ export class ProfileForm extends Component {
             if(colName === "birth_date"){
               o.type = "date";
             };
-            profile.push(o);
+            //profile.push(o);
             if(colName === "birth_date"){
               var o = {};
               o.key = colName;
               o.val = data[colName];
               o.type = "date";
-              profile.push(o);
+              //profile.push(o);
             } else {
               o.key = colName;
               o.val = data[colName];
-              profile.push(o);
             }
+            profile.push(o);
           }
 
           profile = this.mapNames(profile);
+          console.log("PROFILE ERROR DATA", profile);
           this.isLoaded = true;
           this.setState({profile:profile});
         });

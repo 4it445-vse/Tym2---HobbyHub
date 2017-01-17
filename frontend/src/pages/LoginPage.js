@@ -122,10 +122,11 @@ class LoginPageRaw extends Component {
         this.setState({ error: null });
         this._addNotification("success", event);
         setTimeout(() => {
-          console.log(browserHistory)
-          browserHistory.goBack()
+          this.props.history.push('/land')
+          //console.log(browserHistory)
+          //browserHistory.goBack()
           // this.props.history.push('/land')
-        },1500);
+        },1000);
       })
       .catch(error => {
         const { response } = error;

@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
-import { Nav, DropdownButton, MenuItem } from 'react-bootstrap'
-import _ from 'lodash'
+import { Nav, DropdownButton, MenuItem } from 'react-bootstrap';
+import _ from 'lodash';
 
-import { saveState } from  '../../store/localState'
-import { setAuthToken } from '../../api'
+import { saveState } from  '../../store/localState';
+import api from '../../api';
+import { setAuthToken } from '../../api';
 
-const logo = require('../../img/paper-plane.png')
+const logo = require('../../img/paper-plane.png');
+import { logoutAction } from '../../actions';
 
 export class LoggedUserNavigation extends Component {
   constructor(props) {
@@ -15,11 +17,20 @@ export class LoggedUserNavigation extends Component {
   }
 
   onLogout(e) {
-    console.log(`logging out`);
+    const { logoutAction, userLogged } = this.props;
+
+    api.post('Customers/logout')
+      .then(({ data }) => {
+        console.log('logout post data', data)
+      })
+      .catch(error => {
+        console.log('logout post error', error)
+      });
+
     saveState({})
     setAuthToken(undefined)
-    this.props.logoutAction()
-    this.props.userLogged(false)
+    logoutAction()
+    userLogged(false)
     this.props.history.push('/login')
   }
 
