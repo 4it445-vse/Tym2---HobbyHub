@@ -54,15 +54,15 @@ class CreateProfileCommentPageRaw extends Component {
     event.preventDefault();
 
     let reqData = {
-      to_user_id: this.props.params.customerId,
+      to_user_id: parseFloat(this.props.params.customerId),
       text: this.state.commentText
     }
 
-    api.post('/CustomerHasComments/createComment', reqData).then((res) => {
+    api.post('/CustomerHasComments/createComment', reqData).then(() => {
       this._addNotification("success", event);
       setTimeout(() => {
         this.props.history.push(`/land`)
-      },1500);
+      },1500)
     }).catch(error => {
       this._addNotification("error", event);
     })
