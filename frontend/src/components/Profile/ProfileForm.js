@@ -82,21 +82,23 @@ export class ProfileForm extends Component {
         //  console.log("PROFILE DATA::", data);
 
           for(var colName in data){
-            var o = {};
-            o.key = colName;
-            o.val = data[colName];
-            if(colName === "birth_date"){
-              o.type = "date";
-            };
-            if(colName === "birth_date"){
+            if(colName.length){
+              var o = {};
               o.key = colName;
               o.val = data[colName];
-              o.type = "date";
-            } else {
-              o.key = colName;
-              o.val = data[colName];
+              if(colName === "birth_date"){
+                o.type = "date";
+              };
+              if(colName === "birth_date"){
+                o.key = colName;
+                o.val = data[colName];
+                o.type = "date";
+              } else {
+                o.key = colName;
+                o.val = data[colName];
+              }
+              profile.push(o);
             }
-            profile.push(o);
           }
 
           profile = this.mapNames(profile);
@@ -157,24 +159,26 @@ export class ProfileForm extends Component {
               };
 
           for(var colName in data){
-            var o = {};
-            o.key = colName;
-            o.val = data[colName];
-            if(colName === "birth_date"){
-              o.type = "date";
-            };
-            //profile.push(o);
-            if(colName === "birth_date"){
-              //var o = {};
+            if(colName.length){
+              var o = {};
               o.key = colName;
               o.val = data[colName];
-              o.type = "date";
+              if(colName === "birth_date"){
+                o.type = "date";
+              };
               //profile.push(o);
-            } else {
-              o.key = colName;
-              o.val = data[colName];
+              if(colName === "birth_date"){
+                //var o = {};
+                o.key = colName;
+                o.val = data[colName];
+                o.type = "date";
+                //profile.push(o);
+              } else {
+                o.key = colName;
+                o.val = data[colName];
+              }
+              profile.push(o);
             }
-            profile.push(o);
           }
 
           profile = this.mapNames(profile);
