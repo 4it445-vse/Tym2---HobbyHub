@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Link, browserHistory } from 'react-router';
+import { Link } from 'react-router';
 //import $ from 'jquery';
 
 import './RegistrationPage.css';
@@ -138,7 +138,7 @@ class LoginPageRaw extends Component {
   }
 
   handleEmailBlur(){
-    return 1 // smazat az bude findByEmail
+  //  return 1 // smazat az bude findByEmail
     // if(this.state.email ){
     //   // dočasně zakomentováno ať konzole neprudí
     //   // const regData = {

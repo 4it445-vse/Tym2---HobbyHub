@@ -2,13 +2,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import {  Button, Form, FormGroup,  FormControl,  ButtonGroup,
-  DropdownButton, MenuItem, ControlLabel, Collapse, Well, Panel, Tab, Tabs } from 'react-bootstrap'; //Jumbotron, Thumbnail, Grid, Col, Row, InputGroup, Radio,
+  DropdownButton, MenuItem, ControlLabel, Collapse, Well, Tab, Tabs } from 'react-bootstrap'; //Jumbotron, Thumbnail, Grid, Col, Row, InputGroup, Radio,
 
 import { ProfileInput } from '../Profile/ProfileInput.js';
 import { UserActivities } from './UserActivities.js';
 import { UserRating } from './UserRating.js';
 
-import Datetime from 'react-datetime';
 //import { ProfileMultiselect } from '../Profile/ProfileMultiselect.js';
 
 var Multiselect = require('react-bootstrap-multiselect');
@@ -17,7 +16,7 @@ var Multiselect = require('react-bootstrap-multiselect');
 
 import api from '../../api.js';
 
-import { userLogged, isUserLogged, getSession } from '../../actions'
+import { userLogged } from '../../actions'
 
 import { loadState } from '../../store/localState.js'
 
@@ -80,7 +79,7 @@ export class ProfileForm extends Component {
           this.isCreated = true;
           var profile = [];
           var data = response.data;
-          console.log("PROFILE DATA::", data);
+        //  console.log("PROFILE DATA::", data);
 
           for(var colName in data){
             var o = {};
@@ -166,7 +165,7 @@ export class ProfileForm extends Component {
             };
             //profile.push(o);
             if(colName === "birth_date"){
-              var o = {};
+              //var o = {};
               o.key = colName;
               o.val = data[colName];
               o.type = "date";
@@ -401,7 +400,7 @@ export class ProfileForm extends Component {
 
       return (
         <div>
-          <Tabs defaultActiveKey={1} animation={false}>
+          <Tabs defaultActiveKey={1} animation={false} id="uncontrolled-tab">
             <Tab eventKey={1} title="Profil">
               <h3>Můj Profil</h3>
               <br/>
@@ -480,7 +479,7 @@ export class ProfileForm extends Component {
             <Tab eventKey={2} title="Aktivity">
               <UserActivities customerId={this.customerId}/>
             </Tab>
-            <Tab eventKey={3} id={3} title="Mé hodnocení">
+            <Tab eventKey={3} title="Mé hodnocení">
               <UserRating customerId={this.customerId}/>
             </Tab>
           </Tabs>
