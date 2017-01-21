@@ -68,7 +68,7 @@ export class ParticipantListItem extends Component {
 
   render() {
     const { isShowingModal } = this.state
-    const { participant, id } = this.props;
+    const { participant } = this.props;
 
     const { username } = participant; //title, price, shortInfo, userImage,
 

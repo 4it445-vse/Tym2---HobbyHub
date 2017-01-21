@@ -112,7 +112,7 @@ export class ActivityDetailPageRaw extends Component {
     }
 
     var mapHeight = $(window).height()/2;
-    var buttonTop = $(window).height()/3;
+  //  var buttonTop = $(window).height()/3;
 
     const {
       name,
@@ -133,75 +133,75 @@ export class ActivityDetailPageRaw extends Component {
 
         return (
             <Grid>
-            <Row>
-            <Col xs={4}>
-                <h1>{name}</h1>
-                <h2>Popis</h2>
-                <p>{about}</p>
+              <Row>
+                <Col xs={4}>
+                  <h1>{name}</h1>
+                  <h2>Popis</h2>
+                  <p>{about}</p>
 
-               <br/>
-               <br/>
-               <h2>Informace</h2>
+                  <br/>
+                  <br/>
+                  <h2>Informace</h2>
 
-                 <div><h5>Kategorie:</h5>{categories[category_id] + ' - ' + subcategories[subcategory_id]}</div>
-                 <div><h5>Datum konání:</h5>{parsedDate}</div>
-                 <div><h5>Čas:</h5>{parsedTime}</div>
-                 {/* <div><h5>Datum:</h5> {dateFormat(date_and_time, "dddd, mmmm dS, yyyy")}</div>
-                 <div><h5>Čas:</h5>   {dateFormat(date_and_time, "h:MM:ss TT")}</div> */}
+                  <div><h5>Kategorie:</h5>{categories[category_id] + ' - ' + subcategories[subcategory_id]}</div>
+                  <div><h5>Datum konání:</h5>{parsedDate}</div>
+                  <div><h5>Čas:</h5>{parsedTime}</div>
+                  {/* <div><h5>Datum:</h5> {dateFormat(date_and_time, "dddd, mmmm dS, yyyy")}</div>
+                  <div><h5>Čas:</h5>   {dateFormat(date_and_time, "h:MM:ss TT")}</div> */}
                 </Col>
                 <Col xs={8}>
-                <h2>Místo konání</h2>
-                {(activity.lat && activity.lng) ?
+                  <h2>Místo konání</h2>
+                  {(activity.lat && activity.lng) ?
 
-                  <Map google={window.google} zoom={15}
-                   containerStyle={{width: '100%', height: mapHeight+'px'}}
-                   onClick={this.onMapClicked}
-                   initialCenter={{lat: lat, lng: lng}}
-                   center={{lat: lat, lng: lng}}>
+                    <Map google={window.google} zoom={15}
+                      containerStyle={{width: '100%', height: mapHeight+'px'}}
+                      onClick={this.onMapClicked}
+                      initialCenter={{lat: lat, lng: lng}}
+                      center={{lat: lat, lng: lng}}>
 
-                  <Marker
-                   name={'Test'}
-                   onClick={this.onMarkerClick}
-                   position={{lat: lat, lng: lng}} />
+                      <Marker
+                        name={'Test'}
+                        onClick={this.onMarkerClick}
+                        position={{lat: lat, lng: lng}} />
 
-                   <InfoWindow
-                             marker={this.state.activeMarker}
-                             visible={this.state.showingInfoWindow}>
-                               <div>
-                                   <div><h5>Místo:</h5> {city}</div>
-                                   <div><h5>Ulice:</h5> {address}</div>
-                               </div>
-                           </InfoWindow>
+                      <InfoWindow
+                        marker={this.state.activeMarker}
+                        visible={this.state.showingInfoWindow}>
+                        <div>
+                          <div><h5>Místo:</h5> {city}</div>
+                          <div><h5>Ulice:</h5> {address}</div>
+                        </div>
+                      </InfoWindow>
 
-                   </Map>
+                    </Map>
 
-                   :
-                  <Thumbnail>
-                  <h3>Mapa nedostupná!</h3>
-                  <div><h5>Místo:</h5> {city}</div>
-                  <div><h5>Ulice:</h5> {address}</div>
-                  </Thumbnail>
-                }
+                    :
+                    <Thumbnail>
+                      <h3>Mapa nedostupná!</h3>
+                      <div><h5>Místo:</h5> {city}</div>
+                      <div><h5>Ulice:</h5> {address}</div>
+                    </Thumbnail>
+                  }
 
                 </Col>
-                </Row>
+              </Row>
 
-                   <Row>
-                   {/* <UserSearching/> */}
-                   </Row>
-                   <Row>
-                      <Col xs={12}>
-                     <h2>Účastníci {Subscribers.length} / {user_count}
+              <Row>
+                {/* <UserSearching/> */}
+              </Row>
+              <Row>
+                <Col xs={12}>
+                  <h2>Účastníci {Subscribers.length} / {user_count}
 
-                      </h2>
-                     </Col>
-                   </Row>
-                   <Row>
-                     <Col xs={12}>
-                   {(Subscribers.length === 0 || !activity) ?
-                     <div>Loading...</div> :
+                  </h2>
+                </Col>
+              </Row>
+              <Row>
+                <Col xs={12}>
+                  {(Subscribers.length === 0 || !activity) ?
+                    <div>Loading...</div> :
                     <ParticipantList Subscribers={Subscribers}/>
-                   }
+                  }
                   {/* <div className="vertical-cen" style={{'paddingTop': {buttonTop}}}> */}
                    <AttendButton activity={activity}
                     subBsStyle="primary"

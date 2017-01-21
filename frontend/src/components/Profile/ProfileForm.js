@@ -72,7 +72,7 @@ export class ProfileForm extends Component {
 
   componentDidMount(){
 
-    console.log("IS USER LOGGED::", loadState());
+    //console.log("IS USER LOGGED::", loadState());
 
       api.get('/Customers/'+this.customerId+'/profile')
         .then((response) => {
@@ -144,7 +144,7 @@ export class ProfileForm extends Component {
           //this.setState({profile:profile});
         })
         .catch(error => {
-          console.log("ERROR::", error);
+          //console.log("ERROR::", error);
           this.isCreated = false;
           var profile = [];
           var data = {
@@ -182,10 +182,19 @@ export class ProfileForm extends Component {
           }
 
           profile = this.mapNames(profile);
-          console.log("PROFILE ERROR DATA", profile);
+          //console.log("PROFILE ERROR DATA", profile);
           this.isLoaded = true;
           this.setState({profile:profile});
         });
+      api.get('/Customers/'+this.customerId).then((response) => {
+        this.setState({email:response.data.email});
+      })
+      .catch(error => {
+        const { response } = error;
+        const { errors } = response.data.error.details;
+
+        this.setState({ errors });
+      });
   }
 
   mapNames(obj){
@@ -384,7 +393,6 @@ export class ProfileForm extends Component {
 
       api.delete('/HasInterests/'+relId)
         .then((response) => {
-          //console.log("DELETED::", response);
         })
         .catch(error => {
           const { response } = error;
@@ -425,8 +433,8 @@ export class ProfileForm extends Component {
                         whiteSpace: "nowrap"
                       }}><h4>Koníčky:</h4></td>
                       <td width="100%">
-                        <div style={{display: 'flex', justifyContent: 'center'}}>
-                          <Multiselect data={this.horses} onChange={this.multiselectChange} multiple />
+                        <div style={{display: 'flex', justifyContent: 'center'}} className="col-xl-8">
+                          <Multiselect maxHeight={250} data={this.horses} onChange={this.multiselectChange} multiple />
                         </div>
                       </td>
                     </tr>
@@ -443,7 +451,6 @@ export class ProfileForm extends Component {
                         </div></td>
                     </tr>
                   </tbody>
-
                 </table>
 
                 <FormGroup controlId="formControlsTextarea">
@@ -462,7 +469,7 @@ export class ProfileForm extends Component {
                 <div>&nbsp;</div>
                 <Collapse in={this.state.open}>
                   <div>
-                    <ProfileInput type="email"  validate="true" name="Nový Email" save={(key, val) => this.save(key, val)} click={(key, val) => this.clickSaveEmail(key, val)}></ProfileInput>
+                    <ProfileInput type="email" validate="true" name="Nový Email" save={(key, val) => this.save(key, val)} value={this.state.email} click={(key, val) => this.clickSaveEmail(key, val)}></ProfileInput>
                     <Well>
                       <h2>Změna hesla:</h2>
 
@@ -477,7 +484,6 @@ export class ProfileForm extends Component {
                     </Well>
                   </div>
                 </Collapse>
-
               </Form>
             </Tab>
             <Tab eventKey={2} title="Aktivity">
@@ -487,8 +493,6 @@ export class ProfileForm extends Component {
               <UserRating customerId={this.customerId}/>
             </Tab>
           </Tabs>
-
-
         </div>
       );
     } else {
