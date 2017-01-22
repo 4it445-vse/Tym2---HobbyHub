@@ -33,11 +33,11 @@ export class ParticipantListItem extends Component {
   componentDidMount(props){
     api(`/profiles?filter={"where":{"customer_id":${this.state.userId}}}`
     ).then((response) => {
-      console.log('response')
-      console.log(response)
-      console.log(response.data)
+      // console.log('response')
+      // console.log(response)
+      // console.log(response.data)
       var data = response.data[0]
-      console.log(data)
+      // console.log(data)
       this.setState({
         city: data.city,
         marital_status:  data.marital_status,
@@ -49,8 +49,8 @@ export class ParticipantListItem extends Component {
         aboutMe:  data.aboutMe,
       })
       this.setState({info: response.data})
-      console.log('state')
-      console.log(this.state)
+      // console.log('state')
+      // console.log(this.state)
 
     }).catch((data) => {
       console.log(data)
@@ -89,6 +89,8 @@ export class ParticipantListItem extends Component {
             <p>Váha:           {this.state.weight}</p>
             <p>Povolání:       {this.state.profession}</p>
             <p>O mě:           {this.state.aboutMe}</p>
+            <br/>
+            <Link className="btn btn-default"  style={{backgroundColor: '#28ABE3', color: 'white'}} to={`/createProfileComment/${participant.id}`} role="button">Ohodnitit uživatele</Link> {/* #337ab7 */}
           </ModalDialog>
         </ModalContainer>
         :
